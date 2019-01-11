@@ -59,6 +59,7 @@ Run the following commands to install the initial project dependencies and insta
 
 jlpm install
 jupyter labextension install . --no-build
+jlpm watch
 
 ```
 
@@ -68,17 +69,21 @@ environment and to start a JupyterLab instance in watch mode so that it will kee
 
 ```bash
 
-conda activate jupyterlab-ext
+conda activate jupyterlab-metadata-service
 jupyter lab --watch
 
 ```
 
 ### Build and Run the Tests
 
+To build this extesion run:
+
 ```bash
-jlpm run build:test
-jlpm test
+npm run prepare
 ```
+
+At this momemnt, tests is not available.
+
 
 ## [Writing Documentation](#writing-documenation)
 
@@ -96,21 +101,14 @@ conda env update -n <ENVIRONMENT> -f docs/environment.yml
 
 The Developer Documentation includes a [guide](http://jupyterlab.readthedocs.io/en/latest/developer/documentation.html) to writing documentation including writing style, naming conventions, keyboard shortcuts, and screenshots.
 
-To test the docs run:
+To test the docs run (inside `docs` folder):
 
 ```
 py.test --check-links -k .md . || py.test --check-links -k .md --lf .
 ```
 
-The Read the Docs pages can be built using `make`:
+The Read the Docs pages can be built using `make` (inside `docs` folder):
 
 ```bash
-cd docs
 make html
-```
-
-Or with `jlpm`:
-
-```
-jlpm run docs
 ```
