@@ -1,0 +1,54 @@
+{
+  "name": "jupyterlab-metadata-service",
+  "version": "0.1.0",
+  "description": "A JupyterLab extension for Metadata Service",
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension"
+  ],
+  "homepage": "https://github.com/jupyterlab/jupyterlab-metadata-service",
+  "bugs": {
+    "url": "https://github.com/jupyterlab/jupyterlab-metadata-service/issues"
+  },
+  "license": "BSD-3-Clause",
+  "author": "CalPoly-Quansight",
+  "files": [
+    "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
+    "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jupyterlab/jupyterlab-metadata-service.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf lib",
+    "prepare": "npm run clean && npm run build",
+    "watch": "tsc -w",
+    "precommit": "lint-staged",
+    "prettier": "prettier --write '**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}'",
+    "test": "cd test && ./run-tests.sh"
+  },
+  "dependencies": {
+    "@jupyterlab/application": "^0.19.1"
+  },
+  "devDependencies": {
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.0",
+    "prettier": "^1.13.7",
+    "rimraf": "^2.6.1",
+    "typescript": "~3.1.1"
+  },
+  "lint-staged": {
+    "**/*{.ts,.tsx,.css,.json,.md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "jupyterlab": {
+    "extension": true
+  }
+}

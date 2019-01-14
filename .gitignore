@@ -102,3 +102,11 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+*.bundle.*
+lib/
+node_modules/
+*.egg-info/
+.ipynb_checkpoints
+
+# npm
+yarn.lock
