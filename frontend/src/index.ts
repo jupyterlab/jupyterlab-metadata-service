@@ -4,7 +4,6 @@ import {
 
 import '../style/index.css';
 
-
 /**
  * Initialization data for the jupyterlab-metadata-service extension.
  */

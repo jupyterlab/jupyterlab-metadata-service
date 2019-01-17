@@ -1,16 +1,19 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "lib": ["es2015", "dom"],
+    "jsx": "react",
+    "lib": ["es6", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "outDir": "lib",
     "rootDir": "src",
-    "strict": true,
-    "strictNullChecks": false,
-    "target": "es2015",
+    "skipLibCheck": true,
+    // "strict": true,
+    "strictNullChecks": true, // false
+    "target": "es6",
     "types": []
   },
   "include": ["src/*"]
