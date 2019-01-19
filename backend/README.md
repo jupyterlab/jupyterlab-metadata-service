@@ -26,7 +26,7 @@ Building JupyterLab Metadata Service - Server from its GitHub source code requir
 If you use `conda`, you can get it with:
 
 ```bash
-conda create -n jlab-metadata-service-server -c conda-forge --override-channels nodejs
+conda create -n jlab-metadata-service-server -c conda-forge --override-channels nodejs yarn
 
 # and activate your new environment
 conda activate jlab-metadata-service-server
@@ -39,7 +39,7 @@ Run the following commands to install the initial project dependencies and insta
 
 ```bash
 
-npm install
+yarn install
 
 ```
 
@@ -47,16 +47,16 @@ Run your server using:
 
 ```bash
 
-npm start
+yarn start
 
 ```
 
 ### Build and Run the Tests
 
-To build this extesion run:
+To build JupyterLab Metadata Service - Server, run:
 
 ```bash
-npm run build
+yarn run build
 ```
 
 At this momemnt, tests is not available.

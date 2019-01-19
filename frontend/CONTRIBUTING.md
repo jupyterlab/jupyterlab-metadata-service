@@ -44,7 +44,7 @@ Building JupyterLab Metadata Service from its GitHub source code requires Node.j
 If you use `conda`, you can get it with:
 
 ```bash
-conda create -n jupyterlab-metadata-service -c conda-forge --override-channels nodejs jupyterlab
+conda create -n jlab-metadata-service-frontend -c conda-forge --override-channels nodejs jupyterlab
 
 # and activate your new environment
 conda activate jupyterlab-metadata-service
@@ -66,7 +66,6 @@ jlpm watch
 After the install completes, open a second terminal. Run these commands to activate the `jupyterlab-metadata-service`
 environment and to start a JupyterLab instance in watch mode so that it will keep up with our changes as we make them.
 
-
 ```bash
 
 conda activate jupyterlab-metadata-service
@@ -79,11 +78,10 @@ jupyter lab --watch
 To build this extesion run:
 
 ```bash
-npm run prepare
+yarn run prepare
 ```
 
 At this momemnt, tests is not available.
-
 
 ## [Writing Documentation](#writing-documenation)
 

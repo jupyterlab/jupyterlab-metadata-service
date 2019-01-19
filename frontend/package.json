@@ -33,7 +33,20 @@
     "test": "cd test && ./run-tests.sh"
   },
   "dependencies": {
-    "@jupyterlab/application": "^0.19.1"
+    "@jupyterlab/application": "^0.19.1",
+    "@jupyterlab/apputils": "^0.19.1",
+    "@jupyterlab/codeeditor": "^0.19.1",
+    "@jupyterlab/completer": "^0.19.1",
+    "@jupyterlab/coreutils": "^2.2.1",
+    "@jupyterlab/docregistry": "^0.19.1",
+    "@jupyterlab/launcher": "^0.19.1",
+    "@jupyterlab/mainmenu": "^0.8.1",
+    "@phosphor/messaging": "^1.2.2",
+    "@phosphor/widgets": "^1.6.0",
+    "apollo-boost": "^0.1.26",
+    "graphql": "^14.1.1",
+    "graphql-tag": "^2.10.1",
+    "react-apollo": "^2.3.3"
   },
   "devDependencies": {
     "husky": "^0.14.3",
