@@ -4,6 +4,9 @@ import { Message } from "@phosphor/messaging";
 
 import { openConnection, getDatasets } from "./connection";
 
+// import * as React from 'react';
+// import * as ReactDOM from 'react-dom';
+
 /**
  *
  */
@@ -17,29 +20,28 @@ export class MetadataWidget extends Widget {
     this.id = "jlab-metadata-service";
     this.title.label = "Jupyterlab Metadata Service Connection";
     this.title.closable = true;
+
   }
 
   /**
    * Handle update requests for the widget.
    */
   onUpdateRequest(msg: Message): void {
-    let btnConnect: HTMLInputElement = document.createElement("input");
-    btnConnect.type = "button";
-    btnConnect.value = "OpenConnection";
-    btnConnect.click = openConnection;
+    console.log(msg)
+    let self = this;
 
-    let divQueryResult: HTMLDivElement = document.createElement("div");
+    let f = async () => {
+      openConnection();
 
-    let btnQueryAll: HTMLInputElement = document.createElement("input");
-    btnQueryAll.type = "button";
-    btnQueryAll.value = "Query all Datasets";
-    btnQueryAll.click = async () => {
+      let divQueryResult: HTMLDivElement = document.createElement("div");
+
+      console.log('quering ...');
       const data = await getDatasets();
       divQueryResult.innerHTML = JSON.stringify(data);
-    };
+      console.log(data);
 
-    this.node.appendChild(btnConnect);
-    this.node.appendChild(btnQueryAll);
-    this.node.appendChild(divQueryResult);
+      self.node.appendChild(divQueryResult);
+    }
+    f();
   }
 }

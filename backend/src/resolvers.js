@@ -19,10 +19,10 @@ const resolvers = {
       datasets.push(newDataset);
       return {
         success: true,
-        dataset: newDataset
+        result: newDataset
       };
     },
   },
 };
 
-module.exports = resolvers
+module.exports = resolvers;

@@ -21,7 +21,7 @@ a keyboard shortcut or automatically on save.
 
 ### Creating the environment using conda
 
-Building JupyterLab Metadata Service - Server from its GitHub source code requires Node.js.
+Building JupyterLab Metadata Service - Server from its GitHub source code requires Node.js and yarn.
 
 If you use `conda`, you can get it with:
 
@@ -60,4 +60,3 @@ yarn run build
 ```
 
 At this momemnt, tests is not available.
-

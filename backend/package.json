@@ -33,8 +33,12 @@
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/__utils"
+      "node_modules/",
+      "__utils"
     ]
+  },
+  "nodemonConfig": {
+    "ignore": ["/test/*.*", "/docs/*.*", "/node_modules/*.*"],
+    "delay": "2500"
   }
 }

@@ -46,7 +46,9 @@
     "apollo-boost": "^0.1.26",
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
-    "react-apollo": "^2.3.3"
+    "react": "^16.7.0",
+    "react-apollo": "^2.3.3",
+    "react-dom": "^16.7.0"
   },
   "devDependencies": {
     "husky": "^0.14.3",

@@ -27,6 +27,20 @@ The latest versions of the following browsers are currently _known to work_:
 
 ---
 
+## Installation
+
+This extension includes both a client-side JupyterLab extension and a server-side Jupyter notebook extension. Install these using the command line with
+
+```
+pip install jupyterlab-metadata-service
+jupyter labextension install jupyterlab-metadata-service
+```
+
+If you are running Notebook 5.2 or earlier, enable the server extension by running
+
+jupyter serverextension enable --py --sys-prefix jupyterlab-metadata-service
+
+
 ## Development
 
 ### Contributing
