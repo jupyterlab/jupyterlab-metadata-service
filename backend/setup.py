@@ -5,6 +5,8 @@ setuptools.setup(
   version='0.1',
   license='BSD-3-Clause',
   author='CalPoly/Quansight',
+  author_email='jupyterlab@localhost',
+  url='https://github.com/jupyterlab/jupyterlab-metadata-service',
   # py_modules rather than packages, since we only have 1 file
   py_modules=['jupyterlab_metadata_service_server.metadata'],
   entry_points={
