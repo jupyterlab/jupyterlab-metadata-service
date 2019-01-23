@@ -15,8 +15,17 @@ A metadata service, client and UI for the metadata schema of [schema.org](https:
 
 ### Installation
 
+This extension includes both a client-side JupyterLab extension and a server-side Jupyter notebook extension. Install these using the command line with
+
 ```bash
+pip install jupyterlab-metadata-service
 jupyter labextension install jupyterlab-metadata-service
+```
+
+If you are running Notebook 5.2 or earlier, enable the server extension by running
+
+```bash
+jupyter serverextension enable --py --sys-prefix jupyterlab-metadata-service
 ```
 
 The latest versions of the following browsers are currently _known to work_:
@@ -24,21 +33,6 @@ The latest versions of the following browsers are currently _known to work_:
 - Firefox
 - Chrome
 - Safari
-
----
-
-## Installation
-
-This extension includes both a client-side JupyterLab extension and a server-side Jupyter notebook extension. Install these using the command line with
-
-```
-pip install jupyterlab-metadata-service
-jupyter labextension install jupyterlab-metadata-service
-```
-
-If you are running Notebook 5.2 or earlier, enable the server extension by running
-
-jupyter serverextension enable --py --sys-prefix jupyterlab-metadata-service
 
 
 ## Development
@@ -49,20 +43,34 @@ To contribute to the project, please read the [contributor documentation](CONTRI
 
 JupyterLab Metadata Service Extensions follows the Jupyter [Community Guides](https://jupyter.readthedocs.io/en/latest/community/content-community.html).
 
-For a development install (requires npm version 4 or later), do the following in the repository directory:
-
+For a development install, do the following in the `frontend/` directory:
 ```bash
-npm install
-npm run build
-jupyter labextension link .
+# If you don't yet have a conda environemnt for your work on this project, run these two commands:
+conda create -n jlmeta -c conda-forge --override-channels nodejs jupyterlab
+conda activate jlmeta
+
+# Install JS dependencies:
+jlpm install
+
+# Register this extension with JupyterLab in development-mode:
+jupyter labextension install . --no-build
 ```
 
-To rebuild the package and the JupyterLab app:
-
+Now you can run JupyterLab in auto-reload mode, like this:
 ```bash
-npm run build
-jupyter lab build
+jupyter lab --watch
 ```
+
+If you modify the code in the `frontend/` folder, you'll have to rebuilt it (once rebuilt, JupyterLab will notice and do a partial re-build of itself, from the command above):
+```bash
+jlpm run build
+```
+
+If you don't want to run the above command every time you modify code, you can watch the source with the following command:
+```bash
+jlpm run watch
+```
+
 
 ### License
 
