@@ -11,7 +11,6 @@ def start():
 
     """
     path = os.path.dirname(os.path.abspath(__file__))
-    path = os.path.join(path, 'jupyterlab_metadata_service_server')
 
     return {
         'command': [

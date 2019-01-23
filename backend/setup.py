@@ -32,9 +32,10 @@ setuptools.setup(
   entry_points={
       'jupyter_serverproxy_servers': [
           # name = packagename:function_name
-          'metadata = jupyterlab_metadata_service_server.metadata.metadata:start',
+          'metadata = jupyterlab_metadata_service_server.metadata:start',
       ]
   },
   install_requires=['jupyter-server-proxy'],
-  data_files=extra_files
+  package_data=dict(extra_files),
+  include_package_data = True
 )
