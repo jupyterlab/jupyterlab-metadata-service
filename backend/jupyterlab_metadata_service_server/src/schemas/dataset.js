@@ -1,11 +1,16 @@
 const { gql } = require('apollo-server');
 
-const datasets = []
+const data = []
 let nextId = 1;
 
 const typeDef = gql`
 
-  union OrgPerson = Organization | Person
+  union OrgOrPerson = Organization | Person
+
+  input OrgOrPersonInput {
+    person_id: Int
+    organization_id: Int
+  }
 
   type Dataset {
     # Internal properties
@@ -13,11 +18,11 @@ const typeDef = gql`
     # Properties from Thing
     name: String!
     # Properties from CreativeWork
-    author: OrgPerson
+    author: OrgOrPerson
     license: String
     datePublished: String
     url: String
-    publisher: OrgPerson
+    publisher: OrgOrPerson
   }
 
   type DatasetResponse {
@@ -33,6 +38,7 @@ const typeDef = gql`
 
   extend type Mutation {
     addDataset(
+      author: OrgOrPersonInput
       name: String!
       license: String
       datePublished: String
@@ -46,47 +52,47 @@ const typeDef = gql`
 const resolvers = {
   Query: {
     datasets: () => {
-      return datasets.length ? datasets : [];
+      return data.length ? data : [];
     },
     dataset: (root, args) => {
-      return datasets.length >= args.id ? datasets[args.id - 1] : null
+      return data.length >= args.id ? data[args.id - 1] : null
     }
   },
   Mutation: {
     addDataset: (root, args) => {
-      const newDataset = {
+      const newData = {
         id: nextId++,
+        author: args.author,
         name: args.name,
         license: args.license,
         datePublished: args.datePublished,
         url: args.url
       };
 
-      datasets.push(newDataset);
+      data.push(newData);
 
       return {
         success: true,
-        result: newDataset
+        result: newData
       };
     },
     remDataset: (root, args) => {
-      let oldDataset = null;
+      let oldData = null;
       let message = null;
       let status = true;
 
-      if (datasets.length >= args.id) {
-        oldDataset = datasets.pop(args.id - 1);
+      if (data.length >= args.id) {
+        oldData = data.pop(args.id - 1);
       } else {
-        message = 'Dataset not found.';
+        message = 'Data not found.';
         status = false;
       }
 
       return {
         success: status,
-        result: newDataset,
+        result: oldData,
         message: message
       };
-
     }
   }
 };
