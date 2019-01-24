@@ -49,7 +49,7 @@ const resolvers = {
       return datasets.length ? datasets : [];
     },
     dataset: (root, args) => {
-      return datasets.length <= id ? datasets[args.id] : null
+      return datasets.length >= args.id ? datasets[args.id - 1] : null
     }
   },
   Mutation: {
@@ -74,7 +74,7 @@ const resolvers = {
       let message = null;
       let status = true;
 
-      if (datasets.length <= args.id) {
+      if (datasets.length >= args.id) {
         oldDataset = datasets.pop(args.id - 1);
       } else {
         message = 'Dataset not found.';
