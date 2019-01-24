@@ -39,6 +39,12 @@ The latest versions of the following browsers are currently _known to work_:
 
 ### Contributing
 
+#### Backend Server
+
+TODO: Write instructions for how to contribute to the backend server (e.g. how to run in development mode).
+
+#### Frontend Extension
+
 To contribute to the project, please read the [contributor documentation](CONTRIBUTING.md).
 
 JupyterLab Metadata Service Extensions follows the Jupyter [Community Guides](https://jupyter.readthedocs.io/en/latest/community/content-community.html).
@@ -53,7 +59,7 @@ conda activate jlmeta
 jlpm install
 
 # Register this extension with JupyterLab in development-mode:
-jupyter labextension install . --no-build
+jupyter labextension link .
 ```
 
 Now you can run JupyterLab in auto-reload mode, like this:
