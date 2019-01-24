@@ -1,5 +1,5 @@
 const { ApolloServer } = require('apollo-server');
-const Schema = require('./schema/schema');
+const Schema = require('./schema');
 
 let args = process.argv.slice(2);
 let port = args.length > 0 ? args[0] : 4000;
