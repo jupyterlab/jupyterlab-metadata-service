@@ -1,43 +1,76 @@
-import { JupyterLab, JupyterLabPlugin } from "@jupyterlab/application";
-
+import { JupyterLabPlugin } from "@jupyterlab/application";
 import { ICommandPalette } from "@jupyterlab/apputils";
 
+import {
+  IMetadataApolloGraphQlConnection,
+  activateApolloGraphQlConnection
+} from "./metadata_concrete/apollo_connection";
+
+import { IMetadataCommentsService } from "./metadata_iface/comments";
+import { activateMetadataComments } from "./metadata_concrete/comments";
+
+import { IMetadataDatasetsService } from "./metadata_iface/datasets";
+import { activateMetadataDatasets } from "./metadata_concrete/datasets";
+
+import { activateMetadataUI } from "./ui";
+
 import "../style/index.css";
-import { MetadataWidget } from "./widget";
 
 /**
- * Initialization data for the jupyterlab-metadata-service extension.
+ * Initialization the extension that manages the connection to Apollo GraphQL.
  */
-const extension: JupyterLabPlugin<void> = {
-  id: "jupyterlab-metadata-service",
+const graphqlExtension: JupyterLabPlugin<IMetadataApolloGraphQlConnection> = {
+  id: "jupyterlab-metadata-service-apollo-graphql",
   autoStart: true,
-  requires: [ICommandPalette],
-  activate: (app: JupyterLab, palette: ICommandPalette) => {
-    console.log(
-      "JupyterLab extension jupyterlab-metadata-service is activated!"
-    );
-
-    // Create a single widget
-    let widget: MetadataWidget = new MetadataWidget();
-
-    // Add an application command
-    const command: string = "jlab-metadata-service:open";
-    app.commands.addCommand(command, {
-      label: "Metadata Service",
-      execute: async () => {
-        if (!widget.isAttached) {
-          // Attach the widget to the main work area if it's not there
-          app.shell.addToMainArea(widget);
-        }
-        widget.update();
-        // Activate the widget
-        app.shell.activateById(widget.id);
-      }
-    });
-
-    // Add the command to the palette.
-    palette.addItem({ command, category: "Metadata" });
-  }
+  requires: [],
+  provides: IMetadataApolloGraphQlConnection,
+  activate: activateApolloGraphQlConnection
 };
 
-export default extension;
+/**
+ * Initialization the extension for querying/posting metadata COMMENTS.
+ */
+const commentExtension: JupyterLabPlugin<IMetadataCommentsService> = {
+  id: "jupyterlab-metadata-service-comments",
+  autoStart: true,
+  requires: [IMetadataApolloGraphQlConnection],
+  provides: IMetadataCommentsService,
+  activate: activateMetadataComments
+};
+
+/**
+ * Initialization the extension for querying/posting metadata DATASETS.
+ */
+const datasetExtension: JupyterLabPlugin<IMetadataDatasetsService> = {
+  id: "jupyterlab-metadata-service-datasets",
+  autoStart: true,
+  requires: [IMetadataApolloGraphQlConnection],
+  provides: IMetadataDatasetsService,
+  activate: activateMetadataDatasets
+};
+
+/**
+ * Initialization the metadata UI extension.
+ */
+const uiExtension: JupyterLabPlugin<void> = {
+  id: "jupyterlab-metadata-service-ui",
+  autoStart: true,
+  requires: [
+    ICommandPalette,
+    IMetadataCommentsService,
+    IMetadataDatasetsService
+  ],
+  activate: activateMetadataUI
+};
+
+/**
+ * Export the plugins as default.
+ */
+const plugins: JupyterLabPlugin<any>[] = [
+  graphqlExtension,
+  commentExtension,
+  datasetExtension,
+  uiExtension
+];
+
+export default plugins;
