@@ -1,8 +1,5 @@
 const { gql } = require('apollo-server');
 
-const data = []
-let nextId = 1;
-
 const typeDef = gql`
 
   union OrgOrPerson = Organization | Person
@@ -43,7 +40,7 @@ const typeDef = gql`
       license: String
       datePublished: String
       url: String
-    ): DatasetResponse
+    ): DatasetResponse!
 
     remDataset(id: ID!): DatasetResponse!
   }
@@ -51,17 +48,16 @@ const typeDef = gql`
 
 const resolvers = {
   Query: {
-    datasets: () => {
-      return data.length ? data : [];
+    datasets: async (_, { pageSize = 20, after }, { dataSources }) => {
+      return dataSources.DatasetAPI.fetchall();
     },
-    dataset: (root, args) => {
-      return data.length >= args.id ? data[args.id - 1] : null
+    dataset: (root, args, { dataSources } ) => {
+      return dataSources.DatasetAPI.getByID(args.id);
     }
   },
   Mutation: {
-    addDataset: (root, args) => {
-      const newData = {
-        id: nextId++,
+    addDataset: async (root, args, { dataSources }) => {
+      let newData = {
         author: args.author,
         name: args.name,
         license: args.license,
@@ -69,28 +65,26 @@ const resolvers = {
         url: args.url
       };
 
-      data.push(newData);
+      newData = dataSources.DatasetAPI.insert(newData);
 
       return {
         success: true,
         result: newData
       };
     },
-    remDataset: (root, args) => {
-      let oldData = null;
+    remDataset: (root, args, { dataSources }) => {
       let message = null;
       let status = true;
+      const result = dataSources.DatasetAPI.deleteByID(args.id);
 
-      if (data.length >= args.id) {
-        oldData = data.pop(args.id - 1);
-      } else {
+      if (result == null) {
         message = 'Data not found.';
         status = false;
       }
 
       return {
         success: status,
-        result: oldData,
+        result: result,
         message: message
       };
     }
