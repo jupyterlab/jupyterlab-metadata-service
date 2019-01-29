@@ -11,8 +11,7 @@
     "outDir": "lib",
     "rootDir": "src",
     "skipLibCheck": true,
-    // "strict": true,
-    "strictNullChecks": true, // false
+    "strictNullChecks": true,
     "target": "es6",
     "types": []
   },
