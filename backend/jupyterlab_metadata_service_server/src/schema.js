@@ -1,6 +1,7 @@
 const { gql, makeExecutableSchema } = require('apollo-server');
 const { merge } = require('lodash');
 
+// schemas
 const Dataset = require('./schemas/dataset');
 const Person = require('./schemas/person');
 const Organization = require('./schemas/organization');

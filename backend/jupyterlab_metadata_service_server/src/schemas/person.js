@@ -1,8 +1,5 @@
 const { gql } = require('apollo-server');
 
-const data = [];
-let nextId = 1;
-
 const typeDef = gql`
   type Person {
     id: ID!
@@ -31,42 +28,39 @@ const typeDef = gql`
 
 const resolvers = {
   Query: {
-    people: () => {
-      return data.length ? data : [];
+    people: async (_, { pageSize = 20, after }, { dataSources }) => {
+      return dataSources.PersonAPI.fetchall();
     },
-    person: (root, args) => {
-      return data.length >= args.id ? data[args.id - 1] : null
+    person: (root, args, { dataSources } ) => {
+      return dataSources.PersonAPI.getByID(args.id);
     }
   },
   Mutation: {
-    addPerson: (root, args) => {
-      const newData = {
-        id: nextId++,
+    addPerson: async (root, args, { dataSources }) => {
+      let newData = {
         name: args.name
       };
 
-      data.push(newData);
+      newData = dataSources.PersonAPI.insert(newData);
 
       return {
         success: true,
         result: newData
       };
     },
-    remPerson: (root, args) => {
-      let oldData = null;
+    remPerson: (root, args, { dataSources }) => {
       let message = null;
       let status = true;
+      const result = dataSources.PersonAPI.deleteByID(args.id);
 
-      if (data.length >= args.id) {
-        oldData = data.pop(args.id - 1);
-      } else {
+      if (result == null) {
         message = 'Data not found.';
         status = false;
       }
 
       return {
         success: status,
-        result: oldData,
+        result: result,
         message: message
       };
     }

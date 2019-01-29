@@ -1,8 +1,5 @@
 const { gql } = require('apollo-server');
 
-const data = [];
-let nextId = 1;
-
 const typeDef = gql`
   type Organization {
     id: ID!
@@ -31,42 +28,40 @@ const typeDef = gql`
 
 const resolvers = {
   Query: {
-    organizations: () => {
-      return data.length ? data : [];
+    // TODO: implement pagination
+    organizations: async (_, { pageSize = 20, after }, { dataSources }) => {
+      return dataSources.OrganizationAPI.fetchall();
     },
-    organization: (root, args) => {
-      return data.length >= args.id ? data[args.id] : null
+    organization: (root, args, { dataSources } ) => {
+      return dataSources.OrganizationAPI.getByID(args.id);
     }
   },
   Mutation: {
-    addOrganization: (root, args) => {
-      const newData = {
-        id: nextId++,
+    addOrganization: async (root, args, { dataSources }) => {
+      let newData = {
         name: args.name
       };
 
-      data.push(newData);
+      newData = dataSources.OrganizationAPI.insert(newData);
 
       return {
         success: true,
         result: newData
       };
     },
-    remOrganization: (root, args) => {
-      let oldData = null;
+    remOrganization: (root, args, { dataSources }) => {
       let message = null;
       let status = true;
+      const result = dataSources.OrganizationAPI.deleteByID(args.id);
 
-      if (data.length >= args.id) {
-        oldData = data.pop(args.id - 1);
-      } else {
+      if (result == null) {
         message = 'Data not found.';
         status = false;
       }
 
       return {
         success: status,
-        result: oldData,
+        result: result,
         message: message
       };
     }

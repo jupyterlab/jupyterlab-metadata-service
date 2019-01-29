@@ -48,6 +48,7 @@ const typeDef = gql`
 
 const resolvers = {
   Query: {
+    // TODO: implement pagination
     datasets: async (_, { pageSize = 20, after }, { dataSources }) => {
       return dataSources.DatasetAPI.fetchall();
     },

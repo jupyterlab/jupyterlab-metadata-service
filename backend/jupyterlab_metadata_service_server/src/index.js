@@ -1,11 +1,16 @@
 const { ApolloServer } = require('apollo-server');
+// schema
 const Schema = require('./schema');
 
-const DatasetAPI = require('./datasources/dataset');
-
 // set up any dataSources our resolvers need
+const DatasetAPI = require('./datasources/dataset');
+const OrganizationAPI = require('./datasources/organization');
+const PersonAPI = require('./datasources/person');
+
 const dataSources = () => ({
   DatasetAPI: new DatasetAPI(),
+  OrganizationAPI: new OrganizationAPI(),
+  PersonAPI: new PersonAPI(),
 });
 
 let args = process.argv.slice(2);

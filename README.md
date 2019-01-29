@@ -78,6 +78,37 @@ jlpm run watch
 ```
 
 
+
+##### JupyterLab master
+To develop against an unreleased version of `JupyterLab` requires that you add this extension
+as a package inside the `jupyterlab` repo:
+
+```bash
+# clone metadata service
+git clone git@github.com:jupyterlab/jupyterlab-metadata-service.git
+
+# create JupyterLab dev environment
+conda create -n jupyterlab-metadata-service -c conda-forge notebook
+git clone https://github.com/jupyterlab/jupyterlab.git jupyterlab
+cd jupyterlab
+conda activate jupyterlab-metadata-service
+pip install -e .
+
+
+# Add metadata service frontend as sibling package
+jlpm run add:sibling ../jupyterlab-metadata-service/frontend
+cd packages/frontend
+# build metadata frontend
+jlpm run build
+```
+
+Edit the files in the package in `./packages/jupterlab-commenting` and run `jupyter lab --watch --dev` in the 
+top level directory to run JupyterLab with this package enabled.
+
+NOTE: This copies all the frontend files, so to commit any edits you make, copy the changes back to the `../jupyterlab-metadata-service` directory.
+
+
+
 ### License
 
 JupyterLab Metadata Service extension uses a shared copyright model that enables all contributors to maintain the
