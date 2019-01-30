@@ -16,6 +16,10 @@ import { activateMetadataUI } from './ui';
 
 import '../style/index.css';
 
+export { IMetadataCommentsService };
+export { IMetadataDatasetsService };
+export { IMetadataApolloGraphQlConnection };
+
 /**
  * Initialization the extension that manages the connection to Apollo GraphQL.
  */

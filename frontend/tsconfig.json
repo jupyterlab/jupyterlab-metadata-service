@@ -2,7 +2,10 @@
   "compilerOptions": {
     "declaration": true,
     "jsx": "react",
-    "lib": ["es6", "dom"],
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
@@ -13,7 +16,36 @@
     "skipLibCheck": true,
     "strictNullChecks": true,
     "target": "es6",
-    "types": []
+    "types": [],
+    "composite": true
   },
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../application"
+    },
+    {
+      "path": "../apputils"
+    },
+    {
+      "path": "../codeeditor"
+    },
+    {
+      "path": "../completer"
+    },
+    {
+      "path": "../coreutils"
+    },
+    {
+      "path": "../docregistry"
+    },
+    {
+      "path": "../launcher"
+    },
+    {
+      "path": "../mainmenu"
+    }
+  ]
 }

@@ -16,7 +16,7 @@ class MetadataDatasetsService implements IMetadataDatasetsService {
   queryAllDatasets(): object {
     return this.connection.executeQuery(gql`
       query {
-        Datasets {
+        datasets {
           id
           name
           license
