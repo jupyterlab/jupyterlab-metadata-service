@@ -1,7 +1,7 @@
-import { Token } from "@phosphor/coreutils";
+import { Token } from '@phosphor/coreutils';
 
 export const IMetadataDatasetsService = new Token<IMetadataDatasetsService>(
-  "@jupyterlab/metadata-service:IMetadataDatasetsService"
+  '@jupyterlab/metadata-service:IMetadataDatasetsService'
 );
 
 /**
@@ -19,5 +19,5 @@ export interface IMetadataDatasetsService {
   /**
    * Create a new dataset.
    */
-  createNewDataset(item_id: string): void;
+  createNewDataset(itemId: string): void;
 }

@@ -1,7 +1,7 @@
-import { Token } from "@phosphor/coreutils";
+import { Token } from '@phosphor/coreutils';
 
 export const IMetadataCommentsService = new Token<IMetadataCommentsService>(
-  "@jupyterlab/metadata-service:IMetadataCommentsService"
+  '@jupyterlab/metadata-service:IMetadataCommentsService'
 );
 
 /**
@@ -21,10 +21,10 @@ export interface IMetadataCommentsService {
    * Return the comments on the item with the item identifier of
    * `item_id`.
    */
-  queryComments(item_id: string): string[];
+  queryComments(itemId: string): string[];
 
   /**
    * Post a new comment (`comment`) to an item (`item_id`).
    */
-  createComment(comment: string, item_id: string): void;
+  createComment(comment: string, itemId: string): void;
 }

@@ -1,12 +1,12 @@
-import { Token } from "@phosphor/coreutils";
+import { Token } from '@phosphor/coreutils';
 
-import { JupyterLab } from "@jupyterlab/application";
+import { JupyterFrontEnd } from '@jupyterlab/application';
 
-import ApolloClient from "apollo-boost";
+import ApolloClient from 'apollo-boost';
 
 export const IMetadataApolloGraphQlConnection = new Token<
   IMetadataApolloGraphQlConnection
->("@jupyterlab/metadata-service:IMetadataApolloGraphQlConnection");
+>('@jupyterlab/metadata-service:IMetadataApolloGraphQlConnection');
 
 /**
  * The interface for managing the connection to Apollo GraphQL.
@@ -23,7 +23,7 @@ class MetadataApolloGraphQlConnection
 
   constructor() {
     this.client = new ApolloClient({
-      uri: "http://localhost:4000" // TODO: parameterize this
+      uri: 'http://localhost:4000' // TODO: parameterize this
     });
   }
 
@@ -35,7 +35,7 @@ class MetadataApolloGraphQlConnection
 }
 
 export function activateApolloGraphQlConnection(
-  app: JupyterLab
+  app: JupyterFrontEnd
 ): IMetadataApolloGraphQlConnection {
   return new MetadataApolloGraphQlConnection();
 }

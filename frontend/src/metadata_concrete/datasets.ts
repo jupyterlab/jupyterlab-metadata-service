@@ -1,10 +1,10 @@
-import { JupyterLab } from "@jupyterlab/application";
+import { JupyterFrontEnd } from '@jupyterlab/application';
 
-import { IMetadataDatasetsService } from "../metadata_iface/datasets";
+import { IMetadataDatasetsService } from '../metadata_iface/datasets';
 
-import { IMetadataApolloGraphQlConnection } from "../metadata_concrete/apollo_connection";
+import { IMetadataApolloGraphQlConnection } from '../metadata_concrete/apollo_connection';
 
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 class MetadataDatasetsService implements IMetadataDatasetsService {
   connection: IMetadataApolloGraphQlConnection;
@@ -27,13 +27,13 @@ class MetadataDatasetsService implements IMetadataDatasetsService {
     `);
   }
 
-  createNewDataset(item_id: string): void {
+  createNewDataset(itemId: string): void {
     // TODO
   }
 }
 
 export function activateMetadataDatasets(
-  app: JupyterLab,
+  app: JupyterFrontEnd,
   connection: IMetadataApolloGraphQlConnection
 ): IMetadataDatasetsService {
   return new MetadataDatasetsService(connection);

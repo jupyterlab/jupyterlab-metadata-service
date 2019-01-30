@@ -1,8 +1,8 @@
-import { JupyterLab } from "@jupyterlab/application";
+import { JupyterFrontEnd } from '@jupyterlab/application';
 
-import { IMetadataCommentsService } from "../metadata_iface/comments";
+import { IMetadataCommentsService } from '../metadata_iface/comments';
 
-import { IMetadataApolloGraphQlConnection } from "../metadata_concrete/apollo_connection";
+import { IMetadataApolloGraphQlConnection } from '../metadata_concrete/apollo_connection';
 
 class MetadataCommentsService implements IMetadataCommentsService {
   connection: IMetadataApolloGraphQlConnection;
@@ -12,20 +12,20 @@ class MetadataCommentsService implements IMetadataCommentsService {
   }
 
   queryCommentedItems(): string[] {
-    return ["notebook_1", "whatever_1"];
+    return ['notebook_1', 'whatever_1'];
   }
 
-  queryComments(item_id: string): string[] {
-    return ["This is cool.", "I want more JupyterLab."];
+  queryComments(itemId: string): string[] {
+    return ['This is cool.', 'I want more JupyterLab.'];
   }
 
-  createComment(comment: string, item_id: string): void {
+  createComment(comment: string, itemId: string): void {
     // TODO
   }
 }
 
 export function activateMetadataComments(
-  app: JupyterLab,
+  app: JupyterFrontEnd,
   connection: IMetadataApolloGraphQlConnection
 ): IMetadataCommentsService {
   return new MetadataCommentsService(connection);

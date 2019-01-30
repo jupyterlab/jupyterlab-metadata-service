@@ -1,26 +1,28 @@
-import { JupyterLabPlugin } from "@jupyterlab/application";
-import { ICommandPalette } from "@jupyterlab/apputils";
+import { JupyterFrontEndPlugin, ILabShell } from '@jupyterlab/application';
+import { ICommandPalette } from '@jupyterlab/apputils';
 
 import {
   IMetadataApolloGraphQlConnection,
   activateApolloGraphQlConnection
-} from "./metadata_concrete/apollo_connection";
+} from './metadata_concrete/apollo_connection';
 
-import { IMetadataCommentsService } from "./metadata_iface/comments";
-import { activateMetadataComments } from "./metadata_concrete/comments";
+import { IMetadataCommentsService } from './metadata_iface/comments';
+import { activateMetadataComments } from './metadata_concrete/comments';
 
-import { IMetadataDatasetsService } from "./metadata_iface/datasets";
-import { activateMetadataDatasets } from "./metadata_concrete/datasets";
+import { IMetadataDatasetsService } from './metadata_iface/datasets';
+import { activateMetadataDatasets } from './metadata_concrete/datasets';
 
-import { activateMetadataUI } from "./ui";
+import { activateMetadataUI } from './ui';
 
-import "../style/index.css";
+import '../style/index.css';
 
 /**
  * Initialization the extension that manages the connection to Apollo GraphQL.
  */
-const graphqlExtension: JupyterLabPlugin<IMetadataApolloGraphQlConnection> = {
-  id: "jupyterlab-metadata-service-apollo-graphql",
+const graphqlExtension: JupyterFrontEndPlugin<
+  IMetadataApolloGraphQlConnection
+> = {
+  id: 'jupyterlab-metadata-service-apollo-graphql',
   autoStart: true,
   requires: [],
   provides: IMetadataApolloGraphQlConnection,
@@ -30,8 +32,8 @@ const graphqlExtension: JupyterLabPlugin<IMetadataApolloGraphQlConnection> = {
 /**
  * Initialization the extension for querying/posting metadata COMMENTS.
  */
-const commentExtension: JupyterLabPlugin<IMetadataCommentsService> = {
-  id: "jupyterlab-metadata-service-comments",
+const commentExtension: JupyterFrontEndPlugin<IMetadataCommentsService> = {
+  id: 'jupyterlab-metadata-service-comments',
   autoStart: true,
   requires: [IMetadataApolloGraphQlConnection],
   provides: IMetadataCommentsService,
@@ -41,8 +43,8 @@ const commentExtension: JupyterLabPlugin<IMetadataCommentsService> = {
 /**
  * Initialization the extension for querying/posting metadata DATASETS.
  */
-const datasetExtension: JupyterLabPlugin<IMetadataDatasetsService> = {
-  id: "jupyterlab-metadata-service-datasets",
+const datasetExtension: JupyterFrontEndPlugin<IMetadataDatasetsService> = {
+  id: 'jupyterlab-metadata-service-datasets',
   autoStart: true,
   requires: [IMetadataApolloGraphQlConnection],
   provides: IMetadataDatasetsService,
@@ -52,13 +54,14 @@ const datasetExtension: JupyterLabPlugin<IMetadataDatasetsService> = {
 /**
  * Initialization the metadata UI extension.
  */
-const uiExtension: JupyterLabPlugin<void> = {
-  id: "jupyterlab-metadata-service-ui",
+const uiExtension: JupyterFrontEndPlugin<void> = {
+  id: 'jupyterlab-metadata-service-ui',
   autoStart: true,
   requires: [
     ICommandPalette,
     IMetadataCommentsService,
-    IMetadataDatasetsService
+    IMetadataDatasetsService,
+    ILabShell
   ],
   activate: activateMetadataUI
 };
@@ -66,7 +69,7 @@ const uiExtension: JupyterLabPlugin<void> = {
 /**
  * Export the plugins as default.
  */
-const plugins: JupyterLabPlugin<any>[] = [
+const plugins: JupyterFrontEndPlugin<any>[] = [
   graphqlExtension,
   commentExtension,
   datasetExtension,
