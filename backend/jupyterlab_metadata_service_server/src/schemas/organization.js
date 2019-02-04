@@ -4,6 +4,8 @@ const typeDef = gql`
   type Organization {
     id: ID!
     name: String
+    email: String
+    legalName: String
   }
 
   type OrganizationResponse {

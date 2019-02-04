@@ -4,6 +4,8 @@ const typeDef = gql`
   type Person {
     id: ID!
     name: String
+    email: String
+    affiliation: Organization
   }
 
   type PersonResponse {

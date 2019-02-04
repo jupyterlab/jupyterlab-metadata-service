@@ -47,6 +47,19 @@ const typeDef = gql`
 `;
 
 const resolvers = {
+  OrgOrPerson: {
+    __resolveType(obj, context, info){
+      if(obj.affiliation){
+        return 'Person';
+      }
+
+      if(obj.legalName){
+        return 'Organization';
+      }
+
+      return null;
+    },
+  },
   Query: {
     // TODO: implement pagination
     datasets: async (_, { pageSize = 20, after }, { dataSources }) => {

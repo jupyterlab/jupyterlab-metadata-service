@@ -18,9 +18,19 @@ let port = args.length > 0 ? args[0] : 4000;
 
 const server = new ApolloServer({
   schema: Schema,
-  dataSources: dataSources
+  dataSources: dataSources,
+  playground: {
+    endpoint: '/metadata',
+    settings: {
+      'editor.theme': 'dark'
+    }
+  }
 });
 
-server.listen({port: port}).then(({ url }) => {
+server.listen({
+  port: port,
+  path: 'metadata',
+  host: '0.0.0.0'
+}).then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
 });
