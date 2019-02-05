@@ -1,8 +1,8 @@
-import { Widget } from "@phosphor/widgets";
-import { Message } from "@phosphor/messaging";
+import { Widget } from '@phosphor/widgets';
+import { Message } from '@phosphor/messaging';
 
-import { IMetadataCommentsService } from "../metadata_iface/comments";
-import { IMetadataDatasetsService } from "../metadata_iface/datasets";
+import { IMetadataCommentsService } from '../metadata_iface/comments';
+import { IMetadataDatasetsService } from '../metadata_iface/datasets';
 
 /**
  * Just a mock placeholder widget. Not at all the real deal.
@@ -30,8 +30,8 @@ export class MetadataWidget extends Widget {
     this.comments = comments;
     this.datasets = datasets;
 
-    this.id = "jlab-metadata-service";
-    this.title.label = "Jupyterlab Metadata Service Connection";
+    this.id = 'jlab-metadata-service';
+    this.title.label = 'Jupyterlab Metadata Service Connection';
     this.title.closable = true;
   }
 
@@ -43,20 +43,20 @@ export class MetadataWidget extends Widget {
     let self = this;
 
     let f = async () => {
-      let divQueryResult: HTMLDivElement = document.createElement("div");
+      let divQueryResult: HTMLDivElement = document.createElement('div');
 
-      console.log("mutating JSON ...");
+      console.log('mutating JSON ...');
       const resultJSON = await this.datasets.createNewDataset({
-        name: "JSON"
+        name: 'JSON'
       });
       console.log(resultJSON);
 
       const resultCSV = await this.datasets.createNewDataset({
-        name: "CSV"
+        name: 'CSV'
       });
       console.log(resultCSV);
 
-      console.log("quering ...");
+      console.log('quering ...');
       this.datasets.queryAllDatasets().then(data => {
         divQueryResult.innerHTML = JSON.stringify(data);
         console.log(data);

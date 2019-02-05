@@ -1,10 +1,10 @@
-import { JupyterFrontEnd } from "@jupyterlab/application";
+import { JupyterFrontEnd } from '@jupyterlab/application';
 
-import { IMetadataDatasetsService } from "../metadata_iface/datasets";
+import { IMetadataDatasetsService } from '../metadata_iface/datasets';
 
-import { IMetadataApolloGraphQlConnection } from "../metadata_concrete/apollo_connection";
+import { IMetadataApolloGraphQlConnection } from '../metadata_concrete/apollo_connection';
 
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 class MetadataDatasetsService implements IMetadataDatasetsService {
   connection: IMetadataApolloGraphQlConnection;
@@ -14,7 +14,7 @@ class MetadataDatasetsService implements IMetadataDatasetsService {
   }
 
   queryAllDatasets(): Promise<{}> {
-    console.log("MetadataDatasetsService.queryAllDatasets");
+    console.log('MetadataDatasetsService.queryAllDatasets');
     return this.connection.query(
       gql`
         query {
@@ -29,7 +29,7 @@ class MetadataDatasetsService implements IMetadataDatasetsService {
   }
 
   createNewDataset(data: object): Promise<{}> {
-    console.log("MetadataDatasetsService.queryAllDatasets");
+    console.log('MetadataDatasetsService.queryAllDatasets');
     return this.connection.mutate(
       gql`
         mutation AddDataset($name: String!) {

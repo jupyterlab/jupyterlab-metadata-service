@@ -1,13 +1,13 @@
-import { Token } from "@phosphor/coreutils";
+import { Token } from '@phosphor/coreutils';
 
-import { JupyterFrontEnd } from "@jupyterlab/application";
-import { PageConfig } from "@jupyterlab/coreutils";
+import { JupyterFrontEnd } from '@jupyterlab/application';
+import { PageConfig } from '@jupyterlab/coreutils';
 
-import ApolloClient from "apollo-boost";
+import ApolloClient from 'apollo-boost';
 
 export const IMetadataApolloGraphQlConnection = new Token<
   IMetadataApolloGraphQlConnection
->("@jupyterlab/metadata-service:IMetadataApolloGraphQlConnection");
+>('@jupyterlab/metadata-service:IMetadataApolloGraphQlConnection');
 
 /**
  * The interface for managing the connection to Apollo GraphQL.
@@ -24,31 +24,31 @@ class MetadataApolloGraphQlConnection
   client: ApolloClient<{}>;
 
   constructor() {
-    console.log("Starting MetadataApolloGraphQlConnection ...");
+    console.log('Starting MetadataApolloGraphQlConnection ...');
 
     let baseUrl = PageConfig.getBaseUrl();
-    let port = "40000";
+    let port = '40000';
 
-    console.log("Starting MetadataApolloGraphQlConnection ...");
+    console.log('Starting MetadataApolloGraphQlConnection ...');
     console.log(PageConfig);
 
     // Construct URL of our proxied service
-    let serviceUrl = baseUrl + "metadata/";
+    let serviceUrl = baseUrl + 'metadata/';
 
-    console.log("Getting /metadata at " + serviceUrl);
+    console.log('Getting /metadata at ' + serviceUrl);
     window.fetch(serviceUrl).then(response => {
-      console.log("Metadata reponse ... ");
+      console.log('Metadata reponse ... ');
       // Check if this is the best approach
       const serviceInternalUrl =
         baseUrl
-          .split(":")
+          .split(':')
           .splice(0, 2)
-          .join(":") +
-        ":" +
+          .join(':') +
+        ':' +
         port +
-        "/";
+        '/';
 
-      console.log("Instatiating Apollo Client at " + serviceInternalUrl);
+      console.log('Instatiating Apollo Client at ' + serviceInternalUrl);
       this.client = new ApolloClient({
         uri: serviceInternalUrl // TODO: parameterize this
       });
@@ -57,7 +57,11 @@ class MetadataApolloGraphQlConnection
   }
 
   query(query: object, variables: object): Promise<{}> {
-    return this.client.query({ query: query, variables: variables });
+    return this.client.query({
+      query: query,
+      variables: variables,
+      fetchPolicy: 'network-only'
+    });
   }
 
   mutate(mutation: object, variables: object): Promise<{}> {
