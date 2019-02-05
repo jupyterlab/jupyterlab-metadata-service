@@ -21,20 +21,10 @@ export interface IMetadataCommentsService {
    * Return the comments on the item with the item identifier of
    * `item_id`.
    */
-  queryComments(itemId: string): any;
+  queryComments(itemId: string): string[];
 
   /**
    * Post a new comment (`comment`) to an item (`item_id`).
    */
-  createComment(
-    itemId: string,
-    cardId: string,
-    comment?: string,
-    tag?: string
-  ): void;
-
-  /**
-   * Post a new state of to a comment
-   */
-  setCardValue(itemId: string, cardId: string, key: string, value: any): void;
+  createComment(comment: string, itemId: string): void;
 }
