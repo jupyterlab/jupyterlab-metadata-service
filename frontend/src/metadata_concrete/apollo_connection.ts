@@ -57,7 +57,11 @@ class MetadataApolloGraphQlConnection
   }
 
   query(query: object, variables: object): Promise<{}> {
-    return this.client.query({ query: query, variables: variables });
+    return this.client.query({
+      query: query,
+      variables: variables,
+      fetchPolicy: 'network-only'
+    });
   }
 
   mutate(mutation: object, variables: object): Promise<{}> {
