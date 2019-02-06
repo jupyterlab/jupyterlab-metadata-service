@@ -8,6 +8,11 @@ const typeDef = gql`
     affiliation: Organization
   }
 
+  input PersonInput {
+    name: String
+    email: String
+  }
+
   type PersonResponse {
     success: Boolean!
     message: String

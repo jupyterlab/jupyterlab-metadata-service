@@ -8,6 +8,12 @@ const typeDef = gql`
     legalName: String
   }
 
+  input OrganizationInput {
+    name: String
+    email: String
+    legalName: String
+  }
+
   type OrganizationResponse {
     success: Boolean!
     message: String

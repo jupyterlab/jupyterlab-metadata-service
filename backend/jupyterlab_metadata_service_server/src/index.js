@@ -3,11 +3,13 @@ const { ApolloServer } = require('apollo-server');
 const Schema = require('./schema');
 
 // set up any dataSources our resolvers need
+const AnnotationAPI = require('./datasources/annotation')
 const DatasetAPI = require('./datasources/dataset');
 const OrganizationAPI = require('./datasources/organization');
 const PersonAPI = require('./datasources/person');
 
 const dataSources = () => ({
+  AnnotationAPI: new AnnotationAPI(),
   DatasetAPI: new DatasetAPI(),
   OrganizationAPI: new OrganizationAPI(),
   PersonAPI: new PersonAPI(),

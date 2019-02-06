@@ -4,22 +4,17 @@ const typeDef = gql`
 
   union OrgOrPerson = Organization | Person
 
-  input OrgOrPersonInput {
-    person_id: Int
-    organization_id: Int
-  }
-
   type Dataset {
     # Internal properties
     id: ID!
     # Properties from Thing
     name: String!
     # Properties from CreativeWork
-    author: OrgOrPerson
-    license: String
+    author: Person
     datePublished: String
+    license: String
+    publisher: Organization
     url: String
-    publisher: OrgOrPerson
   }
 
   type DatasetResponse {
@@ -35,10 +30,11 @@ const typeDef = gql`
 
   extend type Mutation {
     addDataset(
-      author: OrgOrPersonInput
-      name: String!
-      license: String
+      author: PersonInput
       datePublished: String
+      license: String
+      name: String!
+      publisher: OrganizationInput
       url: String
     ): DatasetResponse!
 
