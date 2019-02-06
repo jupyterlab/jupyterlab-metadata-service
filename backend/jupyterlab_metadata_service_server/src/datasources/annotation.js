@@ -1,7 +1,63 @@
 const { DataSource } = require('apollo-datasource');
 
-let store = [];
-let nextId = 1;
+// test data
+let store = [{
+  id: 'anno/1',
+  target: 'clean.py',
+  context: 'http://www.w3.org/ns/anno.jsonld',
+  label: 'Meta',
+  resolved: true,
+  body: [{
+    creator: {
+      id: 'person/1',
+      type: 'Person',
+      name: 'Igor Derke',
+      image: 'https://media.licdn.com/dms/image/C4E03AQHzafiGiPqMUw/profile-displayphoto-shrink_800_800/0?e=1554336000&v=beta&t=PHPBXy0BCT113x_u2qIVjyVUAjVy1bqE1G7mcoCYJ94'
+    },
+    created: '2015-10-13T13:00:00Z',
+    value:
+      'Lorem iappveyor.ymlsicing elit. Similique accusamus ut placeat eum, veritatis est sit. Maxime ipsum, delectus enim, laudantium excepturi corrupti eligendi corporis',
+  }, {
+    creator: {
+      id: 'person/1',
+      type: 'Person',
+      name: 'Igor Derke',
+      image: 'https://media.licdn.com/dms/image/C4E03AQHzafiGiPqMUw/profile-displayphoto-shrink_800_800/0?e=1554336000&v=beta&t=PHPBXy0BCT113x_u2qIVjyVUAjVy1bqE1G7mcoCYJ94'
+    },
+    created: '2015-10-15T13:00:00Z',
+    value: 'this comment resolved the problem.'
+  }],
+  total: 2
+}, {
+  id: 'anno/2',
+  target: 'clean.py',
+  context: 'http://www.w3.org/ns/anno.jsonld',
+  label: 'Meta2',
+  resolved: true,
+  body: [{
+    creator: {
+      id: 'person/1',
+      type: 'Person',
+      name: 'Igor Derke',
+      image: 'https://media.licdn.com/dms/image/C4E03AQHzafiGiPqMUw/profile-displayphoto-shrink_800_800/0?e=1554336000&v=beta&t=PHPBXy0BCT113x_u2qIVjyVUAjVy1bqE1G7mcoCYJ94'
+    },
+    created: '2015-11-13T13:00:00Z',
+    value:
+      'Lorem iappveyor.ymlsicing elit. Similique accusamus ut placeat eum, veritatis est sit. Maxime ipsum, delectus enim, laudantium excepturi corrupti eligendi corporis',
+  }, {
+    creator: {
+      id: 'person/1',
+      type: 'Person',
+      name: 'Igor Derke',
+      image: 'https://media.licdn.com/dms/image/C4E03AQHzafiGiPqMUw/profile-displayphoto-shrink_800_800/0?e=1554336000&v=beta&t=PHPBXy0BCT113x_u2qIVjyVUAjVy1bqE1G7mcoCYJ94'
+    },
+    created: '2015-11-15T13:00:00Z',
+    value: 'this comment resolved the problem.'
+  }],
+  total: 2
+}
+];
+let nextId = 3;
 
 class AnnotationAPI extends DataSource {
   constructor() {
@@ -21,7 +77,13 @@ class AnnotationAPI extends DataSource {
   reducer(data) {
     return {
       id: data.id || 0,
-      name: data.name
+      body: data.body,
+      context: data.context,
+      created: data.created,
+      creator: data.creator,
+      label: data.label,
+      target: data.target,
+      total: data.total
     }
   }
 

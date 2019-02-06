@@ -6,11 +6,13 @@ const typeDef = gql`
     name: String
     email: String
     affiliation: Organization
+    image: String
   }
 
   input PersonInput {
     name: String
     email: String
+    image: String
   }
 
   type PersonResponse {

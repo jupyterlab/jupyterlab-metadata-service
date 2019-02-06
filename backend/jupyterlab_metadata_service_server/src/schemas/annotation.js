@@ -2,49 +2,77 @@ const { gql } = require('apollo-server');
 
 const typeDef = gql`
 
+  # type
   type Annotation {
-    id: String
-    context: String # http://www.w3.org/ns/anno.jsonld
-    type: String # Annotation
-    motivation: String # commenting
     body: [AnnotationTextualBody]
-    target: String
-    creator: Person
+    context: String # http://www.w3.org/ns/anno.jsonld
     created: String
+    creator: Person
+    id: String
+    label: String
+    motivation: String # commenting
+    resolved: Boolean
+    target: String
+    total: Int
+    type: String # Annotation
   }
 
+  # type
   type AnnotationTextualBody {
     type: String # TextualBody
     value: String
+    creator: Person
+    created: String # ISO DateTime
   }
 
-  input AnnotationTextualBodyInput {
-    value: String
-  }
-
+  # type
   type AnnotationResponse {
     success: Boolean!
     message: String
     result: Annotation
   }
 
+  # input
+  input AnnotationInput {
+    body: AnnotationTextualBodyInput
+    context: String # http://www.w3.org/ns/anno.jsonld
+    created: String
+    creator: PersonInput
+    label: String
+    motivation: String # commenting
+    resolved: Boolean
+    target: String
+    total: Int
+    type: String # Annotation
+  }
+
+  # input
+  input AnnotationTextualBodyInput {
+    value: String
+    creator: PersonInput
+    created: String
+  }
+
+  # query
   extend type Query {
     annotations: [Annotation]
     annotation(target: String!): Annotation
   }
 
+  # mutation
   extend type Mutation {
     addAnnotation(
       motivation: String # commenting
-      body: [AnnotationTextualBodyInput]
+      body: AnnotationTextualBodyInput
       target: String
       creator: PersonInput
     ): AnnotationResponse
 
     # TODO: WIP
     addAnnotationItem(
+      parentAnnotation: AnnotationInput
       motivation: String # commenting
-      body: [AnnotationTextualBodyInput]
+      body: AnnotationTextualBodyInput
       target: String
       creator: PersonInput
     ): AnnotationResponse

@@ -1,8 +1,10 @@
-import { JupyterFrontEnd } from '@jupyterlab/application';
+import { JupyterFrontEnd } from "@jupyterlab/application";
 
-import { IMetadataCommentsService } from '../metadata_iface/comments';
+import { IMetadataCommentsService } from "../metadata_iface/comments";
 
-import { IMetadataApolloGraphQlConnection } from '../metadata_concrete/apollo_connection';
+import { IMetadataApolloGraphQlConnection } from "../metadata_concrete/apollo_connection";
+
+import gql from "graphql-tag";
 
 class MetadataCommentsService implements IMetadataCommentsService {
   connection: IMetadataApolloGraphQlConnection;
@@ -11,61 +13,83 @@ class MetadataCommentsService implements IMetadataCommentsService {
     this.connection = connection;
   }
 
-  queryCommentedItems(): string[] {
-    return ['notebook_1', 'whatever_1'];
+  queryAllByTarget(target: String): Promise<{}> {
+    return this.connection.query(
+      gql`
+        query($target: String) {
+          annotation(target: $target) {
+            id
+            target
+            context
+            label
+            total
+            body {
+              value
+              created
+              creator {
+                id
+                name
+                image
+              }
+            }
+          }
+        }
+      `,
+      { target: target }
+    );
   }
 
-  queryComments(itemId: string): any {
-    return testData[itemId];
-  }
-
-  createComment(
-    itemId: string,
-    cardId: string,
-    comment?: string,
-    tag?: string
+  createThread(
+    target: string,
+    value: string,
+    creator: object,
+    label?: string
   ): void {
-    new Promise(resolve => {
-      let id;
-
-      if (cardId === 'new') {
-        id = 's' + Object.keys(testData[itemId]).length;
-
-        testData[itemId][id] = {
-          startComment: {
-            name: 'Jacob Houssian',
-            context: comment,
-            timestamp: this.getCurrentDate(),
-            photoMain:
-              'https://media.licdn.com/dms/image/C4E03AQEeWjRAcD6RPg/profile-displayphoto-shrink_200_200/0?e=1554336000&v=beta&t=BqeSA00OA5YRTgZ9UpR0454xqxKtEF1lVwQLm66UKx8',
-            tag: tag,
-            resolved: false,
-            commentCount: 0
-          },
-          allComments: {}
-        };
-      } else {
-        id = cardId;
-
-        let commentCount = testData[itemId][id]['startComment'].commentCount;
-
-        testData[itemId][id]['allComments']['c' + commentCount] = {
-          name: 'Jacob Houssian',
-          context: comment,
-          timestamp: 'Sep 15th 5:30',
-          photoMain:
-            'https://media.licdn.com/dms/image/C4E03AQEeWjRAcD6RPg/profile-displayphoto-shrink_200_200/0?e=1554336000&v=beta&t=BqeSA00OA5YRTgZ9UpR0454xqxKtEF1lVwQLm66UKx8'
-        };
-
-        testData[itemId][id]['startComment'].commentCount++;
+    this.connection.mutate(
+      /* mutation statement */
+      gql`
+      mutation (
+        $body: AnnotationTextualBodyInput
+        $target: String
+        $creator: PersonInput
+      ) addAnnotation(
+        body: $body
+        target: $target
+        creator: $creator
+      ) {
+        success
+        message
+        result {
+          id
+          target
+          context
+          label
+          total
+          body {
+            value
+            created
+            creator {
+              id
+              name
+              image
+            }
+          }
+        }
+      }`,
+      /* variables */
+      {
+        target: target,
+        body: { value: value, creator: creator }
       }
-      resolve();
-    });
-    console.log(testData);
+    );
+  }
+
+  createComment(threadId: string, value: string, creator: object) {
+    return null;
   }
 
   setCardValue(itemId: string, cardId: string, key: string, value: any): void {
-    testData[itemId][cardId]['startComment'][key] = value;
+    // testData[itemId][cardId]['startComment'][key] = value;
   }
 
   getCurrentDate() {
@@ -76,25 +100,25 @@ class MetadataCommentsService implements IMetadataCommentsService {
     let curMinutes = today.getMinutes();
 
     let month: any = {
-      '0': 'Jan',
-      '1': 'Feb',
-      '2': 'Mar',
-      '3': 'Apr',
-      '4': 'May',
-      '5': 'Jun',
-      '6': 'Jul',
-      '7': 'Aug',
-      '8': 'Sep',
-      '9': 'Oct',
-      '10': 'Nov',
-      '11': 'Dec'
+      "0": "Jan",
+      "1": "Feb",
+      "2": "Mar",
+      "3": "Apr",
+      "4": "May",
+      "5": "Jun",
+      "6": "Jul",
+      "7": "Aug",
+      "8": "Sep",
+      "9": "Oct",
+      "10": "Nov",
+      "11": "Dec"
     };
     console.log(typeof curHour);
     let timestamp =
       month[curMonth] +
-      ' ' +
+      " " +
       curDate +
-      ' ' +
+      " " +
       this.formatTime(curHour, curMinutes);
 
     return timestamp;
@@ -105,9 +129,9 @@ class MetadataCommentsService implements IMetadataCommentsService {
       if (hour > 12) {
         hour = hour - 12;
       }
-      return hour + ':' + minutes + 'pm';
+      return hour + ":" + minutes + "pm";
     } else {
-      return hour + ':' + minutes + 'am';
+      return hour + ":" + minutes + "am";
     }
   }
 }
@@ -122,6 +146,7 @@ export function activateMetadataComments(
 /**
  * Data used for testing
  */
+/*
 let testData: any = {
   'clean.py': {
     s0: {
@@ -272,3 +297,4 @@ let testData: any = {
     }
   }
 };
+*/
