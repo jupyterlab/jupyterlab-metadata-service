@@ -1,7 +1,12 @@
 const { DataSource } = require('apollo-datasource');
 
-let store = [];
-let nextId = 1;
+let store = [{
+  id: 'person/1',
+  name: 'Igor Derke',
+  image: 'https://media.licdn.com/dms/image/C4E03AQHzafiGiPqMUw/profile-displayphoto-shrink_800_800/0?e=1554336000&v=beta&t=PHPBXy0BCT113x_u2qIVjyVUAjVy1bqE1G7mcoCYJ94'
+}];
+
+let nextId = 2;
 
 class PersonAPI extends DataSource {
   constructor() {
@@ -20,8 +25,9 @@ class PersonAPI extends DataSource {
 
   reducer(data) {
     return {
-      id: data.id || 0,
-      name: data.name
+      id: data.id || '0',
+      name: data.name,
+      image: data.image
     }
   }
 
@@ -30,9 +36,13 @@ class PersonAPI extends DataSource {
   }
 
   getByID(id) {
-    return store.length >= id
-      ? this.reducer(store[id - 1])
-      : null;
+    // TODO: change to filter
+    for (let i in store) {
+      if (store[i].id == id) {
+        return this.reducer(store[i]);
+      }
+    }
+    return null;
   }
 
   insert(data) {
@@ -42,17 +52,12 @@ class PersonAPI extends DataSource {
   }
 
   deleteByID(id) {
-    let result = null;
-
-    if (store.length >= id) {
-      for (let i in store) {
-        if (store[i].id == id) {
-          result = store.splice(i, 1)[0];
-          break;
-        }
+    for (let i in store) {
+      if (store[i].id == id) {
+        return this.reducer(store.splice(i, 1)[0]);
       }
     }
-    return result;
+    return null;
   }
 }
 

@@ -92,15 +92,17 @@ const resolvers = {
   },
   Mutation: {
     addAnnotation: async (root, args, { dataSources }) => {
+      let body = args.body;
+      let created = (new Date()).toISOString();
+
       let newData = {
         context: 'http://www.w3.org/ns/anno.jsonld',
         type: 'Annotation',
         motivation: args.motivation || 'commenting',
         target: args.target,
+        label: args.label || null,
         created: (new Date()).toISOString(),
-        creator: {
-          id: args.creator.id || null
-        }
+        body: [ args.body ]
       };
 
       newData = dataSources.AnnotationAPI.insert(newData);

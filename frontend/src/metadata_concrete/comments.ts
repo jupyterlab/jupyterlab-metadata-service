@@ -48,34 +48,29 @@ class MetadataCommentsService implements IMetadataCommentsService {
     this.connection.mutate(
       /* mutation statement */
       gql`
-      mutation (
-        $body: AnnotationTextualBodyInput
-        $target: String
-        $creator: PersonInput
-      ) addAnnotation(
-        body: $body
-        target: $target
-        creator: $creator
-      ) {
-        success
-        message
-        result {
-          id
-          target
-          context
-          label
-          total
-          body {
-            value
-            created
-            creator {
+        mutation($body: AnnotationTextualBodyInput, $target: String) {
+          addAnnotation(body: $body, target: $target) {
+            success
+            message
+            result {
               id
-              name
-              image
+              target
+              context
+              label
+              total
+              body {
+                value
+                created
+                creator {
+                  id
+                  name
+                  image
+                }
+              }
             }
           }
         }
-      }`,
+      `,
       /* variables */
       {
         target: target,

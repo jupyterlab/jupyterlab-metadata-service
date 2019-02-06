@@ -7,6 +7,8 @@ let store = [{
   context: 'http://www.w3.org/ns/anno.jsonld',
   label: 'Meta',
   resolved: true,
+  type: 'Annotation',
+  motivation: 'commenting',
   body: [{
     creator: {
       id: 'person/1',
@@ -34,6 +36,8 @@ let store = [{
   context: 'http://www.w3.org/ns/anno.jsonld',
   label: 'Meta2',
   resolved: true,
+  type: 'Annotation',
+  motivation: 'commenting',
   body: [{
     creator: {
       id: 'person/1',
@@ -108,7 +112,7 @@ class AnnotationAPI extends DataSource {
   }
 
   insert(data) {
-    data.id = nextId++;
+    data.id = "anno/" + nextId++;
     store.push(data);
     return data;
   }
