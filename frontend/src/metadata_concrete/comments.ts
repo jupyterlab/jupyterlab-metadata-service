@@ -112,7 +112,11 @@ class MetadataCommentsService implements IMetadataCommentsService {
           $body: AnnotationTextualBodyInput
           $resolved: Boolean
         ) {
-          addAnnotationItem(body: $body, resolved: $resolved, target: $target) {
+          addAnnotationItem(
+            annotation: $annotation
+            body: $body
+            resolved: $resolved
+          ) {
             success
             message
             result {

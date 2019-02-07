@@ -82,7 +82,6 @@ const typeDef = gql`
       annotation: AnnotationInput
       motivation: String = "commenting"
       body: AnnotationTextualBodyInput
-      creator: PersonInput
       resolved: Boolean = false
     ): AnnotationTextualBodyResponse
 
