@@ -16,8 +16,8 @@ class MetadataCommentsService implements IMetadataCommentsService {
   queryAllByTarget(target: String): Promise<{}> {
     return this.connection.query(
       gql`
-        query($target: String) {
-          annotation(target: $target) {
+        query($target: String!) {
+          annotationsByTarget(target: $target) {
             id
             target
             context

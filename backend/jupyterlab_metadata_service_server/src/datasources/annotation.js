@@ -96,7 +96,7 @@ class AnnotationAPI extends DataSource {
       created: data.created,
       creator: data.creator,
       value: data.value
-    }
+    };
   }
 
   fetchall() {
@@ -106,19 +106,28 @@ class AnnotationAPI extends DataSource {
   getByID(id) {
     for (let i in store) {
       if (store[i].id == value) {
-        return this.reducer(store[i])
+        return this.reducer(store[i]);
       }
     }
-    return null
+    return null;
+  }
+
+  filterByField(field_name, value) {
+    let result = [];
+    for (let i in store) {
+      if (store[i][field_name] == value) {
+        result.push(this.reducer(store[i]));
+      }
+    }
+    return result;
   }
 
   getByField(field_name, value) {
     for (let i in store) {
       if (store[i][field_name] == value) {
-        return this.reducer(store[i])
+        return this.reducer(store[i]);
       }
     }
-
     return null;
   }
 

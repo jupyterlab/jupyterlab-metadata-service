@@ -63,7 +63,7 @@ const typeDef = gql`
   # query
   extend type Query {
     annotations: [Annotation]
-    annotation(target: String!): Annotation
+    annotationsByTarget(target: String!): [Annotation]!
   }
 
   # mutation
@@ -96,8 +96,8 @@ const resolvers = {
     annotations: async (_, { pageSize = 20, after }, { dataSources }) => {
       return dataSources.AnnotationAPI.fetchall();
     },
-    annotation: (root, args, { dataSources } ) => {
-      return dataSources.AnnotationAPI.getByField('target', args.target);
+    annotationsByTarget: (root, args, { dataSources } ) => {
+      return dataSources.AnnotationAPI.filterByField('target', args.target);
     }
   },
   Mutation: {
@@ -109,7 +109,7 @@ const resolvers = {
       let created = (new Date()).toISOString();
 
       body['created'] = created;
-      body['creator'] = dataSources.PersonAPI.getByID(body['creator']['id']);
+      body['creator'] = dataSources.PersonAPI.getByID(args.creator['id']);
 
       let newData = {
         body: [ args.body ],
