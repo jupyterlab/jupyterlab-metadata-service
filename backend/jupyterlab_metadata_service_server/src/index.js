@@ -24,6 +24,7 @@ const server = new ApolloServer({
   playground: {
     endpoint: '/metadata',
     settings: {
+      'request.credentials': 'same-origin',
       'editor.theme': 'dark'
     }
   }
