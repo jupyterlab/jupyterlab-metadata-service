@@ -7,18 +7,18 @@ export const IMetadataCommentsService = new Token<IMetadataCommentsService>(
 /**
  * The interface for querying, modifying, and creating metadata objects
  * that represent a comment.
- *
- * TODO: This is NOT the right interface. It's just a placeholder to get going.
  */
 export interface IMetadataCommentsService {
   /**
-   * Return the comments on a target with the target identifier of
-   * `target`.
+   * Return all comment threads on a target.
+   * For now, `target` should be a file URL.
+   * In the future, `target` may represent
+   * things other than a file.
    */
   queryAllByTarget(target: String): Promise<{}>;
 
   /**
-   * Post a new thread to an target.
+   * Create a new thread for a target.
    */
   createThread(
     target: String,
@@ -28,7 +28,7 @@ export interface IMetadataCommentsService {
   ): void;
 
   /**
-   * Post a new Comment to an target.
+   * Create a new comment in a thread.
    */
   createComment(
     threadId: String,

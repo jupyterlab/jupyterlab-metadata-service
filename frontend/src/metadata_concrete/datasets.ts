@@ -2,7 +2,7 @@ import { JupyterFrontEnd } from '@jupyterlab/application';
 
 import { IMetadataDatasetsService } from '../metadata_iface/datasets';
 
-import { IMetadataApolloGraphQlConnection } from '../metadata_concrete/apollo_connection';
+import { IMetadataApolloGraphQlConnection } from '../metadata_iface/apollo_connection';
 
 import gql from 'graphql-tag';
 

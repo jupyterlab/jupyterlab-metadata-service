@@ -7,14 +7,12 @@ export const IMetadataDatasetsService = new Token<IMetadataDatasetsService>(
 /**
  * The interface for querying, modifying, and creating metadata objects
  * that represent a dataset.
- *
- * TODO: This is NOT the right interface. It's just a placeholder to get going.
  */
 export interface IMetadataDatasetsService {
   /**
    * Query for all the datasets.
    */
-  queryAllDatasets(): Promise<{}>; // TODO: What type does this return?
+  queryAllDatasets(): Promise<{}>;
 
   /**
    * Create a new dataset.
