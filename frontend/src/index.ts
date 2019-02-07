@@ -1,10 +1,8 @@
 import { JupyterFrontEndPlugin, ILabShell } from '@jupyterlab/application';
 import { ICommandPalette } from '@jupyterlab/apputils';
 
-import {
-  IMetadataApolloGraphQlConnection,
-  activateApolloGraphQlConnection
-} from './metadata_concrete/apollo_connection';
+import { IMetadataApolloGraphQlConnection } from './metadata_iface/apollo_connection';
+import { activateApolloGraphQlConnection } from './metadata_concrete/apollo_connection';
 
 import { IMetadataCommentsService } from './metadata_iface/comments';
 import { activateMetadataComments } from './metadata_concrete/comments';
