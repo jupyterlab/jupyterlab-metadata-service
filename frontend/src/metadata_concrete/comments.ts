@@ -2,7 +2,7 @@ import { JupyterFrontEnd } from "@jupyterlab/application";
 
 import { IMetadataCommentsService } from "../metadata_iface/comments";
 
-import { IMetadataApolloGraphQlConnection } from '../metadata_iface/apollo_connection';
+import { IMetadataApolloGraphQlConnection } from "../metadata_iface/apollo_connection";
 
 import gql from "graphql-tag";
 
@@ -55,8 +55,18 @@ class MetadataCommentsService implements IMetadataCommentsService {
     this.connection.mutate(
       /* mutation statement */
       gql`
-        mutation($body: AnnotationTextualBodyInput, $target: String) {
-          addAnnotation(body: $body, target: $target) {
+        mutation(
+          $body: AnnotationTextualBodyInput
+          $creator: PersonInput
+          $label: String
+          $target: String
+        ) {
+          addAnnotation(
+            body: $body
+            creator: $creator
+            label: $label
+            target: $target
+          ) {
             success
             message
             result {
@@ -80,8 +90,10 @@ class MetadataCommentsService implements IMetadataCommentsService {
       `,
       /* variables */
       {
-        target: target,
-        body: { value: value, creator: creator }
+        body: { value: value },
+        creator: creator,
+        label: label || null,
+        target: target
       }
     );
   }
@@ -96,7 +108,7 @@ class MetadataCommentsService implements IMetadataCommentsService {
       /* mutation statement */
       gql`
         mutation(
-          $parentAnnotation: AnnotationInput
+          $annotation: AnnotationInput
           $body: AnnotationTextualBodyInput
           $resolved: Boolean
         ) {
@@ -118,7 +130,7 @@ class MetadataCommentsService implements IMetadataCommentsService {
       /* variables */
       {
         body: { value: value, creator: creator },
-        parentAnnotation: { id: threadId },
+        annotation: { id: threadId },
         resolved: resolved
       }
     );
