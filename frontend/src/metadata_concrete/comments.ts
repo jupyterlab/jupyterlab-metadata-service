@@ -39,6 +39,13 @@ class MetadataCommentsService implements IMetadataCommentsService {
     );
   }
 
+  /**
+   *
+   * @param target
+   * @param value
+   * @param {object} creator An object with `id` key and string with creator ID
+   * @param label
+   */
   createThread(
     target: string,
     value: string,
@@ -79,8 +86,42 @@ class MetadataCommentsService implements IMetadataCommentsService {
     );
   }
 
-  createComment(threadId: string, value: string, creator: object) {
-    return null;  // TODO
+  createComment(
+    threadId: String,
+    value: String,
+    creator: Object,
+    resolved: Boolean
+  ) {
+    this.connection.mutate(
+      /* mutation statement */
+      gql`
+        mutation(
+          $parentAnnotation: AnnotationInput
+          $body: AnnotationTextualBodyInput
+          $resolved: Boolean
+        ) {
+          addAnnotationItem(body: $body, resolved: $resolved, target: $target) {
+            success
+            message
+            result {
+              value
+              created
+              creator {
+                id
+                name
+                image
+              }
+            }
+          }
+        }
+      `,
+      /* variables */
+      {
+        body: { value: value, creator: creator },
+        parentAnnotation: { id: threadId },
+        resolved: resolved
+      }
+    );
   }
 
   setCardValue(itemId: string, cardId: string, key: string, value: any): void {

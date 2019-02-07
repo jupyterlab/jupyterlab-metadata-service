@@ -87,7 +87,15 @@ class AnnotationAPI extends DataSource {
       creator: data.creator,
       label: data.label,
       target: data.target,
-      total: data.total
+      total: data.body.length || 0
+    }
+  }
+
+  reducer_body_textual(data) {
+    return {
+      created: data.created,
+      creator: data.creator,
+      value: data.value
     }
   }
 
@@ -96,15 +104,18 @@ class AnnotationAPI extends DataSource {
   }
 
   getByID(id) {
-    return store.length >= id
-      ? this.reducer(store[id - 1])
-      : null;
+    for (let i in store) {
+      if (store[i].id == value) {
+        return this.reducer(store[i])
+      }
+    }
+    return null
   }
 
   getByField(field_name, value) {
     for (let i in store) {
       if (store[i][field_name] == value) {
-        return store[i]
+        return this.reducer(store[i])
       }
     }
 
@@ -114,7 +125,25 @@ class AnnotationAPI extends DataSource {
   insert(data) {
     data.id = "anno/" + nextId++;
     store.push(data);
-    return data;
+    return this.reducer(data);
+  }
+
+  /**
+   *
+   * @param {Object} annotation
+   * @param {Object} body
+   * @param {Boolean} resolved
+   * @returns {Object}
+   */
+  update (annotation, body, resolved) {
+    for (let i in store) {
+      if (store[i].id == annotation.id) {
+        store[i].body.push(body);
+        store[i].resolved = resolved;
+        return this.reducer_body_textual(body)
+      }
+    }
+    return null
   }
 
   deleteByID(id) {
@@ -128,7 +157,7 @@ class AnnotationAPI extends DataSource {
         }
       }
     }
-    return result;
+    return this.reducer(result);
   }
 }
 

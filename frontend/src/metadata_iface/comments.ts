@@ -21,16 +21,21 @@ export interface IMetadataCommentsService {
    * Create a new thread for a target.
    */
   createThread(
-    target: string,
-    value: string,
-    creator: object,
-    label?: string
+    target: String,
+    value: String,
+    creator: Object,
+    label?: String
   ): void;
 
   /**
    * Create a new comment in a thread.
    */
-  createComment(threadId: string, value: string, creator: object): void;
+  createComment(
+    threadId: String,
+    value: String,
+    creator: Object,
+    resolved: Boolean
+  ): void;
 
   /**
    * Post a new state of to a comment
