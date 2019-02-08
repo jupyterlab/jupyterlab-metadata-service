@@ -39,6 +39,9 @@ class MetadataPeopleService implements IMetadataPeopleService {
             message
             result {
               id
+              name
+              email
+              image
             }
           }
         }
