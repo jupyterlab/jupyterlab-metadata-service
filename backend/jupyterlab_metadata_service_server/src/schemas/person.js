@@ -59,6 +59,7 @@ const resolvers = {
 
       return {
         success: true,
+        message: null,
         result: newData
       };
     },

@@ -47,7 +47,7 @@ class PersonAPI extends DataSource {
   }
 
   insert(data) {
-    data.id = nextId++;
+    data.id = "person/" + nextId++;
     store.push(data);
     return data;
   }
