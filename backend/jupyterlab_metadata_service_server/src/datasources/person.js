@@ -27,6 +27,7 @@ class PersonAPI extends DataSource {
     return {
       id: data.id || '0',
       name: data.name,
+      email: data.email,
       image: data.image
     }
   }

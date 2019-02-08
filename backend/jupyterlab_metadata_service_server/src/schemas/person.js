@@ -30,6 +30,8 @@ const typeDef = gql`
   extend type Mutation {
     addPerson(
       name: String!
+      email: String
+      image: String
     ): PersonResponse
 
     remPerson(id: String!): PersonResponse!
@@ -48,7 +50,9 @@ const resolvers = {
   Mutation: {
     addPerson: async (root, args, { dataSources }) => {
       let newData = {
-        name: args.name
+        name: args.name,
+        email: args.email,
+        image: args.image
       };
 
       newData = dataSources.PersonAPI.insert(newData);
