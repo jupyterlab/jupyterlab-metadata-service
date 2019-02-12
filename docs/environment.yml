@@ -1,4 +1,4 @@
-name: jl-metadata-service-docs
+name: jlab-metadata-service-docs
 channels:
   - conda-forge
 dependencies:

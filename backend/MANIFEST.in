@@ -1,0 +1,4 @@
+recursive-include jupyterlab_metadata_service_server/src *
+recursive-include jupyterlab_metadata_service_server/node_modules *
+recursive-include jupyterlab_metadata_service_server/lib *
+recursive-include jupyterlab_metadata_service_server/style *
