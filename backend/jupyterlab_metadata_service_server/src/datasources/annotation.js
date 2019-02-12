@@ -86,6 +86,7 @@ class AnnotationAPI extends DataSource {
       created: data.created,
       creator: data.creator,
       label: data.label,
+      resolved: data.resolved,
       target: data.target,
       total: data.body.length || 0
     }
