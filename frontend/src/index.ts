@@ -1,34 +1,26 @@
-import { JupyterFrontEndPlugin, ILabShell } from '@jupyterlab/application';
-import { ICommandPalette } from '@jupyterlab/apputils';
+import { JupyterLabPlugin } from "@jupyterlab/application";
+import { ICommandPalette } from "@jupyterlab/apputils";
 
-import { IMetadataApolloGraphQlConnection } from './metadata_iface/apollo_connection';
-import { activateApolloGraphQlConnection } from './metadata_concrete/apollo_connection';
+import {
+  IMetadataApolloGraphQlConnection,
+  activateApolloGraphQlConnection
+} from "./metadata_concrete/apollo_connection";
 
-import { IMetadataCommentsService } from './metadata_iface/comments';
-import { activateMetadataComments } from './metadata_concrete/comments';
+import { IMetadataCommentsService } from "./metadata_iface/comments";
+import { activateMetadataComments } from "./metadata_concrete/comments";
 
-import { IMetadataPeopleService } from './metadata_iface/people';
-import { activateMetadataPeople } from './metadata_concrete/people';
+import { IMetadataDatasetsService } from "./metadata_iface/datasets";
+import { activateMetadataDatasets } from "./metadata_concrete/datasets";
 
-import { IMetadataDatasetsService } from './metadata_iface/datasets';
-import { activateMetadataDatasets } from './metadata_concrete/datasets';
+import { activateMetadataUI } from "./ui";
 
-import { activateMetadataUI } from './ui';
-
-import '../style/index.css';
-
-export { IMetadataCommentsService };
-export { IMetadataDatasetsService };
-export { IMetadataPeopleService };
-export { IMetadataApolloGraphQlConnection };
+import "../style/index.css";
 
 /**
  * Initialization the extension that manages the connection to Apollo GraphQL.
  */
-const graphqlExtension: JupyterFrontEndPlugin<
-  IMetadataApolloGraphQlConnection
-> = {
-  id: 'jupyterlab-metadata-service-apollo-graphql',
+const graphqlExtension: JupyterLabPlugin<IMetadataApolloGraphQlConnection> = {
+  id: "jupyterlab-metadata-service-apollo-graphql",
   autoStart: true,
   requires: [],
   provides: IMetadataApolloGraphQlConnection,
@@ -38,8 +30,8 @@ const graphqlExtension: JupyterFrontEndPlugin<
 /**
  * Initialization the extension for querying/posting metadata COMMENTS.
  */
-const commentExtension: JupyterFrontEndPlugin<IMetadataCommentsService> = {
-  id: 'jupyterlab-metadata-service-comments',
+const commentExtension: JupyterLabPlugin<IMetadataCommentsService> = {
+  id: "jupyterlab-metadata-service-comments",
   autoStart: true,
   requires: [IMetadataApolloGraphQlConnection],
   provides: IMetadataCommentsService,
@@ -47,21 +39,10 @@ const commentExtension: JupyterFrontEndPlugin<IMetadataCommentsService> = {
 };
 
 /**
- * Initialization the extension for querying/posting metadata COMMENTS.
- */
-const peopleExtension: JupyterFrontEndPlugin<IMetadataPeopleService> = {
-  id: 'jupyterlab-metadata-service-people',
-  autoStart: true,
-  requires: [IMetadataApolloGraphQlConnection],
-  provides: IMetadataPeopleService,
-  activate: activateMetadataPeople
-};
-
-/**
  * Initialization the extension for querying/posting metadata DATASETS.
  */
-const datasetExtension: JupyterFrontEndPlugin<IMetadataDatasetsService> = {
-  id: 'jupyterlab-metadata-service-datasets',
+const datasetExtension: JupyterLabPlugin<IMetadataDatasetsService> = {
+  id: "jupyterlab-metadata-service-datasets",
   autoStart: true,
   requires: [IMetadataApolloGraphQlConnection],
   provides: IMetadataDatasetsService,
@@ -71,15 +52,13 @@ const datasetExtension: JupyterFrontEndPlugin<IMetadataDatasetsService> = {
 /**
  * Initialization the metadata UI extension.
  */
-const uiExtension: JupyterFrontEndPlugin<void> = {
-  id: 'jupyterlab-metadata-service-ui',
+const uiExtension: JupyterLabPlugin<void> = {
+  id: "jupyterlab-metadata-service-ui",
   autoStart: true,
   requires: [
     ICommandPalette,
     IMetadataCommentsService,
-    IMetadataPeopleService,
-    IMetadataDatasetsService,
-    ILabShell
+    IMetadataDatasetsService
   ],
   activate: activateMetadataUI
 };
@@ -87,10 +66,9 @@ const uiExtension: JupyterFrontEndPlugin<void> = {
 /**
  * Export the plugins as default.
  */
-const plugins: JupyterFrontEndPlugin<any>[] = [
+const plugins: JupyterLabPlugin<any>[] = [
   graphqlExtension,
   commentExtension,
-  peopleExtension,
   datasetExtension,
   uiExtension
 ];
