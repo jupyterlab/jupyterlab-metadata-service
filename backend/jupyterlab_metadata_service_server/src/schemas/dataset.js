@@ -6,14 +6,21 @@ const typeDef = gql`
 
   type Dataset {
     # Internal properties
-    id: ID!
+    id: String!
     # Properties from Thing
     name: String!
     # Properties from CreativeWork
     author: Person
+    copyrightHolder: Person  # TODO: or Organization
+    copyrightYear: Int
+    creator: Person  # TODO: or Organization
+    dateCreated: String
+    dateModified: String
     datePublished: String
-    license: String
-    publisher: Organization
+    exampleOfWork: CreativeWork
+    license: String  # TODO: or CreativeWork
+    provider: Organization  # TODO: or Person
+    publisher: Organization  # TODO: or Person
     url: String
   }
 
@@ -25,16 +32,23 @@ const typeDef = gql`
 
   extend type Query {
     datasets: [Dataset]
-    dataset(id: Int!): Dataset
+    dataset(id: String!): Dataset
   }
 
   extend type Mutation {
     addDataset(
       author: PersonInput
+      copyrightHolder: PersonInput  # TODO: or OrganizationInput
+      copyrightYear: Int
+      creator: PersonInput  # TODO: or Organization
+      dateCreated: String
+      dateModified: String
       datePublished: String
-      license: String
+      exampleOfWork: CreativeWorkInput
+      license: String  # TODO: or CreativeWorkInput
       name: String!
-      publisher: OrganizationInput
+      provider: OrganizationInput  # TODO: or PersonInput
+      publisher: OrganizationInput  # TODO: or PersonInput
       url: String
     ): DatasetResponse!
 
@@ -67,11 +81,56 @@ const resolvers = {
   },
   Mutation: {
     addDataset: async (root, args, { dataSources }) => {
+
+      const author = (
+        args.author && args.author.id
+          ? dataSources.PersonAPI.getByID(args.author.id)
+          : null
+      );
+
+      const copyrightHolder = (
+        args.copyrightHolder && args.copyrightHolder.id
+          ? dataSources.PersonAPI.getByID(args.copyrightHolder.id)
+          : null
+      );
+
+      const creator = (
+        args.creator && args.creator.id
+          ? dataSources.PersonAPI.getByID(args.creator.id)
+          : null
+      );
+
+      const exampleOfWork = (
+        args.exampleOfWork && args.exampleOfWork.id
+          ? dataSources.CreativeWorkAPI.getByID(args.exampleOfWork.id)
+          : null
+      );
+
+      const provider = (
+        args.provider && args.provider.id
+          ? dataSources.OrganizationAPI.getByID(args.provider.id)
+          : null
+      );
+
+      const publisher = (
+        args.publisher && args.publisher.id
+          ? dataSources.OrganizationAPI.getByID(args.publisher.id)
+          : null
+      );
+
       let newData = {
-        author: args.author,
-        name: args.name,
-        license: args.license,
+        author: author,
+        copyrightHolder: copyrightHolder,
+        copyrightYear: args.copyrightYear,
+        creator: creator,
+        dateCreated: args.dateCreated,
+        dateModified: args.dateModified,
         datePublished: args.datePublished,
+        exampleOfWork: exampleOfWork,
+        license: args.license,
+        name: args.name,
+        provider: provider,
+        publisher: publisher,
         url: args.url
       };
 
