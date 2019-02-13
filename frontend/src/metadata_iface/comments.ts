@@ -1,7 +1,7 @@
-import { Token } from "@phosphor/coreutils";
+import { Token } from '@phosphor/coreutils';
 
 export const IMetadataCommentsService = new Token<IMetadataCommentsService>(
-  "@jupyterlab/metadata-service:IMetadataCommentsService"
+  '@jupyterlab/metadata-service:IMetadataCommentsService'
 );
 
 /**
@@ -30,12 +30,7 @@ export interface IMetadataCommentsService {
   /**
    * Create a new comment in a thread.
    */
-  createComment(
-    threadId: String,
-    value: String,
-    creator: Object,
-    resolved: Boolean
-  ): void;
+  createComment(threadId: String, value: String, creator: Object): void;
 
   /**
    * Post a new state of to a comment

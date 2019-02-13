@@ -1,7 +1,7 @@
-import { Token } from "@phosphor/coreutils";
+import { Token } from '@phosphor/coreutils';
 
 export const IMetadataPeopleService = new Token<IMetadataPeopleService>(
-  "@jupyterlab/metadata-service:IMetadataPeopleService"
+  '@jupyterlab/metadata-service:IMetadataPeopleService'
 );
 
 /**
