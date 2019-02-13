@@ -78,13 +78,16 @@ class DatasetAPI extends DataSource {
   }
 
   getByID(id) {
-    return store.length >= id
-      ? this.reducer(store[id - 1])
-      : null;
+    for (let i in store) {
+      if (store[i].id == value) {
+        return this.reducer(store[i]);
+      }
+    }
+    return null;
   }
 
   insert(data) {
-    data.id = nextId++;
+    data.id = "dataset/" + nextId++;
     store.push(data);
     return data;
   }

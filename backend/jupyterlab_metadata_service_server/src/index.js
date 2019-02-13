@@ -11,6 +11,7 @@ const PersonAPI = require('./datasources/person');
 
 const dataSources = () => ({
   AnnotationAPI: new AnnotationAPI(),
+  CreativeWorkAPI: new CreativeWorkAPI(),
   DatasetAPI: new DatasetAPI(),
   OrganizationAPI: new OrganizationAPI(),
   PersonAPI: new PersonAPI(),
