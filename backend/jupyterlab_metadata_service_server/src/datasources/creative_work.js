@@ -1,12 +1,13 @@
 const { DataSource } = require('apollo-datasource');
 
 let store = [{
-  id: 'organization/1',
-  name: 'Quansight'
+  id: 'creative_work/1',
+  name: 'Hello world'
 }];
+
 let nextId = 2;
 
-class OrganizationAPI extends DataSource {
+class CreativeWorkAPI extends DataSource {
   constructor() {
     super();
   }
@@ -23,7 +24,7 @@ class OrganizationAPI extends DataSource {
 
   reducer(data) {
     return {
-      id: data.id || 0,
+      id: data.id || '0',
       name: data.name
     }
   }
@@ -33,30 +34,29 @@ class OrganizationAPI extends DataSource {
   }
 
   getByID(id) {
-    return store.length >= id
-      ? this.reducer(store[id - 1])
-      : null;
+    // TODO: change to filter
+    for (let i in store) {
+      if (store[i].id == id) {
+        return this.reducer(store[i]);
+      }
+    }
+    return null;
   }
 
   insert(data) {
-    data.id = 'organization/' + nextId++;
+    data.id = "creative_work/" + nextId++;
     store.push(data);
     return data;
   }
 
   deleteByID(id) {
-    let result = null;
-
-    if (store.length >= id) {
-      for (let i in store) {
-        if (store[i].id == id) {
-          result = store.splice(i, 1)[0];
-          break;
-        }
+    for (let i in store) {
+      if (store[i].id == id) {
+        return this.reducer(store.splice(i, 1)[0]);
       }
     }
-    return result;
+    return null;
   }
 }
 
-module.exports = OrganizationAPI;
+module.exports = CreativeWorkAPI;

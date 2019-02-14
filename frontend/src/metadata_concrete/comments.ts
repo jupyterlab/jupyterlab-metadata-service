@@ -1,10 +1,10 @@
-import { JupyterFrontEnd } from "@jupyterlab/application";
+import { JupyterFrontEnd } from '@jupyterlab/application';
 
-import { IMetadataCommentsService } from "../metadata_iface/comments";
+import { IMetadataCommentsService } from '../metadata_iface/comments';
 
-import { IMetadataApolloGraphQlConnection } from "../metadata_iface/apollo_connection";
+import { IMetadataApolloGraphQlConnection } from '../metadata_iface/apollo_connection';
 
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 class MetadataCommentsService implements IMetadataCommentsService {
   connection: IMetadataApolloGraphQlConnection;
@@ -23,6 +23,7 @@ class MetadataCommentsService implements IMetadataCommentsService {
             context
             label
             total
+            resolved
             body {
               value
               created
@@ -98,25 +99,15 @@ class MetadataCommentsService implements IMetadataCommentsService {
     );
   }
 
-  createComment(
-    threadId: String,
-    value: String,
-    creator: Object,
-    resolved: Boolean
-  ) {
+  createComment(threadId: String, value: String, creator: Object) {
     this.connection.mutate(
       /* mutation statement */
       gql`
         mutation(
           $annotation: AnnotationInput
           $body: AnnotationTextualBodyInput
-          $resolved: Boolean
         ) {
-          addAnnotationItem(
-            annotation: $annotation
-            body: $body
-            resolved: $resolved
-          ) {
+          addAnnotationItem(annotation: $annotation, body: $body) {
             success
             message
             result {
@@ -134,8 +125,7 @@ class MetadataCommentsService implements IMetadataCommentsService {
       /* variables */
       {
         body: { value: value, creator: creator },
-        annotation: { id: threadId },
-        resolved: resolved
+        annotation: { id: threadId }
       }
     );
   }

@@ -4,12 +4,14 @@ const Schema = require('./schema');
 
 // set up any dataSources our resolvers need
 const AnnotationAPI = require('./datasources/annotation')
+const CreativeWorkAPI = require('./datasources/creative_work');
 const DatasetAPI = require('./datasources/dataset');
 const OrganizationAPI = require('./datasources/organization');
 const PersonAPI = require('./datasources/person');
 
 const dataSources = () => ({
   AnnotationAPI: new AnnotationAPI(),
+  CreativeWorkAPI: new CreativeWorkAPI(),
   DatasetAPI: new DatasetAPI(),
   OrganizationAPI: new OrganizationAPI(),
   PersonAPI: new PersonAPI(),
@@ -22,7 +24,7 @@ const server = new ApolloServer({
   schema: Schema,
   dataSources: dataSources,
   playground: {
-    endpoint: '/metadata',
+    endpoint: '/metadata/',
     settings: {
       'request.credentials': 'same-origin',
       'editor.theme': 'dark'
@@ -32,7 +34,7 @@ const server = new ApolloServer({
 
 server.listen({
   port: port,
-  path: 'metadata',
+  path: 'metadata/',
   host: '0.0.0.0'
 }).then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);

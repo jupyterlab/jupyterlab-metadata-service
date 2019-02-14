@@ -1,10 +1,10 @@
-import { JupyterFrontEnd } from "@jupyterlab/application";
+import { JupyterFrontEnd } from '@jupyterlab/application';
 
-import { IMetadataPeopleService } from "../metadata_iface/people";
+import { IMetadataPeopleService } from '../metadata_iface/people';
 
-import { IMetadataApolloGraphQlConnection } from "../metadata_iface/apollo_connection";
+import { IMetadataApolloGraphQlConnection } from '../metadata_iface/apollo_connection';
 
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 class MetadataPeopleService implements IMetadataPeopleService {
   connection: IMetadataApolloGraphQlConnection;
@@ -39,9 +39,6 @@ class MetadataPeopleService implements IMetadataPeopleService {
             message
             result {
               id
-              name
-              email
-              image
             }
           }
         }
@@ -56,7 +53,7 @@ class MetadataPeopleService implements IMetadataPeopleService {
   }
 }
 
-export function activateMetadataComments(
+export function activateMetadataPeople(
   app: JupyterFrontEnd,
   connection: IMetadataApolloGraphQlConnection
 ): IMetadataPeopleService {

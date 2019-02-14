@@ -21,7 +21,7 @@ class MetadataApolloGraphQlConnection
     console.log('Instatiating Apollo Client at: ' + serviceUrl);
     this.client = new ApolloClient({
       uri: serviceUrl,
-      credentials: 'same-origin'    // See: https://www.apollographql.com/docs/react/recipes/authentication.html
+      credentials: 'same-origin' // See: https://www.apollographql.com/docs/react/recipes/authentication.html
     });
     console.log(this.client);
   }

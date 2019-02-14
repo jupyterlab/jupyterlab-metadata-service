@@ -7,6 +7,9 @@ import { activateApolloGraphQlConnection } from './metadata_concrete/apollo_conn
 import { IMetadataCommentsService } from './metadata_iface/comments';
 import { activateMetadataComments } from './metadata_concrete/comments';
 
+import { IMetadataPeopleService } from './metadata_iface/people';
+import { activateMetadataPeople } from './metadata_concrete/people';
+
 import { IMetadataDatasetsService } from './metadata_iface/datasets';
 import { activateMetadataDatasets } from './metadata_concrete/datasets';
 
@@ -16,6 +19,7 @@ import '../style/index.css';
 
 export { IMetadataCommentsService };
 export { IMetadataDatasetsService };
+export { IMetadataPeopleService };
 export { IMetadataApolloGraphQlConnection };
 
 /**
@@ -43,6 +47,17 @@ const commentExtension: JupyterFrontEndPlugin<IMetadataCommentsService> = {
 };
 
 /**
+ * Initialization the extension for querying/posting metadata COMMENTS.
+ */
+const peopleExtension: JupyterFrontEndPlugin<IMetadataPeopleService> = {
+  id: 'jupyterlab-metadata-service-people',
+  autoStart: true,
+  requires: [IMetadataApolloGraphQlConnection],
+  provides: IMetadataPeopleService,
+  activate: activateMetadataPeople
+};
+
+/**
  * Initialization the extension for querying/posting metadata DATASETS.
  */
 const datasetExtension: JupyterFrontEndPlugin<IMetadataDatasetsService> = {
@@ -62,6 +77,7 @@ const uiExtension: JupyterFrontEndPlugin<void> = {
   requires: [
     ICommandPalette,
     IMetadataCommentsService,
+    IMetadataPeopleService,
     IMetadataDatasetsService,
     ILabShell
   ],
@@ -74,6 +90,7 @@ const uiExtension: JupyterFrontEndPlugin<void> = {
 const plugins: JupyterFrontEndPlugin<any>[] = [
   graphqlExtension,
   commentExtension,
+  peopleExtension,
   datasetExtension,
   uiExtension
 ];

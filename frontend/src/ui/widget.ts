@@ -3,6 +3,7 @@ import { Message } from '@phosphor/messaging';
 
 import { IMetadataCommentsService } from '../metadata_iface/comments';
 import { IMetadataDatasetsService } from '../metadata_iface/datasets';
+import { IMetadataPeopleService } from '../metadata_iface/people';
 
 /**
  * Just a mock placeholder widget. Not at all the real deal.
@@ -19,16 +20,23 @@ export class MetadataWidget extends Widget {
   datasets: IMetadataDatasetsService;
 
   /**
+   * A handle to the metadata PEOPLE interface.
+   */
+  people: IMetadataPeopleService;
+
+  /**
    *
    */
   constructor(
     comments: IMetadataCommentsService,
-    datasets: IMetadataDatasetsService
+    datasets: IMetadataDatasetsService,
+    people: IMetadataPeopleService
   ) {
     super();
 
     this.comments = comments;
     this.datasets = datasets;
+    this.people = people;
 
     this.id = 'jlab-metadata-service';
     this.title.label = 'Jupyterlab Metadata Service Connection';

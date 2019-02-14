@@ -9,6 +9,7 @@ const typeDef = gql`
   }
 
   input OrganizationInput {
+    id: String
     name: String
     email: String
     legalName: String
