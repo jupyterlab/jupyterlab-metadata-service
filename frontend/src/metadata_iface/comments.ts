@@ -33,7 +33,7 @@ export interface IMetadataCommentsService {
   createComment(threadId: String, value: String, creator: Object): void;
 
   /**
-   * Post a new state of to a comment
+   * Post a new resolved state to a thread
    */
-  setCardValue(itemId: string, cardId: string, key: string, value: any): void;
+  setResolvedValue(target: String, threadId: String, value: Boolean): void;
 }

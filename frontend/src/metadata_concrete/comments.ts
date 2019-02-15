@@ -130,9 +130,23 @@ class MetadataCommentsService implements IMetadataCommentsService {
     );
   }
 
-  setCardValue(itemId: string, cardId: string, key: string, value: any): void {
-    // testData[itemId][cardId]['startComment'][key] = value;
-    // TODO
+  setResolvedValue(target: String, threadId: String, value: Boolean): void {
+    this.connection.mutate(
+      gql`
+        mutation($annotation: AnnotationInput) {
+          updateAnnotationResolve(annotation: $annotation) {
+            success
+            message
+            result {
+              resolved
+            }
+          }
+        }
+      `,
+      {
+        annotation: { target: target, id: threadId, resolved: value }
+      }
+    );
   }
 }
 

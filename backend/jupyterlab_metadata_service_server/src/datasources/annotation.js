@@ -1,9 +1,11 @@
-const { DataSource } = require('apollo-datasource');
+const {
+  DataSource
+} = require('apollo-datasource');
 
 // test data
 let store = [{
   id: 'anno/1',
-  target: 'clean.py',
+  target: '/clean.py',
   context: 'http://www.w3.org/ns/anno.jsonld',
   label: 'Meta',
   resolved: true,
@@ -17,8 +19,7 @@ let store = [{
       image: 'https://media.licdn.com/dms/image/C4E03AQHzafiGiPqMUw/profile-displayphoto-shrink_800_800/0?e=1554336000&v=beta&t=PHPBXy0BCT113x_u2qIVjyVUAjVy1bqE1G7mcoCYJ94'
     },
     created: '2015-10-13T13:00:00Z',
-    value:
-      'Lorem iappveyor.ymlsicing elit. Similique accusamus ut placeat eum, veritatis est sit. Maxime ipsum, delectus enim, laudantium excepturi corrupti eligendi corporis',
+    value: 'Lorem iappveyor.ymlsicing elit. Similique accusamus ut placeat eum, veritatis est sit. Maxime ipsum, delectus enim, laudantium excepturi corrupti eligendi corporis',
   }, {
     creator: {
       id: 'person/1',
@@ -32,7 +33,7 @@ let store = [{
   total: 2
 }, {
   id: 'anno/2',
-  target: 'clean.py',
+  target: '/clean.py',
   context: 'http://www.w3.org/ns/anno.jsonld',
   label: 'Meta2',
   resolved: true,
@@ -46,8 +47,7 @@ let store = [{
       image: 'https://media.licdn.com/dms/image/C4E03AQHzafiGiPqMUw/profile-displayphoto-shrink_800_800/0?e=1554336000&v=beta&t=PHPBXy0BCT113x_u2qIVjyVUAjVy1bqE1G7mcoCYJ94'
     },
     created: '2015-11-13T13:00:00Z',
-    value:
-      'Lorem iappveyor.ymlsicing elit. Similique accusamus ut placeat eum, veritatis est sit. Maxime ipsum, delectus enim, laudantium excepturi corrupti eligendi corporis',
+    value: 'Lorem iappveyor.ymlsicing elit. Similique accusamus ut placeat eum, veritatis est sit. Maxime ipsum, delectus enim, laudantium excepturi corrupti eligendi corporis',
   }, {
     creator: {
       id: 'person/1',
@@ -59,8 +59,7 @@ let store = [{
     value: 'this comment resolved the problem.'
   }],
   total: 2
-}
-];
+}];
 let nextId = 3;
 
 class AnnotationAPI extends DataSource {
@@ -89,6 +88,12 @@ class AnnotationAPI extends DataSource {
       resolved: data.resolved,
       target: data.target,
       total: data.body.length || 0
+    }
+  }
+
+  reducer_update_resolved(resolved) {
+    return {
+      resolved: resolved
     }
   }
 
@@ -141,16 +146,14 @@ class AnnotationAPI extends DataSource {
   /**
    *
    * @param {Object} annotation
-   * @param {Object} body
    * @param {Boolean} resolved
    * @returns {Object}
    */
-  update (annotation, body, resolved) {
+  update(annotation) {
     for (let i in store) {
-      if (store[i].id == annotation.id) {
-        store[i].body.push(body);
-        store[i].resolved = resolved;
-        return this.reducer_body_textual(body)
+      if (store[i].id == annotation.id && store[i].target == annotation.target) {
+        store[i].resolved = annotation.resolved;
+        return this.reducer_update_resolved(annotation.resolved)
       }
     }
     return null
