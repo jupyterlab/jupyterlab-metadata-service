@@ -20,10 +20,9 @@
     "composite": true
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts", "src/ui/index.tsx", "src/index.tsx", "src/ui/components/*"
   ],
-  "references": [
-    {
+  "references": [{
       "path": "../application"
     },
     {
