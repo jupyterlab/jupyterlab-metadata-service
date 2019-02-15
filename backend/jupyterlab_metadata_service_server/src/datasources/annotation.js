@@ -149,11 +149,29 @@ class AnnotationAPI extends DataSource {
    * @param {Boolean} resolved
    * @returns {Object}
    */
-  update(annotation) {
+  updateResolve(annotation) {
     for (let i in store) {
       if (store[i].id == annotation.id && store[i].target == annotation.target) {
         store[i].resolved = annotation.resolved;
         return this.reducer_update_resolved(annotation.resolved)
+      }
+    }
+    return null
+  }
+
+  /**
+   *
+   * @param {Object} annotation
+   * @param {Object} body
+   * @param {Boolean} resolved
+   * @returns {Object}
+   */
+  update(annotation, body, resolved) {
+    for (let i in store) {
+      if (store[i].id == annotation.id) {
+        store[i].body.push(body);
+        store[i].resolved = resolved;
+        return this.reducer_body_textual(body)
       }
     }
     return null

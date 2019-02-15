@@ -139,7 +139,7 @@ const resolvers = {
      */
     updateAnnotationResolve: async (root, args, { dataSources }) => {
 
-      newData = dataSources.AnnotationAPI.update(args.annotation);
+      newData = dataSources.AnnotationAPI.updateResolve(args.annotation);
 
       return {
         success: true,
