@@ -31,7 +31,11 @@ export default class Header extends React.Component<IBodyProps> {
    * React render function
    */
   render() {
-    return this.getFormatedData();
+    return (
+      <div>
+        {this.props.data.data.dataset !== null ? this.getFormatedData() : ''}
+      </div>
+    );
   }
 
   /**
@@ -50,16 +54,18 @@ export default class Header extends React.Component<IBodyProps> {
    */
   formatData(): React.ReactNode[] {
     let formated: React.ReactNode[] = [];
+    let data: any = this.props.data.data.dataset;
 
-    for (let section in this.props.data) {
-      for (let index in this.props.data[section]) {
-        let key = Object.keys(this.props.data[section][index])[0].toString();
+    for (let section in data) {
+      console.log(section);
 
-        formated.push(
-          this.createField(key, this.props.data[section][index][key])
-        );
+      if (typeof data[section] === 'object') {
+        formated.push(this.createField(section, data[section].name));
+      } else {
+        section !== '__typename' &&
+          section !== 'id' &&
+          formated.push(this.createField(section, data[section]));
       }
-      formated.push(<br />);
     }
     return formated;
   }

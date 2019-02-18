@@ -25,19 +25,22 @@ export function activateMetadataUI(
 ): void {
   console.log('JupyterLab extension jupyterlab-metadata-service is activated!');
 
-  datasets.queryById('/data.csv').then(results => {
-    console.log(results);
-  })
-
-  comments = comments;
-  datasets = datasets;
-  people = people;
-
   // Create a single widget
   const widget = ReactWidget.create(
     <UseSignal signal={activeDataset.signal}>
       {(sender, args) => {
-        return <App />;
+        try {
+          let URL = activeDataset.active.pathname;
+          return (
+            <App
+              target={URL}
+              targetName={URL.split('/').pop()}
+              datasets={datasets}
+            />
+          );
+        } catch {
+          return <App target={''} targetName={''} datasets={datasets} />;
+        }
       }}
     </UseSignal>
   );

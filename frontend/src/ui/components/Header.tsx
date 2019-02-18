@@ -14,6 +14,7 @@ interface IHeaderProps {
    * TODO: Mime type? file type?
    */
   type: string;
+  hasMetadata: string;
 }
 
 /**
@@ -36,8 +37,18 @@ export default class Header extends React.Component<IHeaderProps> {
     return (
       <div className="headerArea">
         <div className="headerItem">
-          <h1 className="headerFileName">{this.props.fileName}</h1>
-          <h1 className="headerFileType">{this.props.type}</h1>
+          {this.props.fileName !== '' ? (
+            <h1 className="headerFileName">{this.props.fileName}</h1>
+          ) : (
+            <h1 className="headerFileNameNone">
+              {this.props.hasMetadata !== ''
+                ? 'No metadata for file'
+                : 'Select a file to view metadata'}
+            </h1>
+          )}
+          {this.props.fileName !== '' && (
+            <h1 className="headerFileType">{this.props.type}</h1>
+          )}
         </div>
       </div>
     );

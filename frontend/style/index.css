@@ -4,6 +4,13 @@
   text-align: center;
 }
 
+.headerFileNameNone {
+  font-size: var(--jp-ui-font-size2);
+  color: var(--jp-ui-font-color2);
+  font-weight: bold;
+  text-align: center;
+}
+
 .headerFileType {
   font-size: var(--jp-ui-font-size1);
   font-weight: bold;
@@ -42,5 +49,5 @@
 
 .bodyValue {
   font-size: var(--jp-ui-font-size1);
-  padding-left: 7px;
+  padding-left: 9px;
 }

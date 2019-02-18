@@ -4,7 +4,8 @@
     "jsx": "react",
     "lib": [
       "es6",
-      "dom"
+      "dom",
+      "esnext.asynciterable"
     ],
     "module": "commonjs",
     "moduleResolution": "node",
@@ -14,15 +15,19 @@
     "outDir": "lib",
     "rootDir": "src",
     "skipLibCheck": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "target": "es6",
     "types": [],
     "composite": true
   },
   "include": [
-    "src/**/*.ts", "src/ui/index.tsx", "src/index.tsx", "src/ui/components/*"
+    "src/**/*.ts",
+    "src/ui/index.tsx",
+    "src/index.tsx",
+    "src/ui/components/*"
   ],
-  "references": [{
+  "references": [
+    {
       "path": "../application"
     },
     {
@@ -45,6 +50,9 @@
     },
     {
       "path": "../mainmenu"
+    },
+    {
+      "path": "../databus"
     }
   ]
 }
