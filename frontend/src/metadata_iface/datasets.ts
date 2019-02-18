@@ -10,12 +10,10 @@ export const IMetadataDatasetsService = new Token<IMetadataDatasetsService>(
  */
 export interface IMetadataDatasetsService {
   /**
-   * Query for all the datasets.
+   * Return the one dataset with the given `id`.
+   * For now, `id` should be a file URL.
+   * In the future, `target` may represent
+   * things other than a file.
    */
-  queryAllDatasets(): Promise<{}>;
-
-  /**
-   * Create a new dataset.
-   */
-  createNewDataset(data: object): Promise<{}>;
+  queryById(id: String): Promise<{}>;
 }
