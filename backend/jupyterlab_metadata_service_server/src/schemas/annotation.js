@@ -75,6 +75,7 @@ const typeDef = gql`
       label: String
       motivation: String
       target: String
+      resolved: Boolean = false
     ): AnnotationResponse
 
     # add annotation item
@@ -82,8 +83,12 @@ const typeDef = gql`
       annotation: AnnotationInput
       motivation: String = "commenting"
       body: AnnotationTextualBodyInput
-      resolved: Boolean = false
     ): AnnotationTextualBodyResponse
+    
+    # update resolved state
+    updateAnnotationResolve(
+      annotation: AnnotationInput
+    ): AnnotationResponse
 
     # remove
     remAnnotation(id: ID!): AnnotationResponse!
@@ -122,6 +127,19 @@ const resolvers = {
       };
 
       newData = dataSources.AnnotationAPI.insert(newData);
+
+      return {
+        success: true,
+        message: null,
+        result: newData
+      };
+    },
+    /**
+     * 
+     */
+    updateAnnotationResolve: async (root, args, { dataSources }) => {
+
+      newData = dataSources.AnnotationAPI.updateResolve(args.annotation);
 
       return {
         success: true,
