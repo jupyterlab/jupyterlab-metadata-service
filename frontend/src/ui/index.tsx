@@ -24,7 +24,10 @@ export function activateMetadataUI(
   labShell: ILabShell
 ): void {
   console.log('JupyterLab extension jupyterlab-metadata-service is activated!');
-  console.log('Comments: ', comments);
+
+  datasets.queryById('/data.csv').then(results => {
+    console.log(results);
+  })
 
   comments = comments;
   datasets = datasets;

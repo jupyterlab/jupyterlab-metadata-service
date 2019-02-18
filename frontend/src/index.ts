@@ -79,8 +79,8 @@ const uiExtension: JupyterFrontEndPlugin<void> = {
     IActiveDataset,
     ICommandPalette,
     IMetadataCommentsService,
-    IMetadataPeopleService,
     IMetadataDatasetsService,
+    IMetadataPeopleService,
     ILabShell
   ],
   activate: activateMetadataUI
