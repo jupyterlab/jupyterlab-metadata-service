@@ -1,22 +1,7 @@
 const { DataSource } = require('apollo-datasource');
 
-let store = [{
-  id: 'person/1',
-  name: 'Igor Derke',
-  image: 'https://media.licdn.com/dms/image/C4E03AQHzafiGiPqMUw/profile-displayphoto-shrink_800_800/0?e=1554336000&v=beta&t=PHPBXy0BCT113x_u2qIVjyVUAjVy1bqE1G7mcoCYJ94'
-},
-{
-  id: 'person/2',
-  name: 'Jacob Houssian',
-  image: 'https://avatars3.githubusercontent.com/u/24966946?s=88&v=4'
-},
-{
-  id: 'person/3',
-  name: 'Ivan Ogasawara',
-  image: 'https://avatars1.githubusercontent.com/u/5209757?s=88&v=4'
-}];
-
-let nextId = 4;
+let store = require('./data/person.json');
+let nextId = store.lenght + 1;
 
 class PersonAPI extends DataSource {
   constructor() {
