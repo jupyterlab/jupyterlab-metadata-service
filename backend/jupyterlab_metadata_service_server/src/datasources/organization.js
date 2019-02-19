@@ -1,10 +1,7 @@
 const { DataSource } = require('apollo-datasource');
 
-let store = [{
-  id: 'organization/1',
-  name: 'Quansight'
-}];
-let nextId = 2;
+let store = require('./data/organization.json');
+let nextId = store.lenght + 1;
 
 class OrganizationAPI extends DataSource {
   constructor() {
