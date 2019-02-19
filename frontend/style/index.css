@@ -1,5 +1,5 @@
 .headerFileName {
-  font-size: var(--jp-ui-font-size2);
+  font-size: var(--jp-ui-font-size1);
   font-weight: bold;
   text-align: center;
 }
@@ -35,11 +35,19 @@
   flex-direction: column;
   justify-content: start;
   padding: 10px;
+  max-height: 81vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .bodyItem {
   display: flex;
   flex-direction: row;
+}
+
+.bodyCol {
+  display: flex;
+  flex-direction: column;
 }
 
 .bodyKey {
@@ -49,5 +57,4 @@
 
 .bodyValue {
   font-size: var(--jp-ui-font-size1);
-  padding-left: 9px;
 }

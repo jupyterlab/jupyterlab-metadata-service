@@ -23,6 +23,8 @@ class MetadataDatasetsService implements IMetadataDatasetsService {
               id
               name
             }
+            category
+            citation
             copyrightHolder {
               id
               name
@@ -39,20 +41,19 @@ class MetadataDatasetsService implements IMetadataDatasetsService {
             dateCreated
             dateModified
             datePublished
+            description
+            distribution
             exampleOfWork {
               id
               name
             }
+            headline
+            keywords
             license
             provider {
               id
               name
             }
-            publisher {
-              id
-              name
-            }
-            url
           }
         }
       `,

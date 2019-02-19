@@ -3,20 +3,19 @@
     "declaration": true,
     "jsx": "react",
     "lib": [
-      "es6",
+      "es2015",
       "dom",
       "esnext.asynciterable"
     ],
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
-    "noImplicitAny": true,
     "noUnusedLocals": true,
     "outDir": "lib",
     "rootDir": "src",
     "skipLibCheck": true,
     "strictNullChecks": false,
-    "target": "es6",
+    "target": "es2015",
     "types": [],
     "composite": true
   },
@@ -26,8 +25,7 @@
     "src/index.tsx",
     "src/ui/components/*"
   ],
-  "references": [
-    {
+  "references": [{
       "path": "../application"
     },
     {

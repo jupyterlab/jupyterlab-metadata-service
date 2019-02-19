@@ -45,7 +45,6 @@ export default class Header extends React.Component<IBodyProps> {
   getFormatedData(): React.ReactNode {
     const nodes = this.formatData();
     const items = nodes.map((node, i) => <div key={i}>{node}</div>);
-    console.log(items);
     return <div className="bodyArea">{items}</div>;
   }
 
@@ -55,16 +54,19 @@ export default class Header extends React.Component<IBodyProps> {
   formatData(): React.ReactNode[] {
     let formated: React.ReactNode[] = [];
     let data: any = this.props.data.data.dataset;
-
     for (let section in data) {
-      console.log(section);
-
-      if (typeof data[section] === 'object') {
-        formated.push(this.createField(section, data[section].name));
-      } else {
-        section !== '__typename' &&
-          section !== 'id' &&
-          formated.push(this.createField(section, data[section]));
+      if (data[section] !== null) {
+        if (typeof data[section] === 'object') {
+          formated.push(
+            this.createField(this.nameMap[section], data[section].name)
+          );
+        } else {
+          section !== '__typename' &&
+            section !== 'id' &&
+            formated.push(
+              this.createField(this.nameMap[section], data[section])
+            );
+        }
       }
     }
     return formated;
@@ -84,4 +86,22 @@ export default class Header extends React.Component<IBodyProps> {
       </div>
     );
   }
+
+  nameMap = {
+    author: 'Author',
+    category: 'Category',
+    citation: 'Citation',
+    copyrightHolder: 'Copy Right Holder',
+    creator: 'Creator',
+    dateCreated: 'Date Created',
+    dateModified: 'Date Modified',
+    datePublished: 'Date Published',
+    description: 'Description',
+    distribution: 'Distribution',
+    exampleOfWork: 'Example of Work',
+    headline: 'Headline',
+    keywords: 'Keywords',
+    license: 'License',
+    provider: 'Provider'
+  };
 }

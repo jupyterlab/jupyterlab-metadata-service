@@ -15,13 +15,22 @@ interface IAppProps {
    * @type string
    */
   target: any;
-
+  /**
+   * Name of open file without path
+   *
+   * @type: string
+   */
   targetName: any;
-
+  /**
+   * DatasetService that interacts with graphql server
+   */
   datasets: IMetadataDatasetsService;
 }
 
 interface IAppStates {
+  /**
+   * Holds the response from querying metadata
+   */
   results: any;
 }
 
@@ -42,30 +51,11 @@ export default class App extends React.Component<IAppProps, IAppStates> {
     };
   }
 
-  componentDidUpdate(): void {
-    console.log('state: ', this.state.results);
-    this.props.datasets.queryById(this.props.target).then((results: any) => {
-      console.log('results: ', results);
-      if (this.state.results.data.dataset !== null) {
-        if (this.state.results.data.dataset.id !== results.data.dataset.id) {
-          this.setState({ results: results });
-        }
-      } else {
-        if (results.data.dataset !== null) {
-          this.setState({ results: results });
-        } else {
-          if (this.state.results.data.dataset !== null) {
-            this.setState({ results: { data: { dataset: null } } });
-          }
-        }
-      }
-    });
-  }
-
   /**
    * React render function
    */
   render() {
+    console.log(this.state.results);
     return (
       <div>
         <Header
@@ -81,7 +71,7 @@ export default class App extends React.Component<IAppProps, IAppStates> {
               ? this.state.results.data.dataset.__typename
               : ''
           }
-          hasMetadata={this.props.targetName}
+          focusedTarget={this.props.targetName}
         />
         {this.props.target !== '' &&
           this.state.results.data.dataset !== null &&
@@ -92,20 +82,24 @@ export default class App extends React.Component<IAppProps, IAppStates> {
     );
   }
 
-  // Data just for testing
-  data = {
-    info: [
-      { Author: 'Jacob Houssian' },
-      { 'Copyright year': '2017' },
-      { Creator: 'Test Corporation' }
-    ],
-    date: [
-      { 'Date Created': '12:04 This is a test date' },
-      { 'Date Modified': 'Test Corporation' },
-      { 'Copyright holder': 'Test Corporation' },
-      { 'Copyright holder': 'Test Corporation' },
-      { 'Copyright holder': 'Test Corporation' }
-    ],
-    examples: [{ 'Examples of work': 'Lorem ipsum dolor sit amet' }]
-  };
+  /**
+   * Called each time component updates
+   */
+  componentDidUpdate(): void {
+    this.props.datasets.queryById(this.props.target).then((results: any) => {
+      if (this.state.results.data.dataset !== null) {
+        if (this.state.results.data.dataset.id !== results.data.dataset.id) {
+          this.setState({ results: results });
+        }
+      } else {
+        if (results.data.dataset !== null) {
+          this.setState({ results: results });
+        } else {
+          if (this.state.results.data.dataset !== null) {
+            this.setState({ results: { data: { dataset: null } } });
+          }
+        }
+      }
+    });
+  }
 }
