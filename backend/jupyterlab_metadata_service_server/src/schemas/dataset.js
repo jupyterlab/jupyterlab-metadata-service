@@ -138,30 +138,36 @@ const resolvers = {
           : null
       );
 
+      const sourceOrganization = (
+        args.sourceOrganization && args.sourceOrganization.id
+          ? dataSources.OrganizationAPI.getByID(args.sourceOrganization.id)
+          : null
+      )
+
       let newData = {
         author: author,
-        category: category,
-        citation: citation,
+        category: args.category,
+        citation: args.citation,
         copyrightHolder: copyrightHolder,
         copyrightYear: args.copyrightYear,
         creator: creator,
         dateCreated: args.dateCreated,
         dateModified: args.dateModified,
         datePublished: args.datePublished,
-        description: description,
-        distribution: distribution,
+        description: args.description,
+        distribution: args.distribution,
         exampleOfWork: exampleOfWork,
-        headline: headline,
-        keywords: keywords,
+        headline: args.headline,
+        keywords: args.keywords,
         license: args.license,
         name: args.name,
         provider: provider,
         publisher: publisher,
         sourceOrganization: sourceOrganization,
-        spatialCoverage: spatialCoverage,
-        temporalCoverage: temporalCoverage,
+        spatialCoverage: args.spatialCoverage,
+        temporalCoverage: args.temporalCoverage,
         url: args.url,
-        version: version
+        version: args.version
       };
 
       newData = dataSources.DatasetAPI.insert(newData);
