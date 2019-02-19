@@ -16,7 +16,7 @@ let store = [{
   image: 'https://avatars1.githubusercontent.com/u/5209757?s=88&v=4'
 }];
 
-let nextId = 2;
+let nextId = 4;
 
 class PersonAPI extends DataSource {
   constructor() {
