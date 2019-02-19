@@ -53,7 +53,7 @@ class DatasetAPI extends DataSource {
 
   getByID(id) {
     for (let i in store) {
-      if (store[i].id == value) {
+      if (store[i].id == id) {
         return this.reducer(store[i]);
       }
     }

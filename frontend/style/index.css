@@ -1,0 +1,53 @@
+.headerFileName {
+  font-size: var(--jp-ui-font-size2);
+  font-weight: bold;
+  text-align: center;
+}
+
+.headerFileNameNone {
+  font-size: var(--jp-ui-font-size2);
+  color: var(--jp-ui-font-color2);
+  font-weight: bold;
+  text-align: center;
+}
+
+.headerFileType {
+  font-size: var(--jp-ui-font-size1);
+  font-weight: bold;
+  text-align: center;
+}
+
+.headerItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.headerArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  border: 0px;
+}
+
+.bodyArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding: 10px;
+}
+
+.bodyItem {
+  display: flex;
+  flex-direction: row;
+}
+
+.bodyKey {
+  font-size: var(--jp-ui-font-size1);
+  font-weight: bold;
+}
+
+.bodyValue {
+  font-size: var(--jp-ui-font-size1);
+  padding-left: 9px;
+}
