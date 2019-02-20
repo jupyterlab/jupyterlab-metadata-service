@@ -89,7 +89,7 @@ export default class Header extends React.Component<IBodyProps> {
   createField(key: string, converter: any, value: string): React.ReactNode {
     return (
       <div className="bodyItem">
-        <span className="bodyKey">{key}:</span>
+        <span className="bodyKey">{key}</span>
         <span className="bodyValue">{converter(value)}</span>
       </div>
     );
@@ -132,21 +132,21 @@ export default class Header extends React.Component<IBodyProps> {
   }
 
   nameMap = {
-    author: 'Author',
-    category: 'Category',
-    citation: 'Citation',
-    copyrightHolder: 'Copy Right Holder',
-    creator: 'Creator',
-    dateCreated: 'Date Created',
-    dateModified: 'Date Modified',
-    datePublished: 'Date Published',
-    description: 'Description',
-    distribution: 'Distribution',
-    exampleOfWork: 'Example of Work',
-    headline: 'Headline',
-    keywords: 'Keywords',
-    license: 'License',
-    provider: 'Provider'
+    author: 'Author:',
+    category: 'Category:',
+    citation: 'Citation:',
+    copyrightHolder: 'Copy Right Holder:',
+    creator: 'Creator:',
+    dateCreated: 'Date Created:',
+    dateModified: 'Date Modified:',
+    datePublished: 'Date Published:',
+    description: 'Description:',
+    distribution: 'Distribution:',
+    exampleOfWork: 'Example of Work:',
+    headline: 'Headline:',
+    keywords: 'Keywords:',
+    license: 'License:',
+    provider: 'Provider:'
   };
 
   converterMap = {
