@@ -1,7 +1,7 @@
 const { DataSource } = require('apollo-datasource');
 
 let store = require('./data/person.json');
-let nextId = store.lenght + 1;
+let nextId = store.length + 2;
 
 class PersonAPI extends DataSource {
   constructor() {
