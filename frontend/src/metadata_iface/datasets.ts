@@ -1,23 +1,19 @@
-import { Token } from "@phosphor/coreutils";
+import { Token } from '@phosphor/coreutils';
 
 export const IMetadataDatasetsService = new Token<IMetadataDatasetsService>(
-  "@jupyterlab/metadata-service:IMetadataDatasetsService"
+  '@jupyterlab/metadata-service:IMetadataDatasetsService'
 );
 
 /**
  * The interface for querying, modifying, and creating metadata objects
  * that represent a dataset.
- *
- * TODO: This is NOT the right interface. It's just a placeholder to get going.
  */
 export interface IMetadataDatasetsService {
   /**
-   * Query for all the datasets.
+   * Return the one dataset with the given `id`.
+   * For now, `id` should be a file URL.
+   * In the future, `target` may represent
+   * things other than a file.
    */
-  queryAllDatasets(): object; // TODO: What type does this return?
-
-  /**
-   * Create a new dataset.
-   */
-  createNewDataset(item_id: string): void;
+  queryById(id: String): Promise<{}>;
 }

@@ -1,30 +1,39 @@
-import { Token } from "@phosphor/coreutils";
+import { Token } from '@phosphor/coreutils';
 
 export const IMetadataCommentsService = new Token<IMetadataCommentsService>(
-  "@jupyterlab/metadata-service:IMetadataCommentsService"
+  '@jupyterlab/metadata-service:IMetadataCommentsService'
 );
 
 /**
  * The interface for querying, modifying, and creating metadata objects
  * that represent a comment.
- *
- * TODO: This is NOT the right interface. It's just a placeholder to get going.
  */
 export interface IMetadataCommentsService {
   /**
-   * Query for a list of all items that have comments.
-   * Returns a list of item identifier strings.
+   * Return all comment threads on a target.
+   * For now, `target` should be a file URL.
+   * In the future, `target` may represent
+   * things other than a file.
    */
-  queryCommentedItems(): string[];
+  queryAllByTarget(target: String): Promise<{}>;
 
   /**
-   * Return the comments on the item with the item identifier of
-   * `item_id`.
+   * Create a new thread for a target.
    */
-  queryComments(item_id: string): string[];
+  createThread(
+    target: String,
+    value: String,
+    creator: Object,
+    label?: String
+  ): void;
 
   /**
-   * Post a new comment (`comment`) to an item (`item_id`).
+   * Create a new comment in a thread.
    */
-  createComment(comment: string, item_id: string): void;
+  createComment(threadId: String, value: String, creator: Object): void;
+
+  /**
+   * Post a new resolved state to a thread
+   */
+  setResolvedValue(target: String, threadId: String, value: Boolean): void;
 }

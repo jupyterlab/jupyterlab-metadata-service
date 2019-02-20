@@ -16,5 +16,6 @@ def start():
         'command': [
             'node', os.path.join(path, 'src', 'index.js'), '{port}'
         ],
-        'timeout': 60
+        'timeout': 60,
+        'port': 40000
     }

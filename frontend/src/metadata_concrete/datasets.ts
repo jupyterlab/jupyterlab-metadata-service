@@ -1,10 +1,10 @@
-import { JupyterLab } from "@jupyterlab/application";
+import { JupyterFrontEnd } from '@jupyterlab/application';
 
-import { IMetadataDatasetsService } from "../metadata_iface/datasets";
+import { IMetadataDatasetsService } from '../metadata_iface/datasets';
 
-import { IMetadataApolloGraphQlConnection } from "../metadata_concrete/apollo_connection";
+import { IMetadataApolloGraphQlConnection } from '../metadata_iface/apollo_connection';
 
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 class MetadataDatasetsService implements IMetadataDatasetsService {
   connection: IMetadataApolloGraphQlConnection;
@@ -13,27 +13,57 @@ class MetadataDatasetsService implements IMetadataDatasetsService {
     this.connection = connection;
   }
 
-  queryAllDatasets(): object {
-    return this.connection.executeQuery(gql`
-      query {
-        Datasets {
-          id
-          name
-          license
-          datePublished
-          url
+  queryById(id: String): Promise<{}> {
+    return this.connection.query(
+      gql`
+        query($id: String!) {
+          dataset(id: $id) {
+            id
+            author {
+              id
+              name
+            }
+            category
+            citation
+            copyrightHolder {
+              id
+              name
+            }
+            copyrightYear
+            creator {
+              id
+              name
+              affiliation {
+                id
+                name
+              }
+            }
+            dateCreated
+            dateModified
+            datePublished
+            description
+            distribution
+            exampleOfWork {
+              id
+              name
+            }
+            headline
+            keywords
+            license
+            provider {
+              id
+              name
+            }
+          }
         }
-      }
-    `);
-  }
-
-  createNewDataset(item_id: string): void {
-    // TODO
+      `,
+      { id: id }
+    );
   }
 }
 
 export function activateMetadataDatasets(
-  app: JupyterLab,
+  app: JupyterFrontEnd,
   connection: IMetadataApolloGraphQlConnection
 ): IMetadataDatasetsService {
   return new MetadataDatasetsService(connection);
