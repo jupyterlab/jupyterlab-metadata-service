@@ -58,13 +58,21 @@ export default class Header extends React.Component<IBodyProps> {
       if (data[section] !== null) {
         if (typeof data[section] === 'object') {
           formated.push(
-            this.createField(this.nameMap[section], data[section].name)
+            this.createField(
+              this.nameMap[section],
+              this.converterMap[section],
+              data[section].name
+            )
           );
         } else {
           section !== '__typename' &&
             section !== 'id' &&
             formated.push(
-              this.createField(this.nameMap[section], data[section])
+              this.createField(
+                this.nameMap[section],
+                this.converterMap[section],
+                data[section]
+              )
             );
         }
       }
@@ -78,13 +86,49 @@ export default class Header extends React.Component<IBodyProps> {
    * @param key Type: string - key value of a field
    * @param value Type: string - value of field
    */
-  createField(key: string, value: string): React.ReactNode {
+  createField(key: string, converter: any, value: string): React.ReactNode {
     return (
       <div className="bodyItem">
         <span className="bodyKey">{key}:</span>
-        <span className="bodyValue">{value}</span>
+        <span className="bodyValue">{converter(value)}</span>
       </div>
     );
+  }
+
+  passThrough(field: any) {
+    return field;
+  }
+
+  dateTransform(field: any): string {
+    let serverTimeStamp = new Date(+field * 1000);
+    let localTimeStamp = serverTimeStamp.toLocaleString();
+    let fullDate = localTimeStamp.split(',')[0].split('/');
+    let fullTime = localTimeStamp.split(',')[1].split(':');
+    let timeIdentifier = fullTime[2].slice(3).toLowerCase();
+
+    let month: any = {
+      '1': 'Jan',
+      '2': 'Feb',
+      '3': 'Mar',
+      '4': 'Apr',
+      '5': 'May',
+      '6': 'Jun',
+      '7': 'Jul',
+      '8': 'Aug',
+      '9': 'Sep',
+      '10': 'Oct',
+      '11': 'Nov',
+      '12': 'Dec'
+    };
+    let timestamp =
+      month[fullDate[0]] +
+      ' ' +
+      fullDate[1] +
+      fullTime[0] +
+      ':' +
+      fullTime[1] +
+      timeIdentifier;
+    return timestamp;
   }
 
   nameMap = {
@@ -103,5 +147,23 @@ export default class Header extends React.Component<IBodyProps> {
     keywords: 'Keywords',
     license: 'License',
     provider: 'Provider'
+  };
+
+  converterMap = {
+    author: this.passThrough,
+    category: this.passThrough,
+    citation: this.passThrough,
+    copyrightHolder: this.passThrough,
+    creator: this.passThrough,
+    dateCreated: this.dateTransform,
+    dateModified: this.dateTransform,
+    datePublished: this.dateTransform,
+    description: this.passThrough,
+    distribution: this.passThrough,
+    exampleOfWork: this.passThrough,
+    headline: this.passThrough,
+    keywords: this.passThrough,
+    license: this.passThrough,
+    provider: this.passThrough
   };
 }
