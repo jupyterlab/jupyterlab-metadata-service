@@ -13,37 +13,51 @@ class MetadataDatasetsService implements IMetadataDatasetsService {
     this.connection = connection;
   }
 
-  queryAllDatasets(): Promise<{}> {
-    console.log('MetadataDatasetsService.queryAllDatasets');
+  queryById(id: String): Promise<{}> {
     return this.connection.query(
       gql`
-        query {
-          datasets {
+        query($id: String!) {
+          dataset(id: $id) {
             id
-            name
-          }
-        }
-      `,
-      {}
-    );
-  }
-
-  createNewDataset(data: object): Promise<{}> {
-    console.log('MetadataDatasetsService.queryAllDatasets');
-    return this.connection.mutate(
-      gql`
-        mutation AddDataset($name: String!) {
-          addDataset(name: $name) {
-            result {
+            author {
               id
               name
             }
-            success
-            message
+            category
+            citation
+            copyrightHolder {
+              id
+              name
+            }
+            copyrightYear
+            creator {
+              id
+              name
+              affiliation {
+                id
+                name
+              }
+            }
+            dateCreated
+            dateModified
+            datePublished
+            description
+            distribution
+            exampleOfWork {
+              id
+              name
+            }
+            headline
+            keywords
+            license
+            provider {
+              id
+              name
+            }
           }
         }
       `,
-      data
+      { id: id }
     );
   }
 }

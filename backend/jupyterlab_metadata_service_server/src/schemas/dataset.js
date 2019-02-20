@@ -6,22 +6,32 @@ const typeDef = gql`
 
   type Dataset {
     # Internal properties
-    id: String!
+    id: String! # TODO: change to identifier
     # Properties from Thing
     name: String!
     # Properties from CreativeWork
     author: Person
+    category: String # TODO: check this field
+    citation: String
     copyrightHolder: Person  # TODO: or Organization
     copyrightYear: Int
     creator: Person  # TODO: or Organization
     dateCreated: String
     dateModified: String
     datePublished: String
+    description: String
+    distribution: String
     exampleOfWork: CreativeWork
+    headline: String
+    keywords: String
     license: String  # TODO: or CreativeWork
     provider: Organization  # TODO: or Person
     publisher: Organization  # TODO: or Person
+    sourceOrganization: Organization
+    spatialCoverage: String
+    temporalCoverage: String
     url: String
+    version: String
   }
 
   type DatasetResponse {
@@ -38,18 +48,28 @@ const typeDef = gql`
   extend type Mutation {
     addDataset(
       author: PersonInput
+      category: String
+      citation: String
       copyrightHolder: PersonInput  # TODO: or OrganizationInput
       copyrightYear: Int
       creator: PersonInput  # TODO: or Organization
       dateCreated: String
       dateModified: String
       datePublished: String
+      description: String
+      distribution: String
       exampleOfWork: CreativeWorkInput
+      headline: String
+      keywords: String
       license: String  # TODO: or CreativeWorkInput
       name: String!
       provider: OrganizationInput  # TODO: or PersonInput
       publisher: OrganizationInput  # TODO: or PersonInput
+      sourceOrganization: OrganizationInput
+      spatialCoverage: String
+      temporalCoverage: String
       url: String
+      version: String
     ): DatasetResponse!
 
     remDataset(id: ID!): DatasetResponse!
@@ -118,20 +138,36 @@ const resolvers = {
           : null
       );
 
+      const sourceOrganization = (
+        args.sourceOrganization && args.sourceOrganization.id
+          ? dataSources.OrganizationAPI.getByID(args.sourceOrganization.id)
+          : null
+      )
+
       let newData = {
         author: author,
+        category: args.category,
+        citation: args.citation,
         copyrightHolder: copyrightHolder,
         copyrightYear: args.copyrightYear,
         creator: creator,
         dateCreated: args.dateCreated,
         dateModified: args.dateModified,
         datePublished: args.datePublished,
+        description: args.description,
+        distribution: args.distribution,
         exampleOfWork: exampleOfWork,
+        headline: args.headline,
+        keywords: args.keywords,
         license: args.license,
         name: args.name,
         provider: provider,
         publisher: publisher,
-        url: args.url
+        sourceOrganization: sourceOrganization,
+        spatialCoverage: args.spatialCoverage,
+        temporalCoverage: args.temporalCoverage,
+        url: args.url,
+        version: args.version
       };
 
       newData = dataSources.DatasetAPI.insert(newData);
