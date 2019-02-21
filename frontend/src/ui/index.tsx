@@ -6,7 +6,12 @@ import { ICommandPalette, ReactWidget } from '@jupyterlab/apputils';
 
 import { UseSignal } from '@jupyterlab/apputils';
 
-import { IActiveDataset } from '@jupyterlab/databus';
+import {
+  IActiveDataset,
+  IConverterRegistry,
+  singleConverter,
+  createViewerMimeType
+} from '@jupyterlab/databus';
 
 import { IMetadataCommentsService } from '../metadata_iface/comments';
 import { IMetadataDatasetsService } from '../metadata_iface/datasets';
@@ -21,7 +26,8 @@ export function activateMetadataUI(
   comments: IMetadataCommentsService,
   datasets: IMetadataDatasetsService,
   people: IMetadataPeopleService,
-  labShell: ILabShell
+  labShell: ILabShell,
+  converters: IConverterRegistry
 ): void {
   console.log('JupyterLab extension jupyterlab-metadata-service is activated!');
 
@@ -49,6 +55,15 @@ export function activateMetadataUI(
   widget.title.caption = 'Metadata';
 
   labShell.add(widget, 'right');
+
+  converters.register(
+    singleConverter((mimeType: string, url: URL) => {
+      return [
+        createViewerMimeType('Metadata'),
+        async () => async () => app.shell.activateById(widget.id)
+      ];
+    })
+  );
 }
 
 // /**
