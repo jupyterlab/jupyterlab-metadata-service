@@ -1,6 +1,9 @@
 import { JupyterFrontEndPlugin, ILabShell } from '@jupyterlab/application';
 import { ICommandPalette } from '@jupyterlab/apputils';
-import { IActiveDataset } from '@jupyterlab/databus';
+import {
+  IActiveDataset,
+  IConverterRegistry
+} from '@jupyterlab/databus';
 
 import { IMetadataApolloGraphQlConnection } from './metadata_iface/apollo_connection';
 import { activateApolloGraphQlConnection } from './metadata_concrete/apollo_connection';
@@ -81,7 +84,8 @@ const uiExtension: JupyterFrontEndPlugin<void> = {
     IMetadataCommentsService,
     IMetadataDatasetsService,
     IMetadataPeopleService,
-    ILabShell
+    ILabShell,
+    IConverterRegistry
   ],
   activate: activateMetadataUI
 };
