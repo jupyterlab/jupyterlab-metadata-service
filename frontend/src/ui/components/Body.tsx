@@ -7,7 +7,7 @@ interface IBodyProps {
   /**
    * Metadata to display
    */
-  data: any;
+  data: any | undefined;
 }
 
 /**
@@ -31,10 +31,12 @@ export default class Header extends React.Component<IBodyProps> {
    * React render function
    */
   render() {
-    return (
+    return this.props.data !== undefined ? (
       <div>
         {this.props.data.data.dataset !== null ? this.getFormatedData() : ''}
       </div>
+    ) : (
+      <p>No metadata</p>
     );
   }
 
@@ -54,6 +56,15 @@ export default class Header extends React.Component<IBodyProps> {
   formatData(): React.ReactNode[] {
     let formated: React.ReactNode[] = [];
     let data: any = this.props.data.data.dataset;
+
+    formated.push(
+      this.createField(
+        this.nameMap['__typename'],
+        this.converterMap['__typename'],
+        data['__typename']
+      )
+    );
+
     for (let section in data) {
       if (data[section] !== null) {
         if (typeof data[section] === 'object') {
@@ -65,8 +76,8 @@ export default class Header extends React.Component<IBodyProps> {
             )
           );
         } else {
-          section !== '__typename' &&
-            section !== 'id' &&
+          section !== 'id' &&
+            section !== '__typename' &&
             formated.push(
               this.createField(
                 this.nameMap[section],
@@ -146,7 +157,8 @@ export default class Header extends React.Component<IBodyProps> {
     headline: 'Headline:',
     keywords: 'Keywords:',
     license: 'License:',
-    provider: 'Provider:'
+    provider: 'Provider:',
+    __typename: 'Type:'
   };
 
   converterMap = {
@@ -164,6 +176,7 @@ export default class Header extends React.Component<IBodyProps> {
     headline: this.passThrough,
     keywords: this.passThrough,
     license: this.passThrough,
-    provider: this.passThrough
+    provider: this.passThrough,
+    __typename: this.passThrough
   };
 }

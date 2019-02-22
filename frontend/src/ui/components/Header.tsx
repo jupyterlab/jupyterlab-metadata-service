@@ -9,17 +9,7 @@ interface IHeaderProps {
    *
    * @type string
    */
-  fileName: string;
-  /**
-   * Type name of file
-   */
-  type: string;
-  /**
-   * File name of focused file
-   *
-   * @type string
-   */
-  focusedTarget: string;
+  targetName: string;
 }
 
 /**
@@ -40,47 +30,25 @@ export default class Header extends React.Component<IHeaderProps> {
    */
   render() {
     return (
-      <div style={this.styles.headercard}>
+      <div style={this.styles.headercard} className="headerArea">
         <div style={this.styles.header}>
-          {this.props.fileName !== '' ? (
-            <div>{this.renderAppHeader(this.props.fileName)}</div>
-          ) : (
-            <h1 className="headerFileNameNone">
-              {this.props.focusedTarget !== ''
-                ? 'No metadata for file'
-                : 'Select a file to view metadata'}
-            </h1>
-          )}
+          <div>{this.renderAppHeader(this.props.targetName)}</div>
         </div>
       </div>
     );
   }
 
   renderAppHeader(header: string): React.ReactNode {
-    if (header === undefined) {
-      return (
-        <div>
-          <h5
-            className={'jp-DirListing-itemText'}
-            style={this.styles.emptyHeader}
-          >
-            Select a file to view metadata
-          </h5>
-        </div>
-      );
-    } else {
-      return (
-        <span style={this.styles.header}>
-          {this.getFileIcon(header)}
-          <span
-            style={this.styles.headerLabel}
-            className={'--jp-ui-font-size1'}
-          >
-            {header}
-          </span>
+    return (
+      <span style={this.styles.header}>
+        {this.props.targetName !== '' && this.getFileIcon(header)}
+        <span style={this.styles.headerLabel} className={'--jp-ui-font-size1'}>
+          {this.props.targetName !== ''
+            ? header
+            : 'Select a file to view metadata'}
         </span>
-      );
-    }
+      </span>
+    );
   }
 
   getFileIcon(header: string): React.ReactNode {
