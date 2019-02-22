@@ -36,7 +36,7 @@ export default class Header extends React.Component<IBodyProps> {
         {this.props.data.data.dataset !== null ? this.getFormatedData() : ''}
       </div>
     ) : (
-      <p>No metadata</p>
+      <p />
     );
   }
 
