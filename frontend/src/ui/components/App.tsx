@@ -14,13 +14,13 @@ interface IAppProps {
    *
    * @type string
    */
-  target: any;
+  target: string;
   /**
    * Name of open file without path
    *
    * @type: string
    */
-  targetName: any;
+  targetName: string;
   /**
    * DatasetService that interacts with graphql server
    */
@@ -55,29 +55,16 @@ export default class App extends React.Component<IAppProps, IAppStates> {
    * React render function
    */
   render() {
-    console.log(this.state.results);
     return (
       <div>
-        <Header
-          fileName={
-            this.state.results.data.dataset !== null &&
-            this.state.results.data.dataset.id === this.props.target
-              ? this.props.targetName
-              : ''
-          }
-          type={
-            this.state.results.data.dataset !== null &&
-            this.state.results.data.dataset.id === this.props.target
-              ? this.state.results.data.dataset.__typename
-              : ''
-          }
-          focusedTarget={this.props.targetName}
-        />
-        {this.props.target !== '' &&
-          this.state.results.data.dataset !== null &&
-          (this.state.results.data.dataset.id === this.props.target && (
+        <Header targetName={this.props.targetName} />
+        {this.state.results.data.dataset !== null ? (
+          this.state.results.data.dataset.id === this.props.target && (
             <Body data={this.state.results} />
-          ))}
+          )
+        ) : (
+          <Body data={undefined} />
+        )}
       </div>
     );
   }
