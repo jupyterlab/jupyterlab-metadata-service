@@ -147,8 +147,8 @@ export default class Header extends React.Component<IHeaderProps> {
     headercard: {
       display: 'flex',
       justifyContent: 'left',
-      paddingLeft: '12px',
-      paddingRight: '12px',
+      paddingLeft: '21px',
+      paddingRight: '21px',
       paddingTop: '4px',
       paddingBottom: '4px'
     },
