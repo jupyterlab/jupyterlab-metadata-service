@@ -9,8 +9,6 @@ import { UseSignal } from '@jupyterlab/apputils';
 import {
   IActiveDataset,
   IConverterRegistry,
-  singleConverter,
-  createViewerMimeType
 } from '@jupyterlab/databus';
 
 import { IMetadataCommentsService } from '../metadata_iface/comments';
@@ -55,15 +53,6 @@ export function activateMetadataUI(
   widget.title.caption = 'Metadata';
 
   labShell.add(widget, 'right');
-
-  converters.register(
-    singleConverter((mimeType: string, url: URL) => {
-      return [
-        createViewerMimeType('Metadata'),
-        async () => async () => app.shell.activateById(widget.id)
-      ];
-    })
-  );
 }
 
 // /**
