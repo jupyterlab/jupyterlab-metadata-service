@@ -36,6 +36,7 @@
   flex-direction: column;
   justify-content: start;
   padding: 10px;
+  font-size: 11px;
   max-height: 87vh;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -53,13 +54,12 @@
 }
 
 .bodyKey {
-  font-size: var(--jp-ui-font-size1);
   font-weight: bold;
   white-space: pre;
   padding-right: 8px;
 }
 
 .bodyValue {
-  font-size: var(--jp-ui-font-size1);
   white-space: pre-line;
+  word-break: break-word;
 }

@@ -39,13 +39,16 @@ export default class Header extends React.Component<IHeaderProps> {
   }
 
   renderAppHeader(header: string): React.ReactNode {
+    const extraStyle: any = {};
+    const hasName = this.props.targetName !== '';
+    if (!hasName) {
+      extraStyle.color = 'var(--jp-ui-font-color2)';
+    }
     return (
-      <span style={this.styles.header}>
+      <span style={{ ...this.styles.header, ...extraStyle }}>
         {this.props.targetName !== '' && this.getFileIcon(header)}
-        <span style={this.styles.headerLabel} className={'--jp-ui-font-size1'}>
-          {this.props.targetName !== ''
-            ? header
-            : 'Select a file to view metadata'}
+        <span style={this.styles.headerLabel}>
+          {hasName ? header : 'Select a file to view metadata'}
         </span>
       </span>
     );
@@ -143,10 +146,11 @@ export default class Header extends React.Component<IHeaderProps> {
   styles = {
     headercard: {
       display: 'flex',
-      justifyContent: 'center',
-      width: '100%',
+      justifyContent: 'left',
       paddingLeft: '12px',
-      paddingRight: '12px'
+      paddingRight: '12px',
+      paddingTop: '4px',
+      paddingBottom: '4px'
     },
     emptyHeader: {
       background: 'white',
@@ -156,10 +160,7 @@ export default class Header extends React.Component<IHeaderProps> {
     },
     header: {
       display: 'flex',
-      flexDirection: 'row' as 'row',
-      paddingTop: '4px',
-      minWidth: '75px',
-      paddingBottom: '25px'
+      flexDirection: 'row' as 'row'
     },
     headerLabel: {
       paddingLeft: '5px',
@@ -167,6 +168,7 @@ export default class Header extends React.Component<IHeaderProps> {
       whiteSpace: 'nowrap' as 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
+      fontSize: 'var(--jp-ui-font-size1)',
       flexShrink: 1
     },
     headerIcon: {
