@@ -147,7 +147,7 @@ export default class Header extends React.Component<IHeaderProps> {
     headercard: {
       display: 'flex',
       justifyContent: 'left',
-      paddingLeft: '12px',
+      paddingLeft: '23px',
       paddingRight: '12px',
       paddingTop: '4px',
       paddingBottom: '4px'
@@ -163,7 +163,7 @@ export default class Header extends React.Component<IHeaderProps> {
       flexDirection: 'row' as 'row'
     },
     headerLabel: {
-      paddingLeft: '5px',
+      paddingLeft: '6px',
       textAlign: 'left' as 'left',
       whiteSpace: 'nowrap' as 'nowrap',
       overflow: 'hidden',
@@ -174,8 +174,7 @@ export default class Header extends React.Component<IHeaderProps> {
     headerIcon: {
       minWidth: '18px',
       minHeight: '18px',
-      backgroundSize: '18px',
-      padding: '8px'
+      backgroundSize: '18px'
     },
     typeLabel: { display: 'flex' }
   };

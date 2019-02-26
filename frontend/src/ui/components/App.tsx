@@ -56,7 +56,7 @@ export default class App extends React.Component<IAppProps, IAppStates> {
    */
   render() {
     return (
-      <div>
+      <div className="Metadata">
         <Header targetName={this.props.targetName} />
         {this.state.results.data.dataset !== null ? (
           this.state.results.data.dataset.id === this.props.target && (
