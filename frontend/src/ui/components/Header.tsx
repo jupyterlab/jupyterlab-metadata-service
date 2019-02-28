@@ -30,10 +30,8 @@ export default class Header extends React.Component<IHeaderProps> {
    */
   render() {
     return (
-      <div className="headerCard">
-        <div style={this.styles.headercard}>
-          {this.renderAppHeader(this.props.targetName)}
-        </div>
+      <div style={this.styles.headercard}>
+        {this.renderAppHeader(this.props.targetName)}
       </div>
     );
   }
@@ -147,9 +145,9 @@ export default class Header extends React.Component<IHeaderProps> {
     headercard: {
       display: 'flex',
       justifyContent: 'left',
-      paddingLeft: '23px',
+      paddingLeft: '22px',
       paddingRight: '12px',
-      paddingTop: '4px',
+      paddingTop: '5px',
       paddingBottom: '4px'
     },
     emptyHeader: {
@@ -163,7 +161,7 @@ export default class Header extends React.Component<IHeaderProps> {
       flexDirection: 'row' as 'row'
     },
     headerLabel: {
-      paddingLeft: '6px',
+      paddingLeft: '5px',
       textAlign: 'left' as 'left',
       whiteSpace: 'nowrap' as 'nowrap',
       overflow: 'hidden',

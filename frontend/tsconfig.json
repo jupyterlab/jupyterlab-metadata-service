@@ -25,7 +25,8 @@
     "src/index.tsx",
     "src/ui/components/*"
   ],
-  "references": [{
+  "references": [
+    {
       "path": "../application"
     },
     {
@@ -41,6 +42,9 @@
       "path": "../coreutils"
     },
     {
+      "path": "../databus"
+    },
+    {
       "path": "../docregistry"
     },
     {
@@ -48,9 +52,6 @@
     },
     {
       "path": "../mainmenu"
-    },
-    {
-      "path": "../databus"
     }
   ]
 }
