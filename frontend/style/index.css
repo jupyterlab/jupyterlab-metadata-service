@@ -1,3 +1,8 @@
+.Metadata {
+  background: white;
+  height: 100%;
+}
+
 .headerFileName {
   font-size: var(--jp-ui-font-size1);
   font-weight: bold;
@@ -28,7 +33,7 @@
 
 .headerArea {
   border-bottom: 1px solid;
-  border-color: #E0E0E0;
+  border-color: #e0e0e0;
 }
 
 .bodyArea {
