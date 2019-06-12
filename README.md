@@ -7,7 +7,9 @@
 
 [![Stability Experimental](https://img.shields.io/badge/stability-experimental-red.svg)](https://img.shields.io/badge/stability-experimental-red.svg)
 
-A metadata service, client and UI for the metadata schema of [schema.org](https://schema.org/). Our plan is to build an architecture that enables everything in JupyterLab (notebooks, text files, datasets, etc.) to have metadata attached to it.
+## Project Vision
+
+We have articulated our vision for this project as a ["Press Release from the Future"](./press_release.md). We are now pursing that vision to make it a _reality_. Have feedback or want to get involved? [Let us know!](https://discourse.jupyter.org/c/jupyterlab)
 
 ---
 
