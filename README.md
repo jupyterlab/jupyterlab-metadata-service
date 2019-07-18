@@ -15,28 +15,7 @@ We have articulated our vision for this project as a ["Press Release from the Fu
 
 ## Getting started
 
-### Installation
-
-This extension includes both a client-side JupyterLab extension and a server-side Jupyter notebook extension. Install these using the command line with:
-
-```bash
-pip install jupyterlab-metadata-service
-jupyter labextension install jupyterlab-metadata-service
-```
-
-Note: This repo has not been published yet, so the commands above won't actually work, _yet_.
-
-If you are running Notebook 5.2 or earlier, enable the server extension by running
-
-```bash
-jupyter serverextension enable --py --sys-prefix jupyterlab-metadata-service
-```
-
-The latest versions of the following browsers are currently _known to work_:
-
-- Firefox
-- Chrome
-- Safari
+#
 
 
 ## Development
@@ -51,81 +30,25 @@ Follow the instructions below to set up your environment for development.
 
 #### Clone
 
-For now, you must develop against the bleeding-edge JupyterLab. Let's close the master JupyterLab branch, and also this branch of this repo.
 
 ```bash
-git clone https://github.com/jupyterlab/jupyterlab.git
-git clone -b add_graphql_apollo https://github.com/Quansight/jupyterlab-metadata-service.git
-```
+git clone https://github.com/jupyterlab/jupyterlab-metada-service.git
+cd jupyterlab-metada-service
 
-#### Create a fresh Conda environment
+// (optional) Create a fresh conda environment
+// conda create -n jupyterlab-metadata-service -c conda-forge python=3.6
+// conda activate jupyterlab-metadata-service
 
-```bash
-# If you already have an environment with this name:
-# conda remove --name jupyterlab-metadata-service --all
+// Install Jupyterlab
+pip install jupyterlab
 
-conda create -n jupyterlab-metadata-service -c conda-forge notebook
-source activate jupyterlab-metadata-service
-```
-
-#### Backend Server
-
-The backend server is Apollo GraphQL. We have a JupyterLab extension that will auto-start Apollo, monitor it (and restart it if needed), and also proxy requests to Apollo through JupyterLab.
-
-```bash
-cd jupyterlab-metadata-service/backend
-pip install -e .
-cd jupyterlab_metadata_service_server
-npm install
-cd ../../..
-```
-
-#### Frontend Extension
-
-To develop against an unreleased version of `JupyterLab` requires that you add this extension
-as a package inside the `jupyterlab` repo:
-
-```bash
-cd jupyterlab
-pip install -e .
-
-jlpm run add:sibling ../jupyterlab-metadata-service/frontend
-
-jupyter lab --watch --dev
-```
-
-Now you can edit the files in the package in `./packages/jupterlab-commenting`. Saving changes should cause JupyterLab to do an incremental re-compile, and you can refresh JupyterLab in your browser to see the changes in effect.
-
-NOTE: Running `add:sibling` copies all the frontend files, so to commit any edits you make, copy the changes back to the `../jupyterlab-metadata-service/frontend` directory.
-
-
-#### Frontend Extension (if we didn't need to build against bleeding-edge JupyterLab)
-
-When JupyterLab officially releases version 1.0, the following will work to develop in this repo without having to clone JupyterLab master.
-
-```bash
-cd jupyterlab-metadata-service/frontend
-
-# Install JS dependencies:
+// Build and link the data explorer packages
 jlpm install
-
-# Register this extension with JupyterLab in development-mode:
-jupyter labextension link .
-```
-
-Now you can run JupyterLab in auto-reload mode, like this:
-```bash
-jupyter lab --watch
-```
-
-If you modify the code in the `frontend/` folder, you'll have to rebuilt it (once rebuilt, JupyterLab will notice and do a partial re-build of itself, from the command above):
-```bash
 jlpm run build
-```
+jupyter labextension link .
 
-If you don't want to run the above command every time you modify code, you can watch the source with the following command:
-```bash
-jlpm run watch
+// Run Jupyterlab
+jupyter lab
 ```
 
 ### License
