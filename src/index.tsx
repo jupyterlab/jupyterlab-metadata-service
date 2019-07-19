@@ -13,6 +13,7 @@ import {
   WidgetTracker
 } from "@jupyterlab/apputils";
 import React from "react";
+
 type LinkedData = object;
 
 export interface ILinkedDataProvider {
@@ -33,7 +34,7 @@ export class LinkedDataRegistry {
         await Promise.all([...this._providers].map(p => p.get(url))),
         null
       )
-    )) as any)[0];
+    )) as Array<any>).filter(o => o["@id"] === url.toString())[0];
   }
 
   private _providers = new Set<ILinkedDataProvider>();
@@ -109,6 +110,30 @@ SAMPLE_DATA.set(
   }
 );
 
+SAMPLE_DATA.set(
+  "https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#duke_univ",
+  {
+    "@context": "https://schema.org",
+    "@id":
+      "https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#duke_univ",
+    "@type": "GovernmentPermit",
+    // "issuedBy": {
+    //   "@type": "GovernmentOrganization",
+    //   "name": "Department of Health and Mental Hygiene\""
+    // },
+    // "issuedThrough": {
+    //   "@type": "GovernmentService",
+    //   "name": "NYC Food Service Establishment Permit Service"
+    // },
+    name: "NYC Food Service Establishment Permit"
+    // "validFor": "P1Y",
+    // "validIn": {
+    //   "@type": "AdministrativeArea",
+    //   "name": "New York"
+    // }
+  }
+);
+
 const sampleProviderPlugin: JupyterFrontEndPlugin<void> = {
   activate: (_, registry: LinkedDataRegistry) => {
     registry.register({
@@ -123,6 +148,86 @@ const sampleProviderPlugin: JupyterFrontEndPlugin<void> = {
   autoStart: true
 };
 
+/**
+ * https://w3c.github.io/json-ld-syntax/#value-objects
+ */
+function ValueObject({ valueObject }: { valueObject: { "@value": any } }) {
+  return <>{JSON.stringify(valueObject["@value"], null, " ")}</>;
+}
+
+/**
+ * https://w3c.github.io/json-ld-syntax/#node-objects
+ */
+function NodeObject({
+  nodeObject,
+  onClick
+}: {
+  nodeObject: object;
+  onClick: (url: URL) => void;
+}) {
+  {
+    const entries = Object.entries(nodeObject);
+    if (entries.length === 0) {
+      return <div>No properties.</div>;
+    }
+    return (
+      <dl>
+        {entries.map(([property, object]) => {
+          // "The entries of a node object whose keys are not keywords are also called properties of the node object."
+          // https://w3c.github.io/json-ld-syntax/#syntax-tokens-and-keywords
+          switch (property) {
+            case "@id":
+              return (
+                <>
+                  <dt>ID:</dt>
+                  <dd>
+                    <a onClick={() => onClick(new URL(object))}>{object}</a>
+                  </dd>
+                </>
+              );
+            case "@type":
+              return (
+                <>
+                  <dt>Type:</dt>
+                  {(Array.isArray(object) ? object : [object]).map(type => (
+                    <dd>{new URL(type).toString()}</dd>
+                  ))}
+                </>
+              );
+            default:
+              let url: URL;
+              try {
+                url = new URL(property);
+              } catch {
+                console.log(`Ignoring property ${property}`);
+                return <></>;
+              }
+              return (
+                <>
+                  <dt>{url.toString()}</dt>
+
+                  {(Array.isArray(object) ? object : [object]).map(
+                    innerObject => (
+                      <dd>
+                        {"@value" in innerObject ? (
+                          <ValueObject valueObject={innerObject} />
+                        ) : (
+                          <NodeObject
+                            nodeObject={innerObject}
+                            onClick={onClick}
+                          />
+                        )}
+                      </dd>
+                    )
+                  )}
+                </>
+              );
+          }
+        })}
+      </dl>
+    );
+  }
+}
 type ViewerProps = {
   url: URL;
   onClick: (url: URL) => void;
@@ -135,8 +240,14 @@ class Viewer extends React.Component<ViewerProps, ViewerState> {
   readonly state: ViewerState = {
     data: undefined
   };
-  async componentDidMount() {
+
+  async componentWillMount() {
     this.setState({ data: await this.props.registry.get(this.props.url) });
+  }
+  componentDidUpdate(prevProps: ViewerProps) {
+    if (this.props.url.toString() !== prevProps.url.toString()) {
+      this.componentWillMount();
+    }
   }
 
   render() {
@@ -144,19 +255,8 @@ class Viewer extends React.Component<ViewerProps, ViewerState> {
     if (data === undefined) {
       return <span>Loading...</span>;
     }
-    const entries = Object.entries(data);
-    if (entries.length === 0) {
-      return <span>No data.</span>;
-    }
-    return (
-      <dl>
-        {entries.map(([field, value]) => (
-          <>
-            <dt>{field}</dt> <dd>{JSON.stringify(value, null, " ")}</dd>
-          </>
-        ))}
-      </dl>
-    );
+    console.log(data);
+    return <NodeObject nodeObject={data} onClick={this.props.onClick} />;
   }
 }
 
