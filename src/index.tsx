@@ -14,12 +14,17 @@ import {
 } from "@jupyterlab/apputils";
 import React from "react";
 
+import defaultGraph from "./defaultGraph";
+
 type LinkedData = object;
 
 export interface ILinkedDataProvider {
   get(url: URL): Promise<LinkedData>;
 }
 
+function findEntity(entities: Array<any>, id: URL): any {
+  return entities.filter(o => o["@id"] === id.toString())[0];
+}
 export class LinkedDataRegistry {
   register(provider: ILinkedDataProvider): void {
     this._providers.add(provider);
@@ -29,12 +34,15 @@ export class LinkedDataRegistry {
    * Lookup this URL in all providers and flatten the results.
    */
   async get(url: URL): Promise<LinkedData> {
-    return ((await expand(
-      await flatten(
-        await Promise.all([...this._providers].map(p => p.get(url))),
-        null
-      )
-    )) as Array<any>).filter(o => o["@id"] === url.toString())[0];
+    return findEntity(
+      (await expand(
+        await flatten(
+          await Promise.all([...this._providers].map(p => p.get(url))),
+          null
+        )
+      )) as Array<any>,
+      url
+    );
   }
 
   private _providers = new Set<ILinkedDataProvider>();
@@ -50,96 +58,11 @@ const linkedDataRegistryPlugin: JupyterFrontEndPlugin<LinkedDataRegistry> = {
   autoStart: true
 };
 
-const SAMPLE_DATA = new Map<string, LinkedData>();
-
-SAMPLE_DATA.set(
-  "https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#dataset381",
-  {
-    "@id":
-      "https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#dataset381",
-    "@type": ["http://purl.org/dc/dcmitype/Dataset"],
-    "http://purl.org/dc/terms/alternative": [
-      {
-        "@language": "en",
-        "@value": "EPESE"
-      }
-    ],
-    "http://purl.org/dc/terms/description": [
-      {
-        "@language": "en",
-        "@value":
-          "A project initiated by the intramural Epidemiology, Demography and Biometry Program of the National Institute on Aging"
-      }
-    ],
-    "http://purl.org/dc/terms/identifier": [
-      {
-        "@language": "en",
-        "@value": "8481423"
-      }
-    ],
-    "http://purl.org/dc/terms/publisher": [
-      {
-        "@id":
-          "https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#duke_univ"
-      }
-    ],
-    "http://purl.org/dc/terms/title": [
-      {
-        "@language": "en",
-        "@value":
-          "Established Populations for Epidemiologic Studies of the Elderly Project"
-      }
-    ],
-    "http://purl.org/pav/createdOn": [
-      {
-        "@type": "http://www.w3.org/2001/XMLSchema#date",
-        "@value": "1993-02-01"
-      }
-    ],
-    "http://purl.org/pav/curatedBy": [
-      {
-        "@id":
-          "https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#cornoni-huntley_j"
-      }
-    ],
-    "http://xmlns.com/foaf/0.1/page": [
-      {
-        "@id": "https://www.ncbi.nlm.nih.gov/pubmed/8481423"
-      }
-    ]
-  }
-);
-
-SAMPLE_DATA.set(
-  "https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#duke_univ",
-  {
-    "@context": "https://schema.org",
-    "@id":
-      "https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#duke_univ",
-    "@type": "GovernmentPermit",
-    // "issuedBy": {
-    //   "@type": "GovernmentOrganization",
-    //   "name": "Department of Health and Mental Hygiene\""
-    // },
-    // "issuedThrough": {
-    //   "@type": "GovernmentService",
-    //   "name": "NYC Food Service Establishment Permit Service"
-    // },
-    name: "NYC Food Service Establishment Permit"
-    // "validFor": "P1Y",
-    // "validIn": {
-    //   "@type": "AdministrativeArea",
-    //   "name": "New York"
-    // }
-  }
-);
-
 const sampleProviderPlugin: JupyterFrontEndPlugin<void> = {
   activate: (_, registry: LinkedDataRegistry) => {
     registry.register({
       get: async url => {
-        console.log("getting ", url);
-        return SAMPLE_DATA.get(url.toString()) || {};
+        return findEntity(defaultGraph, url) || {};
       }
     });
   },
@@ -199,7 +122,7 @@ function NodeObject({
               try {
                 url = new URL(property);
               } catch {
-                console.log(`Ignoring property ${property}`);
+                console.warn(`Ignoring property ${property}`);
                 return <></>;
               }
               return (
@@ -301,7 +224,9 @@ type BrowserState = { url: URL | undefined };
 
 class Browser extends React.Component<BrowserProps, BrowserState> {
   readonly state: BrowserState = {
-    url: undefined
+    url: new URL(
+      "https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#Corpus"
+    )
   };
 
   render() {
