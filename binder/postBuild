@@ -1,0 +1,7 @@
+#!/bin/bash
+set -o errexit
+set -o xtrace
+
+jlpm install
+jlpm run build
+jupyter labextension link .
