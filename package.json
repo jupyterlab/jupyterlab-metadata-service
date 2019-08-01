@@ -1,0 +1,58 @@
+{
+  "name": "@jupyterlab/metadata",
+  "version": "1.0.0",
+  "description": "A JupyterLab extension for Metadata Service",
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension"
+  ],
+  "homepage": "https://github.com/jupyterlab/jupyterlab-metadata-service",
+  "bugs": {
+    "url": "https://github.com/jupyterlab/jupyterlab-metadata-service/issues"
+  },
+  "license": "BSD-3-Clause",
+  "author": "CalPoly-Quansight",
+  "files": [
+    "lib/**/"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jupyterlab/jupyterlab-metadata-service.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "clean": "rimraf lib && rm tsconfig.tsbuildinfo || true",
+    "prepare": "npm run clean && npm run build"
+  },
+  "dependencies": {
+    "@jupyterlab/application": "^1.0.0",
+    "@jupyterlab/apputils": "^1.0.0",
+    "@jupyterlab/codeeditor": "^1.0.0",
+    "@jupyterlab/completer": "^1.0.0",
+    "@jupyterlab/coreutils": "^3.0.0",
+    "@jupyterlab/docregistry": "^1.0.0",
+    "@jupyterlab/launcher": "^1.0.0",
+    "@jupyterlab/mainmenu": "^1.0.0",
+    "@phosphor/coreutils": "^1.3.0",
+    "@phosphor/messaging": "^1.2.2",
+    "@phosphor/widgets": "^1.6.0",
+    "jsonld": "1.6.2",
+    "react": "~16.4.2",
+    "react-dom": "~16.4.2"
+  },
+  "devDependencies": {
+    "@types/jsonld": "1.5.0",
+    "typescript": "~3.3.1",
+    "rimraf": "~2.6.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "jupyterlab": {
+    "extension": true
+  }
+}
