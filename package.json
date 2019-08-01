@@ -1,6 +1,6 @@
 {
-  "name": "jupyterlab-metadata-service",
-  "version": "0.1.0",
+  "name": "@jupyterlab/metadata",
+  "version": "1.0.0",
   "description": "A JupyterLab extension for Metadata Service",
   "keywords": [
     "jupyter",
@@ -14,8 +14,7 @@
   "license": "BSD-3-Clause",
   "author": "CalPoly-Quansight",
   "files": [
-    "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
-    "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
+    "lib/**/"
   ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -25,7 +24,9 @@
   },
   "scripts": {
     "build": "tsc",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "clean": "rimraf lib && rm tsconfig.tsbuildinfo || true",
+    "prepare": "npm run clean && npm run build"
   },
   "dependencies": {
     "@jupyterlab/application": "^1.0.0",
@@ -45,18 +46,13 @@
   },
   "devDependencies": {
     "@types/jsonld": "1.5.0",
-    "typescript": "~3.3.1"
+    "typescript": "~3.3.1",
+    "rimraf": "~2.6.2"
   },
   "publishConfig": {
     "access": "public"
   },
   "jupyterlab": {
     "extension": true
-  },
-  "lint-staged": {
-    "**/*{.ts,.tsx,.css,.json,.md}": [
-      "prettier --write",
-      "git add"
-    ]
   }
 }
