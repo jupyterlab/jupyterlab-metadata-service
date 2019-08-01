@@ -1,5 +1,5 @@
 {
-  "name": "@jupyterlab/metadata",
+  "name": "@jupyterlab/metadata-extension",
   "version": "1.0.0",
   "description": "A JupyterLab extension for Metadata Service",
   "keywords": [

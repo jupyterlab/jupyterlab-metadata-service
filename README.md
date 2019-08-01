@@ -10,7 +10,7 @@
 
 
 ```bash
-jupyter labextension install @jupyterlab/metadata
+jupyter labextension install @jupyterlab/metadata-extension
 ```
 
 
