@@ -10,7 +10,7 @@
 
 
 ```bash
-jupyter labextension install @jupyterlab/metadata
+jupyter labextension install @jupyterlab/metadata-extension @jupyterlab/dataregistry-extension
 ```
 
 
@@ -47,7 +47,7 @@ pip install jupyterlab
 // Build and link the data explorer packages
 jlpm install
 jlpm run build
-jupyter labextension link .
+jupyter labextension install . @jupyterlab/dataregistry-extension
 
 // Run Jupyterlab
 jupyter lab
