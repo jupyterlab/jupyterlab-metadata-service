@@ -1,19 +1,16 @@
 import {
-  JupyterFrontEndPlugin,
-  ILayoutRestorer,
-  JupyterFrontEnd
+  JupyterFrontEnd,
+  JupyterFrontEndPlugin
 } from "@jupyterlab/application";
-
-import { flatten, expand } from "jsonld";
-import { Token } from "@phosphor/coreutils";
+import { createConverter, resolveDataType } from "@jupyterlab/dataregistry";
 import {
-  ICommandPalette,
-  MainAreaWidget,
-  ReactWidget,
-  WidgetTracker
-} from "@jupyterlab/apputils";
+  IActiveDataset,
+  IRegistry,
+  reactDataType
+} from "@jupyterlab/dataregistry-extension";
+import { Token } from "@phosphor/coreutils";
+import { expand, flatten } from "jsonld";
 import React from "react";
-
 import defaultGraph from "./defaultGraph";
 
 type LinkedData = object;
@@ -183,126 +180,31 @@ class Viewer extends React.Component<ViewerProps, ViewerState> {
   }
 }
 
-type URLFormProps = {
-  initial: URL | undefined;
-  onSubmit: (url: URL | undefined) => void;
-};
-
-type URLFormState = { url: string };
-class URLForm extends React.Component<URLFormProps, URLFormState> {
-  readonly state: URLFormState = {
-    url: this.props.initial ? this.props.initial.toString() : ""
-  };
-
-  render() {
-    return (
-      <form
-        onSubmit={event => {
-          const url = this.state.url;
-          this.props.onSubmit(url === "" ? undefined : new URL(url));
-          event.preventDefault();
-        }}
-      >
-        <label>
-          URL:
-          <input
-            type="url"
-            name="url"
-            value={this.state.url}
-            onChange={event => this.setState({ url: event.target.value })}
-          />
-        </label>
-        <input type="submit" value="Browse" />
-      </form>
-    );
-  }
-}
-
-type BrowserProps = { registry: LinkedDataRegistry };
-
-type BrowserState = { url: URL | undefined };
-
-class Browser extends React.Component<BrowserProps, BrowserState> {
-  readonly state: BrowserState = {
-    url: new URL(
-      "https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#Corpus"
-    )
-  };
-
-  render() {
-    return (
-      <div>
-        <h1>Linked Data Browser</h1>
-        <URLForm
-          initial={this.state.url}
-          onSubmit={url => this.setState({ url })}
-        />
-        {this.state.url ? (
-          <Viewer
-            url={this.state.url}
-            registry={this.props.registry}
-            onClick={url => this.setState({ url })}
-          />
-        ) : (
-          <></>
-        )}
-      </div>
-    );
-  }
-}
-
 const linkedDataBrowserPlugin: JupyterFrontEndPlugin<void> = {
   id: "jupyterlab-metadata-service:data-browser",
   autoStart: true,
-  requires: [LinkedDataRegistryToken, ILayoutRestorer, ICommandPalette],
+  requires: [LinkedDataRegistryToken, IRegistry, IActiveDataset],
   activate: (
     app: JupyterFrontEnd,
     registry: LinkedDataRegistry,
-    restorer: ILayoutRestorer,
-    palette: ICommandPalette
+    dataRegistry: IRegistry,
+    active: IActiveDataset
   ) => {
-    // Declare a widget variable
-    let widget: MainAreaWidget<ReactWidget>;
-
-    // Add an application command
-    const command: string = "dataregistry-debugger:open";
-    app.commands.addCommand(command, {
-      label: "Linked Data Browser",
-      execute: () => {
-        if (!widget) {
-          // Create a new widget if one does not exist
-          const content = ReactWidget.create(<Browser registry={registry} />);
-          widget = new MainAreaWidget({ content });
-          widget.id = "metadata-browser";
-          widget.title.label = "Linked Data Browser";
-          widget.title.closable = true;
-        }
-        if (!tracker.has(widget)) {
-          // Track the state of the widget for later restoration
-          tracker.add(widget);
-        }
-        if (!widget.isAttached) {
-          // Attach the widget to the main work area if it's not there
-          app.shell.add(widget, "main");
-        }
-        widget.content.update();
-
-        // Activate the widget
-        app.shell.activateById(widget.id);
-      }
-    });
-
-    // Add the command to the palette.
-    palette.addItem({ command, category: "Linked Data" });
-
-    // Track and restore the widget state
-    let tracker = new WidgetTracker<MainAreaWidget<ReactWidget>>({
-      namespace: "metadata-browser"
-    });
-    restorer.restore(tracker, {
-      command,
-      name: () => "metadata-browser"
-    });
+    dataRegistry.addConverter(
+      createConverter(
+        { from: resolveDataType, to: reactDataType },
+        ({ url }) => ({
+          type: "Linked Data",
+          data: (
+            <Viewer
+              url={url}
+              registry={registry}
+              onClick={url => active.next(url.toString())}
+            />
+          )
+        })
+      )
+    );
   }
 };
 
