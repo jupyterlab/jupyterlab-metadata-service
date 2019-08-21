@@ -1,2 +1,11 @@
 children:
-  - https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#Corpus
+  - "https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#Corpus"
+datasets:
+  - url: "https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#Corpus"
+    label: "Corpus"
+    children:
+      - "https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#publication340"
+  - url: "https://github.com/Coleridge-Initiative/adrf-onto/wiki/Vocabulary#publication340"
+    label: "A publication"
+    snippets:
+      Load in Pandas: "import pandas as pd; ..."
