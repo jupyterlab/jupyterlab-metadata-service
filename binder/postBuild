@@ -4,4 +4,4 @@ set -o xtrace
 
 jlpm install
 jlpm run build
-jupyter labextension link .
+jupyter labextension link . @jupyterlab/dataregistry-extension
