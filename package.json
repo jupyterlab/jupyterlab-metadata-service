@@ -1,6 +1,6 @@
 {
   "name": "@jupyterlab/metadata-extension",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "description": "A JupyterLab extension for Metadata Service",
   "keywords": [
     "jupyter",
@@ -34,8 +34,6 @@
     "@jupyterlab/codeeditor": "^1.0.0",
     "@jupyterlab/completer": "^1.0.0",
     "@jupyterlab/coreutils": "^3.0.0",
-    "@jupyterlab/dataregistry": "2.0.0",
-    "@jupyterlab/dataregistry-extension": "2.0.2",
     "@jupyterlab/docregistry": "^1.0.0",
     "@jupyterlab/launcher": "^1.0.0",
     "@jupyterlab/mainmenu": "^1.0.0",
@@ -45,6 +43,10 @@
     "jsonld": "1.6.2",
     "react": "~16.4.2",
     "react-dom": "~16.4.2"
+  },
+  "peerDependencies": {
+    "@jupyterlab/dataregistry": "^2.0.0",
+    "@jupyterlab/dataregistry-extension": "^2.2.0"
   },
   "devDependencies": {
     "@types/jsonld": "1.5.0",
