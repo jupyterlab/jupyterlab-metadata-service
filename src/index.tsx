@@ -13,6 +13,8 @@ import { expand, flatten } from "jsonld";
 import React from "react";
 import defaultGraph from "./defaultGraph";
 
+import '../style/index.css';
+
 type LinkedData = object;
 
 export interface ILinkedDataProvider {
