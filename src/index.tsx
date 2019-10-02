@@ -91,7 +91,7 @@ function NodeObject({
       return <div>No properties.</div>;
     }
     return (
-      <dl>
+      <dl className="jl-metadata-node">
         {entries.map(([property, object]) => {
           // "The entries of a node object whose keys are not keywords are also called properties of the node object."
           // https://w3c.github.io/json-ld-syntax/#syntax-tokens-and-keywords

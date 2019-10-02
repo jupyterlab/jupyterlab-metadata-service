@@ -14,8 +14,10 @@
   "license": "BSD-3-Clause",
   "author": "CalPoly-Quansight",
   "files": [
-    "lib/**/"
+    "lib/**/",
+    "style.css"
   ],
+  "style": "style.css",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": {
@@ -25,8 +27,9 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
+    "lint": "stylelint style.css",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "prepare": "npm run clean && npm run build"
+    "prepare": "npm run clean && jlpm run lint && npm run build"
   },
   "dependencies": {
     "@jupyterlab/application": "^1.0.0",
@@ -53,6 +56,9 @@
     "@jupyterlab/dataregistry-extension": "^2.2.2",
     "@types/jsonld": "1.5.0",
     "rimraf": "~2.6.2",
+    "stylelint": "11.0.0",
+    "stylelint-config-prettier": "6.0.0",
+    "stylelint-config-standard": "19.0.0",
     "typescript": "~3.3.1"
   },
   "publishConfig": {
