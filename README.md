@@ -32,22 +32,24 @@ Follow the instructions below to set up your environment for development.
 
 #### Clone
 
+To set this up with a dev version of the data explorer:
 
 ```bash
+conda create -n jupyterlab-metadata-service -c conda-forge python=3.6 jupyterlab
+conda activate jupyterlab-metadata-service
+
 git clone https://github.com/jupyterlab/jupyterlab-metada-service.git
-cd jupyterlab-metada-service
+git clone https://github.com/jupyterlab/jupyterlab-data-explorer.git
 
-// (optional) Create a fresh conda environment
-// conda create -n jupyterlab-metadata-service -c conda-forge python=3.6
-// conda activate jupyterlab-metadata-service
+cd jupyterlab-data-explorer
+jlpm build:dev
 
-// Install Jupyterlab
-pip install jupyterlab
+cd ../jupyterlab-metada-service
 
 // Build and link the data explorer packages
 jlpm install
 jlpm run build
-jupyter labextension install . @jupyterlab/dataregistry-extension
+jupyter labextension install .
 
 // Run Jupyterlab
 jupyter lab
