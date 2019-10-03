@@ -31,6 +31,8 @@ export class LinkedDataRegistry {
    * Lookup this URL in all providers and flatten the results.
    */
   async get(url: URL): Promise<LinkedData> {
+
+    
     return findEntity(
       (await expand(
         await flatten(
@@ -72,7 +74,81 @@ const sampleProviderPlugin: JupyterFrontEndPlugin<void> = {
  * https://w3c.github.io/json-ld-syntax/#value-objects
  */
 function ValueObject({ valueObject }: { valueObject: { "@value": any } }) {
-  return <>{JSON.stringify(valueObject["@value"], null, " ")}</>;
+  const value = valueObject["@value"];
+  return (
+    <span className="jl-metadata-value">
+      {typeof value === "object" ? JSON.stringify(value, null, " ") : value}
+    </span>
+  );
+}
+
+function InternalURL({
+  url,
+  onClick
+}: {
+  url: string;
+  onClick: (url: URL) => void;
+}) {
+  return (
+    <a
+      className="jl-metadata-internal-url"
+      onClick={() => onClick(new URL(url))}
+    >
+      {url}
+    </a>
+  );
+}
+
+function NodeEntry({
+  keyword,
+  object,
+  onClick
+}: {
+  keyword: string;
+  object: object;
+  onClick: (url: URL) => void;
+}) {
+  // "The entries of a node object whose keys are not keywords are also called properties of the node object."
+  // https://w3c.github.io/json-ld-syntax/#syntax-tokens-and-keywords
+  switch (keyword) {
+    case "@id":
+      return (
+        <>
+          <dt className="jl-metadata-id-keyword"></dt>
+          <dd className="jl-metadata-id-field">
+            <InternalURL url={(object as any) as string} onClick={onClick} />
+          </dd>
+        </>
+      );
+    case "@type":
+      return (
+        <>
+          <dt>type</dt>
+          {(Array.isArray(object) ? object : [object]).map(type => (
+            <dd key={type}>
+              <InternalURL url={type} onClick={onClick} />
+            </dd>
+          ))}
+        </>
+      );
+    default:
+      return (
+        <>
+          <dt>{keyword}</dt>
+          {(Array.isArray(object) ? object : [object]).map(
+            (innerObject, idx) => (
+              <dd key={idx}>
+                {"@value" in innerObject ? (
+                  <ValueObject valueObject={innerObject} />
+                ) : (
+                  <NodeObject nodeObject={innerObject} onClick={onClick} />
+                )}
+              </dd>
+            )
+          )}
+        </>
+      );
+  }
 }
 
 /**
@@ -92,58 +168,9 @@ function NodeObject({
     }
     return (
       <dl className="jl-metadata-node">
-        {entries.map(([property, object]) => {
-          // "The entries of a node object whose keys are not keywords are also called properties of the node object."
-          // https://w3c.github.io/json-ld-syntax/#syntax-tokens-and-keywords
-          switch (property) {
-            case "@id":
-              return (
-                <>
-                  <dt>ID:</dt>
-                  <dd>
-                    <a onClick={() => onClick(new URL(object))}>{object}</a>
-                  </dd>
-                </>
-              );
-            case "@type":
-              return (
-                <>
-                  <dt>Type:</dt>
-                  {(Array.isArray(object) ? object : [object]).map(type => (
-                    <dd>{new URL(type).toString()}</dd>
-                  ))}
-                </>
-              );
-            default:
-              let url: URL;
-              try {
-                url = new URL(property);
-              } catch {
-                console.warn(`Ignoring property ${property}`);
-                return <></>;
-              }
-              return (
-                <>
-                  <dt>{url.toString()}</dt>
-
-                  {(Array.isArray(object) ? object : [object]).map(
-                    innerObject => (
-                      <dd>
-                        {"@value" in innerObject ? (
-                          <ValueObject valueObject={innerObject} />
-                        ) : (
-                          <NodeObject
-                            nodeObject={innerObject}
-                            onClick={onClick}
-                          />
-                        )}
-                      </dd>
-                    )
-                  )}
-                </>
-              );
-          }
-        })}
+        {entries.map(([keyword, object]) => (
+          <NodeEntry key={keyword} {...{ keyword, object, onClick }} />
+        ))}
       </dl>
     );
   }
@@ -173,10 +200,13 @@ class Viewer extends React.Component<ViewerProps, ViewerState> {
   render() {
     const { data } = this.state;
     if (data === undefined) {
-      return <span>Loading...</span>;
+      return <div className="jl-metadata">...</div>;
     }
-    console.log(data);
-    return <NodeObject nodeObject={data} onClick={this.props.onClick} />;
+    return (
+      <div className="jl-metadata">
+        <NodeObject nodeObject={data} onClick={this.props.onClick} />
+      </div>
+    );
   }
 }
 
