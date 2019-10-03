@@ -38,18 +38,13 @@ To set this up with a dev version of the data explorer:
 conda create -n jupyterlab-metadata-service -c conda-forge python=3.6 jupyterlab
 conda activate jupyterlab-metadata-service
 
-git clone https://github.com/jupyterlab/jupyterlab-metada-service.git
 git clone https://github.com/jupyterlab/jupyterlab-data-explorer.git
+git clone https://github.com/jupyterlab/jupyterlab-metadata-service.git
 
-cd jupyterlab-data-explorer
-jlpm build:dev
-
-cd ../jupyterlab-metada-service
+cd jupyterlab-metadata-service
 
 // Build and link the data explorer packages
-jlpm install
-jlpm run build
-jupyter labextension install .
+jupyter labextension link . ../jupyterlab-data-explorer/dataregistry-extension/ ../jupyterlab-data-explorer/dataregistry/
 
 // Run Jupyterlab
 jupyter lab
