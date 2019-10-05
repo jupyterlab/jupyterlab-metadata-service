@@ -2,7 +2,11 @@ import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin
 } from "@jupyterlab/application";
-import { createConverter, resolveDataType } from "@jupyterlab/dataregistry";
+import {
+  createConverter,
+  resolveDataType,
+  DataTypeNoArgs
+} from "@jupyterlab/dataregistry";
 import {
   IActiveDataset,
   IRegistry,
@@ -14,13 +18,18 @@ import React from "react";
 import defaultGraph from "./defaultGraph";
 
 type LinkedData = object;
+type LinkedDataThunk = () => Promise<LinkedData>;
 
 export interface ILinkedDataProvider {
-  get(url: URL): Promise<LinkedData>;
+  /**
+   * Returns a thunk to fetch the linked data associated with this URL or null
+   * if it does not have any information about it.
+   */
+  get(url: URL): LinkedDataThunk | null;
 }
 
-function findEntity(entities: Array<any>, id: URL): any {
-  return entities.filter(o => o["@id"] === id.toString())[0];
+function findEntity(entities: Array<any>, id: URL): LinkedData | undefined {
+  return entities.find(o => o["@id"] === id.toString());
 }
 export class LinkedDataRegistry {
   register(provider: ILinkedDataProvider): void {
@@ -28,20 +37,20 @@ export class LinkedDataRegistry {
   }
 
   /**
-   * Lookup this URL in all providers and flatten the results.
+   * Lookup this URL in all providers and return a thunk to retreive it or null
    */
-  async get(url: URL): Promise<LinkedData> {
-
-    
-    return findEntity(
-      (await expand(
-        await flatten(
-          await Promise.all([...this._providers].map(p => p.get(url))),
-          null
-        )
-      )) as Array<any>,
-      url
-    );
+  get(url: URL): LinkedDataThunk | null {
+    const thunks = [...this._providers].map(p => p.get(url)).filter(v => v);
+    if (thunks.length === 0) {
+      return null;
+    }
+    return async () =>
+      findEntity(
+        (await expand(
+          await flatten(await Promise.all(thunks.map(t => t())), null)
+        )) as Array<any>,
+        url
+      );
   }
 
   private _providers = new Set<ILinkedDataProvider>();
@@ -60,8 +69,12 @@ const linkedDataRegistryPlugin: JupyterFrontEndPlugin<LinkedDataRegistry> = {
 const sampleProviderPlugin: JupyterFrontEndPlugin<void> = {
   activate: (_, registry: LinkedDataRegistry) => {
     registry.register({
-      get: async url => {
-        return findEntity(defaultGraph, url) || {};
+      get: url => {
+        const result = findEntity(defaultGraph, url);
+        if (!result) {
+          return null;
+        }
+        return async () => result;
       }
     });
   },
@@ -178,7 +191,7 @@ function NodeObject({
 type ViewerProps = {
   url: URL;
   onClick: (url: URL) => void;
-  registry: LinkedDataRegistry;
+  thunk: LinkedDataThunk;
 };
 
 type ViewerState = { data: LinkedData | undefined };
@@ -189,7 +202,7 @@ class Viewer extends React.Component<ViewerProps, ViewerState> {
   };
 
   async componentWillMount() {
-    this.setState({ data: await this.props.registry.get(this.props.url) });
+    this.setState({ data: await this.props.thunk() });
   }
   componentDidUpdate(prevProps: ViewerProps) {
     if (this.props.url.toString() !== prevProps.url.toString()) {
@@ -210,6 +223,10 @@ class Viewer extends React.Component<ViewerProps, ViewerState> {
   }
 }
 
+const linkedDataThunkDataType = new DataTypeNoArgs<LinkedDataThunk>(
+  "application/x.jupyter.linked-data-thunk"
+);
+
 const linkedDataBrowserPlugin: JupyterFrontEndPlugin<void> = {
   id: "jupyterlab-metadata-service:data-browser",
   autoStart: true,
@@ -222,13 +239,17 @@ const linkedDataBrowserPlugin: JupyterFrontEndPlugin<void> = {
   ) => {
     dataRegistry.addConverter(
       createConverter(
-        { from: resolveDataType, to: reactDataType },
-        ({ url }) => ({
+        { from: resolveDataType, to: linkedDataThunkDataType },
+        ({ url }) => registry.get(url)
+      ),
+      createConverter(
+        { from: linkedDataThunkDataType, to: reactDataType },
+        ({ url, data }) => ({
           type: "Linked Data",
           data: (
             <Viewer
               url={url}
-              registry={registry}
+              thunk={data}
               onClick={url => active.next(url.toString())}
             />
           )
