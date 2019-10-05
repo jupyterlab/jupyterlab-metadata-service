@@ -3,6 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "composite": true,
     "declaration": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "jsx": "react",
     "module": "esnext",
@@ -14,8 +15,9 @@
     "resolveJsonModule": true,
     "outDir": "lib",
     "rootDir": "src",
+    "lib": ["dom", "esnext"],
     "strict": true,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "target": "es2017",
     "types": []
   },

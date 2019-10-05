@@ -16,6 +16,8 @@ import { Token } from "@phosphor/coreutils";
 import { expand, flatten } from "jsonld";
 import React from "react";
 import defaultGraph from "./defaultGraph";
+import { Observable, combineLatest } from "rxjs";
+import { switchMap, map } from "rxjs/operators";
 
 type LinkedData = object;
 type LinkedDataThunk = () => Promise<LinkedData>;
@@ -31,6 +33,7 @@ export interface ILinkedDataProvider {
 function findEntity(entities: Array<any>, id: URL): LinkedData | undefined {
   return entities.find(o => o["@id"] === id.toString());
 }
+
 export class LinkedDataRegistry {
   register(provider: ILinkedDataProvider): void {
     this._providers.add(provider);
@@ -40,7 +43,9 @@ export class LinkedDataRegistry {
    * Lookup this URL in all providers and return a thunk to retreive it or null
    */
   get(url: URL): LinkedDataThunk | null {
-    const thunks = [...this._providers].map(p => p.get(url)).filter(v => v);
+    const thunks = [...this._providers]
+      .map(p => p.get(url))
+      .filter(v => v) as Array<LinkedDataThunk>;
     if (thunks.length === 0) {
       return null;
     }
@@ -50,7 +55,7 @@ export class LinkedDataRegistry {
           await flatten(await Promise.all(thunks.map(t => t())), null)
         )) as Array<any>,
         url
-      );
+      )!;
   }
 
   private _providers = new Set<ILinkedDataProvider>();
@@ -227,6 +232,17 @@ const linkedDataThunkDataType = new DataTypeNoArgs<LinkedDataThunk>(
   "application/x.jupyter.linked-data-thunk"
 );
 
+const jsonLDDataType = new DataTypeNoArgs<Observable<LinkedData>>(
+  "application/ld+json"
+);
+
+// /**
+//  * https://w3c.github.io/json-ld-syntax/#example-162-http-request-with-profile-requesting-a-compacted-document
+//  */
+// const jsonLDCompactedDataType = new DataTypeNoArgs<Observable<LinkedData>>(
+//   "application/ld+json;profile=http://www.w3.org/ns/json-ld#compacted"
+// );
+
 const linkedDataBrowserPlugin: JupyterFrontEndPlugin<void> = {
   id: "jupyterlab-metadata-service:data-browser",
   autoStart: true,
@@ -237,7 +253,56 @@ const linkedDataBrowserPlugin: JupyterFrontEndPlugin<void> = {
     dataRegistry: IRegistry,
     active: IActiveDataset
   ) => {
+    // Get linked data from all datatypes and register it in the graph:
+    let currentLinkedData: Array<any> = [];
+    dataRegistry.URLs$.pipe(
+      switchMap(urls =>
+        combineLatest(
+          ...([...urls]
+            .map(url => {
+              const res = jsonLDDataType.getDataset(dataRegistry.getURL(url));
+              if (!res) {
+                return null;
+              }
+              return (res as Observable<{ "@id": string }>).pipe(
+                map(r => ({
+                  ...r,
+                  // Replace with by setting base to current URL.
+                  ...{ "@id": new URL(r["@id"], url).toString() }
+                }))
+              );
+            })
+            .filter(e => e !== null)
+            .flat() as Array<Observable<LinkedData>>)
+        )
+      )
+    ).subscribe({
+      next: value => {
+        currentLinkedData = value;
+      }
+    });
+    registry.register({
+      get: url => {
+        const res = findEntity(currentLinkedData, url);
+        if (!res) {
+          return null;
+        }
+        return async () => res;
+      }
+    });
+
     dataRegistry.addConverter(
+      /**
+       * Convert json ld to compacted form and resolve base url, so that the @id
+       * can be relative to the dataset
+       *
+       * https://github.com/digitalbazaar/jsonld.js/issues/329#issuecomment-532475466
+       */
+      // createConverter(
+      //   { from: jsonLDDataType, to: jsonLDCompactedDataType },
+      //   ({ data, url }) =>
+      //     data.pipe(flatMap(doc => compact(doc, {}, { base: url.toString() })))
+      // ),
       createConverter(
         { from: resolveDataType, to: linkedDataThunkDataType },
         ({ url }) => registry.get(url)

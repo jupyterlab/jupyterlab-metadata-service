@@ -49,10 +49,10 @@
   },
   "peerDependencies": {
     "@jupyterlab/dataregistry": "^3.0.0",
-    "@jupyterlab/dataregistry-extension": "^3.0.0"
+    "@jupyterlab/dataregistry-extension": "^3.0.0",
+    "rxjs": "^6.5.2"
   },
   "devDependencies": {
-    "@jupyterlab/dataregistry": "^3.0.0",
     "@jupyterlab/dataregistry-extension": "^3.0.0",
     "@types/jsonld": "1.5.0",
     "rimraf": "~2.6.2",
