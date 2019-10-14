@@ -48,6 +48,9 @@ jupyter labextension link . ../jupyterlab-data-explorer/dataregistry-extension/ 
 
 // Run Jupyterlab
 jupyter lab
+
+# Run tests
+jlpm run test
 ```
 
 ### License

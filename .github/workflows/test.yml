@@ -1,0 +1,14 @@
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - run: conda create -n jupyterlab-metadata-service -c conda-forge python=3.6 jupyterlab
+      - run: |
+          conda activate jupyterlab-metadata-service
+          jupyter labextension link .
+      - run: |
+          conda activate jupyterlab-metadata-service
+          jlpm run test
