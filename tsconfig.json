@@ -18,7 +18,7 @@
     "lib": ["dom", "esnext"],
     "strict": true,
     "strictNullChecks": true,
-    "target": "es2017",
+    "target": "es2017"
   },
-  "include": ["src/*",]
+  "include": ["src/*"]
 }
