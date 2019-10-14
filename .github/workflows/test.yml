@@ -5,10 +5,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - run: conda create -n jupyterlab-metadata-service -c conda-forge python=3.6 jupyterlab
-      - run: |
-          conda activate jupyterlab-metadata-service
-          jupyter labextension link .
-      - run: |
-          conda activate jupyterlab-metadata-service
-          jlpm run test
+      - uses: actions/setup-python@v1
+        with:
+          python-version: "3.6"
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "10.x"
+      - run: python -m pip install --upgrade pip
+      - run: pip install jupyterlab
+      - run: jupyter labextension link .
+      - run: jlpm run test
