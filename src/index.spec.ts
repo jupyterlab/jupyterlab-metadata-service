@@ -14,9 +14,13 @@ async function getXPath(xpath: string): Promise<ElementHandle<Element>> {
   return elements[0];
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 describe("JupyterLab", () => {
   beforeAll(async () => {
     await page.goto("http://localhost:8080/lab?reset");
+    await sleep(1000);
   });
 
   it("should show JupyterLab logo", async () => {
