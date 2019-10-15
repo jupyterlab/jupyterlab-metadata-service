@@ -7,7 +7,7 @@ setDefaultOptions({ timeout });
 
 describe("JupyterLab", () => {
   beforeAll(async () => {
-    await page.goto("http://localhost:8080/lab");
+    await page.goto("http://localhost:8080/lab?reset");
   });
 
   it("should show JupyterLab logo", async () => {
