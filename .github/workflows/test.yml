@@ -17,7 +17,8 @@ jobs:
       - if: failure()
         run: cat log.txt
       - run: jlpm run test
-      - if: failure()
+      - name: upload screenshots
+        if: failure()
         uses: actions/upload-artifact@v1
         with:
           name: screenshots
