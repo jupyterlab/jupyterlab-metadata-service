@@ -2,7 +2,7 @@ import { ElementHandle } from "puppeteer";
 
 const { setDefaultOptions } = require("expect-puppeteer");
 
-const timeout = 10 * 1000;
+const timeout = 20 * 1000;
 
 jest.setTimeout(timeout);
 setDefaultOptions({ timeout });

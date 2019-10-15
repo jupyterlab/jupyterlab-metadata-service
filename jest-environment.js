@@ -1,11 +1,9 @@
-// Copied from https://yarnpkg.com/en/package/@rws-air/jestscreenshot
-// jest-environment.ts
+// Based on from https://yarnpkg.com/en/package/@rws-air/jestscreenshot
 
 const PuppeteerEnvironment = require("jest-environment-puppeteer");
 const JestScreenshot = require("@rws-air/jestscreenshot");
 require("jest-circus");
 
-// @ts-ignore
 class CustomEnvironment extends PuppeteerEnvironment {
   async teardown() {
     await this.global.page.waitFor(2000);
