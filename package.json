@@ -30,7 +30,7 @@
     "lint": "stylelint style.css",
     "test": "jlpm jest --runInBand",
     "test:debug": "env HEADLESS=false jlpm test",
-    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "clean": "rimraf lib tsconfig.tsbuildinfo screenshots",
     "prepare": "npm run clean && jlpm run lint && npm run build"
   },
   "dependencies": {
