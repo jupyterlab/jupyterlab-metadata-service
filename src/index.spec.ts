@@ -27,14 +27,15 @@ describe("JupyterLab", () => {
   });
 
   it("should be able to expand files", async () => {
-    expect.assertions(2);
-    const fileButtons = await page.$x('//button[../h3/text()="file:///"]');
-    await expect(fileButtons.length).toBe(1);
-    await expect(fileButtons[0]).toClick("button");
+    expect.assertions(1);
+    await page.waitForXPath('//button[../h3/text()="file:///"]')
+    const filebuttons = await page.$x('//button[../h3/text()="file:///"]');
+    expect(filebuttons.length).toBe(1)
+    await filebuttons[0].click();
   });
 
   it("should see datasets.yml marker", async () => {
     expect.assertions(1);
-    await expect(page).toMatch("datasets.yml");
+    await expect(page).toMatchElement("h3", { text: "datasets.yml" });
   });
 });
