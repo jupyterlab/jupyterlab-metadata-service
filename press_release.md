@@ -4,48 +4,43 @@
 
 ## JupyterLab Metadata Explorer Press Release
 
-JupyterLab takes a huge leap forward today with the announcement of the JupyterLab Metadata Explorer. This timely feature will enhance your _data analysis experience_ by bringing you one step closer to the ultimate goal of being empowered by _rich context_ throughout your analyses.
+The JupyterLab Metadata Explorer is a step forward in providing _rich context_ to data stewards, analysts, and scientists into the world of meaningful, semantically enriched linked scientific documents and data.
+Jupyter Notebooks and JupyterLab have succeeded as general-purpose tools to wrangle, manipulate, and analyze documents and data with programming languages.
+The JupyterLab audiences combine various computational documents (eg. narrative, code, applications, notebooks) and media types (e.g. figures, data) to contextualize their expertise in different scientific method. 
+_Rich context_ metadata connects vocabularies and schema that enrich the context and meaning of information in computational documents.  
+The JupyterLab Metadata Explorer, a feature of the rich context ecosystem, is a purpose driven extension to expose supplementary meaning to data for individuals and organizations capturing knowledge in JupyterLab and Jupyter notebooks.
 
-There is valuable contextual information–metadata–surrounding all of JupyterLab entities (notebooks, datasets, file, etc) which we call “rich context”. This _rich context_, if visible, enables the collaborative authoring of an emergent narrative around your work within JupyterLab. It empowers you to collaborate with your peers, discover new information, techniques, and results to help you make informed decisions. It gets to the heart of the underlying value of a dataset for stakeholder agencies and organizations and enables researchers to work with the data in a more effective manner. With the introduction of the JupyterLab Metadata Explorer, we enter a new phase of tooling which will surround the practitioner with _rich context_.
 
-Prior to the Metadata Explorer, JupyterLab _itself_ had no standard way to answer simple questions about _rich context_, such as:
+There is valuable contextual information–metadata–surrounding all of JupyterLab entities (notebooks, datasets, file, etc) which we call “rich context”. 
+This _rich context_, when visible, enables the collaborative authoring of an emergent narrative around your work within JupyterLab. 
+It empowers you to collaborate with your peers, discover new information, techniques, and results to help you make informed decisions. 
+It gets to the heart of the underlying value of a dataset for stakeholder agencies and organizations and enables researchers to work with the data in a more effective manner. 
+With the introduction of the JupyterLab Metadata Explorer, we enter a new phase of tooling which will surround the practitioner with _rich context_.
 
-*   Questions about **datasets**:
-    *   What is this dataset _about_?
-    *   What _questions_ are being answered by it, and in which domains?
-    *   Which _research groups_ are using it?
-    *   Are there _research publications_ which use this dataset?
-    *   What _version_ of this dataset am I using?
-    *   Who _curated_ this dataset?
-    *   What other _analysis_ use this dataset?
-    *   What other _datasets _are being used with this dataset?
-*   Questions about **notebooks**:
-    *   Who _first created_ this notebook?
-    *   Who has _contributed_ to this notebook?
-    *   What other notebooks use these same datasets?
-    *   Has this notebook been copied or published? If published, does it have a DOI or URL?
-*   Questions about **people** (e.g. people listed above as contributors, curators, etc):
-    *   What is their name, role, title?
-    *   What other topics, publications, projects, datasets, notebooks have they contributed to?
+Classical sciences, the information poor predecessor to modern science, can manage their metadata knowledge without information systems.  
+The modern information rich landscape of data science is accelerated by global asynchronous collaborations.  
+The velocity of modern science is too fast for individuals to manage the complex meaning in data and computational documents; the rich context ecosystem takes responsibility for managing meaning.
 
-The list of questions above goes on, including questions around topics, domains, organizations, code cells, source code files, documents (PDFs, text files, etc.), publications, research teams, grants, experimental results, etc. An entire _knowledge graph_ of metadata is exposed to the practitioner, built from small bits of metadata which are linked together to form a large network of knowledge. Knowledge is power, and users of JupyterLab will benefit tremendously from the Metadata Explorer inside JupyterLab.
+Specifically, we’re defining metadata as multi-vocabulary knowledge graphs encoded as RDF, through JSON-LD, served by HTTP. 
+Organizations - with their developers and scientists - collaboratively contribute to collections of interlinked descriptions of entities into knowledge graphs. 
+These entities range from  things, publications, datasets, events and people, along with other objects used in coding languages and scientific frameworks. 
+The JupyterLab Metadata Explorer consumes an organization’s metadata catalog in knowledge graphs in order to enhance interactive computing practices with supplemental meaning about the fundamental entities of data and their relationships. 
+Ultimately, it connects knowledge generated by multi-faceted organizations of data consumers and creators.
 
-The Metadata Explorer is part of a larger rollout named the _JupyterLab Metadata Service_, consisting of three components:
+Taken together, the result is a flexible system that serves an organization’s scientists, analysts, and data stewards. 
+Organizations with existing metadata catalogs can serve their catalogs to their JupyterLab users by linking knowledge though the metadata provider; data stewards can also supplement their organization’s knowledge through links to various external metadata providers. 
+Projects in JupyterLab benefit doubly from the auto-generated context supplied by the previous notebooks while maintaining the agency to curate personalized domain knowledge graphs. 
+Rich Context helps organizations, data stewards, and scientists discover information, techniques, and previous analysis extracted from datasets, notebooks, publications etc., to access the underlying value of data in a more effective manner. 
+The end result of linking a Metadata Provider for your organization is less duplicated work and faster innovation.
 
-1. **Metadata Explorer:** A user interface for exploring metadata knowledge graph.
-2. **Metadata Catalogs:** Collections of curated metadata (may exist in various formats).
-3. **Metadata Providers:** JupyterLab extensions linking _catalogs_ into the _explorer_.
+Metadata Catalogs already exist in various formats, are hosted in various ways by various organizations, and have many uses outside of JupyterLab. 
+The Metadata Explorer connects the Metadata Service and Metadata Providers. 
+It relies on well-tested and documented web standards to expose catalogs through the JupyterLab interface to the end-users. 
+The result is that the Metadata Explorer can merge many catalogs together into a unified view! 
+**Insert gif of Metadata Explorer here**
+The Metadata Explorer, and the general rich context suite, aids as your JupyterLab assistant. 
+When the Metadata Explorer is open in JupyterLab it automatically access the knowledge graph to surface links between what an end-user is working on, and any associated knowledge within the graph. 
+Keep your hands free while you browse the data that the software has linked for you. 
+Boom, you’re a scientist collaborating with other Jupyter communities.
 
-_Metadata Catalogs_ already exist in various formats, are hosted in various ways by various organizations, and have many uses outside of JupyterLab. The _Metadata Service_ will not attempt to re-invent these catalogs; rather, it merely uses the _Metadata Providers_ and _Metadata Explorer_ to expose those catalogs through the JupyterLab interface to the end-users. The result is that the _Metadata Explorer_ can merge many catalogs together into a unified view!
-
-Existing organizations can begin serving their metadata catalogs through JupyterLab by supplying a custom Metadata Provider extension to JupyterLab for their members to use. This offers several benefits:
-
-1. End users benefit from having relevant metadata served _within_ JupyterLab.
-2. Security and access control is maintained. JupyterLab queries existing, well-tested systems. (It’s possible to configure these controls to give tiered access to individuals, or members of a project).
-3. Metadata will not be copied into a new system, thus there are no added maintenance costs.
-
-The _Metadata Service_ comes with one built-in _Metadata Provider_ backed by GraphQL. It exposes a schema modeled after [schema.org](https://schema.org/).
-
-Taken together, the result is a flexible system which serves both organizations and end-users. Organizations with existing metadata catalogs can serve their catalogs to their JupyterLab users (by writing or configuring a JupyterLab Metadata Provider). End-users can hand curate metadata on their own project files using the built-in Metadata Provider (GraphQL) or access other Metadata Providers (either supplied by their organization or by the greater JupyterLab community).
-
-The _JupyterLab Metadata Explorer_ is a step forward into the world of _rich context_, which is a long-term goal of the JupyterLab core team. Go download and install the _JupyterLab Metadata Explorer_ today. Your metadata awaits you!
+Go download and install the JupyterLab Metadata Explorer and the other tools in the Jupyterlab rich context ecosystem today, your metadata awaits!
