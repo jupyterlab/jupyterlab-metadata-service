@@ -8,17 +8,19 @@
 [![Stability Experimental](https://img.shields.io/badge/stability-experimental-red.svg)](https://img.shields.io/badge/stability-experimental-red.svg)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jupyterlab/jupyterlab-metadata-service/master?urlpath=lab)
 
+![](./docs/screenshot.png)
 
 ```bash
 jupyter labextension install @jupyterlab/metadata-extension @jupyterlab/dataregistry-extension
 ```
 
+This JupyterLab extension displays linked data about the resources you are interacting with in JuyterLab.
+It enables other extensions to register as linked data providers to expose [JSON LD](https://json-ld.org/) about an entity,
+given its URL. The linked data that is exposed is shown to the user the Linked Data viewer in the Data Browser pane.
 
 ## Project Vision
 
 We have articulated our vision for this project as a ["Press Release from the Future"](./press_release.md). We are now pursing that vision to make it a _reality_. Have feedback or want to get involved? [Post an issue!](https://github.com/jupyterlab/jupyterlab-metadata-service/issues/new)
-
-
 
 ## Development
 
@@ -60,7 +62,6 @@ copyright on their contributions. All code is licensed under the terms of the re
 JupyterLab Metadata Service Extension is part of [Project Jupyter](http://jupyter.org/) and is developed by an open community.
 
 Current maintainers of this project are listed in alphabetical order, with affiliation, and main areas of contribution:
-
 
 - Brian Granger, Cal Poly (co-creator, strategy, vision, management, UI/UX design,
   architecture).
