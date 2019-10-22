@@ -1,4 +1,4 @@
-# JupyterLab Metadata Service Extension
+# JupyterLab Metadata Extension
 
 ![Stability Experimental][badge-stability]
 [![Binder][badge-binder]][binder]
