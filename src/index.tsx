@@ -5,6 +5,11 @@
  * Distributed under the terms of the 3-Clause BSD License.
  */
 
+import React from "react";
+import { Observable, combineLatest } from "rxjs";
+import { switchMap, map } from "rxjs/operators";
+import { expand, flatten } from "jsonld";
+import { Token } from "@phosphor/coreutils";
 import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin
@@ -19,12 +24,7 @@ import {
   IRegistry,
   reactDataType
 } from "@jupyterlab/dataregistry-extension";
-import { Token } from "@phosphor/coreutils";
-import { expand, flatten } from "jsonld";
-import React from "react";
 import defaultGraph from "./defaultGraph";
-import { Observable, combineLatest } from "rxjs";
-import { switchMap, map } from "rxjs/operators";
 
 type LinkedData = object;
 type LinkedDataThunk = () => Promise<LinkedData>;
