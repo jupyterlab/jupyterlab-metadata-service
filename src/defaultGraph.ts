@@ -1,3 +1,10 @@
+/**
+ * @license BSD-3-Clause
+ *
+ * Copyright (c) 2019 Project Jupyter Contributors.
+ * Distributed under the terms of the 3-Clause BSD License.
+ */
+
 // https://github.com/Coleridge-Initiative/rclc/blob/3209bad86bbd3dc1c842e37fca4e432ff17f9430/corpus.jsonld
 // but flattened
 
