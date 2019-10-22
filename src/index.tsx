@@ -24,7 +24,7 @@ import {
   IRegistry,
   reactDataType
 } from "@jupyterlab/dataregistry-extension";
-import defaultGraph from "./defaultGraph";
+import defaultGraph from "./default_graph";
 
 type LinkedData = object;
 type LinkedDataThunk = () => Promise<LinkedData>;
