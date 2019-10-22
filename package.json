@@ -68,7 +68,6 @@
     "rxjs": "^6.5.2"
   },
   "devDependencies": {
-    "@jupyterlab/dataregistry-extension": "^3.0.0",
     "@types/jsonld": "1.5.0",
     "rimraf": "~2.6.2",
     "stylelint": "11.0.0",
