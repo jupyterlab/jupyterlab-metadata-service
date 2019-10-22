@@ -1,7 +1,7 @@
 {
   "name": "@jupyterlab/metadata-extension",
   "version": "2.0.0",
-  "description": "A JupyterLab extension for Metadata Service",
+  "description": "A JupyterLab extension to display linked data about the resources you are interacting with in JuyterLab.",
   "keywords": [
     "jupyter",
     "jupyterlab",
@@ -25,11 +25,28 @@
     "url": "https://github.com/jupyterlab/jupyterlab-metadata-service.git"
   },
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "lint": "stylelint style.css",
-    "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "prepare": "npm run clean && jlpm run lint && npm run build"
+    "all": "jlpm run clean && jlpm run build && jlpm run build:jupyter",
+    "all:watch": "jlpm run clean && jlpm run build && jlpm run build:jupyter:watch",
+    "build": "jlpm run build:dev",
+    "build:dev": "jlpm install && jlpm run clean:packages && jlpm run build:packages && jlpm run link:packages && jlpm run install:extensions && jupyter labextension list",
+    "build:jupyter": "jupyter lab build && jupyter lab",
+    "build:jupyter:watch": "jlpm run build:jupyter && jupyter lab --watch",
+    "build:packages": "tsc --build",
+    "build:watch": "tsc --build --watch --listEmittedFiles",
+    "clean": "jlpm run clean:jupyter && jlpm clean:packages && jlpm clean:node",
+    "clean:jupyter": "jlpm run uninstall:extensions && jlpm run unlink:packages && jupyter lab clean",
+    "clean:node": "rimraf node_modules",
+    "clean:packages": "rimraf lib tsconfig.tsbuildinfo",
+    "install:extensions": "jupyter labextension install @jupyterlab/dataregistry-extension",
+    "link": "jlpm run link:packages",
+    "link:packages": "jupyter labextension link ./ --no-build",
+    "lint": "jlpm run lint:css",
+    "lint:css": "stylelint *.css",
+    "prepublishOnly": "npm run clean && npm run build",
+    "rebuild:packages": "jlpm run clean:packages && jlpm run build:packages",
+    "uninstall:extensions": "jupyter labextension uninstall --all --no-build",
+    "unlink": "jlpm run unlink:packages",
+    "unlink:packages": "jupyter labextension unlink ./ --no-build || echo 'Unlink command failed, but continuing...'"
   },
   "dependencies": {
     "@jupyterlab/application": "^1.0.0",
