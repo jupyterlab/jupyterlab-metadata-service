@@ -42,7 +42,7 @@
     "link:packages": "jupyter labextension link ./ --no-build",
     "lint": "jlpm run lint:css",
     "lint:css": "stylelint *.css",
-    "prepublishOnly": "npm run clean && npm run build",
+    "prepublishOnly": "npm run clean && npm install && npm run build:packages",
     "rebuild:packages": "jlpm run clean:packages && jlpm run build:packages",
     "uninstall:extensions": "jupyter labextension uninstall --all --no-build",
     "unlink": "jlpm run unlink:packages",

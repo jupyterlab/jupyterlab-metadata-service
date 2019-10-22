@@ -90,6 +90,7 @@ To install development dependencies (e.g., [Node.js][node-js] module dependencie
 
 ```bash
 $ jlpm install
+$ jlpm install:extensions
 ```
 
 where `jlpm` is the JupyterLab package manager which is bundled with [JupyterLab][jupyterlab].
