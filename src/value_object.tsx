@@ -8,11 +8,11 @@
 import React from "react";
 
 /**
- * Interface describing an object containing a [value object][1].
+ * Interface describing properties for an object containing a [value object][1].
  *
  * [1]: https://w3c.github.io/json-ld-syntax/#value-objects
  */
-interface ValueObject {
+interface Props {
  	/**
  	 * Value object.
  	 */
@@ -25,11 +25,11 @@ interface ValueObject {
  * [1]: https://w3c.github.io/json-ld-syntax/#value-objects
  *
  * @private
- * @param obj - value object
+ * @param props - value object property values
  * @returns a rendered value object
  */
-function render(obj: ValueObject) {
-  const value = obj.valueObject["@value"];
+function ValueObject(props: ValueObject) {
+  const value = props.valueObject["@value"];
   return (
     <span className="jl-metadata-value">
       {typeof value === "object" ? JSON.stringify(value, null, " ") : value}
@@ -40,4 +40,4 @@ function render(obj: ValueObject) {
 /**
  * Exports.
  */
-export { render as ValueObject };
+export { ValueObject };

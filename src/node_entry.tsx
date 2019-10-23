@@ -11,7 +11,7 @@ import { ValueObject } from './value_object';
 import { NodeObject } from './node_object';
 
 /**
- * Interface describing a node entry.
+ * Interface describing node entry properties.
  *
  * ## Notes
  *
@@ -21,74 +21,74 @@ import { NodeObject } from './node_object';
  *
  * @private
  */
-interface NodeEntry {
-	/**
-	 * Keyword.
-	 */
-	keyword: string;
+interface Props {
+    /**
+     * Keyword.
+     */
+    keyword: string;
 
-	/**
-	 * Node object.
-	 */
-	object: object;
+    /**
+     * Node object.
+     */
+    object: object;
 
-	/**
-	 * Callback invoked upon a "click" event.
-	 *
-	 * @param url - URL
-	 */
-	onClick: (url: URL) => void;
+    /**
+     * Callback invoked upon a "click" event.
+     *
+     * @param url - URL
+     */
+    onClick: (url: URL) => void;
 }
 
 /**
  * Renders a node entry.
  *
  * @private
- * @param obj - node entry
+ * @param props - node entry property values
  * @returns rendered node entry
  */
-function render(obj: NodeEntry) {
-	if (obj.keyword === '@id') {
-		return (
-			<>
-				<dt className="jl-metadata-id-keyword"></dt>
-				<dd className="jl-metadata-id-field">
-					<InternalURL url={(obj.object as any) as string} onClick={obj.onClick} />
-				</dd>
-			</>
-		);
-	}
-	if (obj.keyword === '@type') {
-		return (
-			<>
-				<dt>type</dt>
-				{(Array.isArray(obj.object) ? obj.object : [obj.object]).map(type => (
-					<dd key={type}>
-						<InternalURL url={type} onClick={obj.onClick} />
-					</dd>
-				))}
-			</>
-		);
-	}
-	return (
-		<>
-			<dt>{obj.keyword}</dt>
-			{(Array.isArray(obj.object) ? obj.object : [obj.object]).map(
-				(innerObject, idx) => (
-					<dd key={idx}>
-						{"@value" in innerObject ? (
-							<ValueObject valueObject={innerObject} />
-						) : (
-							<NodeObject nodeObject={innerObject} onClick={obj.onClick} />
-						)}
-					</dd>
-				)
-			)}
-		</>
-	);
+function NodeEntry(props: Props) {
+    if (props.keyword === '@id') {
+        return (
+            <>
+                <dt className="jl-metadata-id-keyword"></dt>
+                <dd className="jl-metadata-id-field">
+                    <InternalURL url={(props.object as any) as string} onClick={props.onClick} />
+                </dd>
+            </>
+        );
+    }
+    if (props.keyword === '@type') {
+        return (
+            <>
+                <dt>type</dt>
+                {(Array.isArray(props.object) ? props.object : [props.object]).map(type => (
+                    <dd key={type}>
+                        <InternalURL url={type} onClick={props.onClick} />
+                    </dd>
+                ))}
+            </>
+        );
+    }
+    return (
+        <>
+            <dt>{props.keyword}</dt>
+            {(Array.isArray(props.object) ? props.object : [props.object]).map(
+                (innerObject, idx) => (
+                    <dd key={idx}>
+                        {"@value" in innerObject ? (
+                            <ValueObject valueObject={innerObject} />
+                        ) : (
+                            <NodeObject nodeObject={innerObject} onClick={props.onClick} />
+                        )}
+                    </dd>
+                )
+            )}
+        </>
+    );
 }
 
 /**
  * Exports.
  */
-export { render as NodeEntry };
+export { NodeEntry };

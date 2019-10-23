@@ -9,11 +9,11 @@ import React from "react";
 import { NodeEntry } from './node_entry';
 
 /**
- * Interface describing a [node object][1].
+ * Interface describing [node object][1] properties.
  *
  * [1]:https://w3c.github.io/json-ld-syntax/#node-objects
  */
-interface NodeObject {
+interface Props {
 	/**
 	 * [Node object][1].
 	 *
@@ -33,26 +33,24 @@ interface NodeObject {
  * Renders a node object.
  *
  * @private
- * @param obj - node object
+ * @param props - node object property values
  * @returns rendered node object
  */
-function render(obj: NodeObject) {
-	{
-		const entries = Object.entries(obj.nodeObject);
-		if (entries.length === 0) {
-			return <div>No properties.</div>;
-		}
-		return (
-			<dl className="jl-metadata-node">
-				{entries.map(([keyword, object]) => (
-					<NodeEntry key={keyword} {...{ keyword, object, onClick: obj.onClick }} />
-				))}
-			</dl>
-		);
+function NodeObject(props: Props) {
+	const entries = Object.entries(props.nodeObject);
+	if (entries.length === 0) {
+		return <div>No properties.</div>;
 	}
+	return (
+		<dl className="jl-metadata-node">
+			{entries.map(([keyword, object]) => (
+				<NodeEntry key={keyword} {...{ keyword, object, onClick: props.onClick }} />
+			))}
+		</dl>
+	);
 }
 
 /**
  * Exports.
  */
-export { render as NodeObject };
+export { NodeObject };

@@ -8,11 +8,11 @@
 import React from "react";
 
 /**
- * Interface describing a URL object.
+ * Interface describing internal URL properties.
  *
  * @private
  */
-interface InternalURL {
+interface Props {
 	/**
 	 * URL.
 	 */
@@ -30,16 +30,16 @@ interface InternalURL {
  * Renders a URL.
  *
  * @private
- * @param obj - URL data
+ * @param props - property values
  * @returns a rendered URL
  */
-function render(obj: InternalURL) {
+function InternalURL(props: Props) {
 	return (
 		<a
 			className="jl-metadata-internal-url"
-			onClick={() => obj.onClick(new URL(obj.url))}
+			onClick={() => props.onClick(new URL(props.url))}
 		>
-			{obj.url}
+			{props.url}
 		</a>
 	);
 }
@@ -47,4 +47,4 @@ function render(obj: InternalURL) {
 /**
  * Exports.
  */
-export { render as InternalURL };
+export { InternalURL };
