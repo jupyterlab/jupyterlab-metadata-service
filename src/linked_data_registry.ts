@@ -5,9 +5,9 @@
  * Distributed under the terms of the 3-Clause BSD License.
  */
 
-import { expand, flatten } from "jsonld";
-import { Token } from "@phosphor/coreutils";
-import { JupyterFrontEndPlugin } from "@jupyterlab/application";
+import { expand, flatten } from 'jsonld';
+import { Token } from '@phosphor/coreutils';
+import { JupyterFrontEndPlugin } from '@jupyterlab/application';
 import { LinkedDataThunk } from './types';
 import { findEntity } from './find_entity';
 
@@ -17,17 +17,17 @@ import { findEntity } from './find_entity';
  * @private
  */
 interface ILinkedDataProvider {
-	/**
-	 * Returns a thunk to fetch the linked data associated with a specified URL.
-	 *
-	 * ## Notes
-	 *
-	 * -  If no information is associated with a specified URL, the method should return `null`.
-	 *
-	 * @param url - URL
-	 * @returns a function returning a promise which resolves linked data
-	 */
-	get(url: URL): LinkedDataThunk | null;
+  /**
+   * Returns a thunk to fetch the linked data associated with a specified URL.
+   *
+   * ## Notes
+   *
+   * -  If no information is associated with a specified URL, the method should return `null`.
+   *
+   * @param url - URL
+   * @returns a function returning a promise which resolves linked data
+   */
+  get(url: URL): LinkedDataThunk | null;
 }
 
 /**
@@ -36,45 +36,45 @@ interface ILinkedDataProvider {
  * @private
  */
 class LinkedDataRegistry {
-	/**
-	 * Registers a linked data provider.
-	 *
-	 * @param provider - linked data provider
-	 */
-	register(provider: ILinkedDataProvider): void {
-		this._providers.add(provider);
-	}
+  /**
+   * Registers a linked data provider.
+   *
+   * @param provider - linked data provider
+   */
+  register(provider: ILinkedDataProvider): void {
+    this._providers.add(provider);
+  }
 
-	/**
-	 * Returns a promise for resolving linked data associated with a specified URL.
-	 *
-	 * ## Notes
-	 *
-	 * -  If a URL is not associated with linked data, the method returns `null`.
-	 *
-	 * @param url - URL
-	 * @returns a function returning a promise which resolves linked data
-	 */
-	get(url: URL): LinkedDataThunk | null {
-		const thunks = [...this._providers]
-			.map(p => p.get(url))
-			.filter(v => v) as Array<LinkedDataThunk>;
-		if (thunks.length === 0) {
-			return null;
-		}
-		return async () =>
-			findEntity(
-				(await expand(
-					await flatten(await Promise.all(thunks.map(t => t())), null)
-				)) as Array<any>,
-				url
-			)!;
-	}
+  /**
+   * Returns a promise for resolving linked data associated with a specified URL.
+   *
+   * ## Notes
+   *
+   * -  If a URL is not associated with linked data, the method returns `null`.
+   *
+   * @param url - URL
+   * @returns a function returning a promise which resolves linked data
+   */
+  get(url: URL): LinkedDataThunk | null {
+    const thunks = [...this._providers]
+      .map(p => p.get(url))
+      .filter(v => v) as Array<LinkedDataThunk>;
+    if (thunks.length === 0) {
+      return null;
+    }
+    return async () =>
+      findEntity(
+        (await expand(
+          await flatten(await Promise.all(thunks.map(t => t())), null)
+        )) as Array<any>,
+        url
+      )!;
+  }
 
-	/**
-	 * List of linked data "providers".
-	 */
-	private _providers = new Set<ILinkedDataProvider>();
+  /**
+   * List of linked data "providers".
+   */
+  private _providers = new Set<ILinkedDataProvider>();
 }
 
 /**
@@ -82,7 +82,7 @@ class LinkedDataRegistry {
  *
  * @private
  */
-const LinkedDataRegistryToken = new Token("LinkedDataRegistry");
+const LinkedDataRegistryToken = new Token('LinkedDataRegistry');
 
 /**
  * Activates the plugin.
@@ -91,18 +91,18 @@ const LinkedDataRegistryToken = new Token("LinkedDataRegistry");
  * @returns a linked data registry
  */
 function activate() {
-	return new LinkedDataRegistry();
+  return new LinkedDataRegistry();
 }
 
 /**
  * Plugin registration data.
  */
 const extension: JupyterFrontEndPlugin<LinkedDataRegistry> = {
-	id: "jupyterlab-metadata-service:linked-data-registry",
-	activate: activate,
-	autoStart: true,
-	requires: [],
-	provides: LinkedDataRegistryToken
+  id: 'jupyterlab-metadata-service:linked-data-registry',
+  activate: activate,
+  autoStart: true,
+  requires: [],
+  provides: LinkedDataRegistryToken
 };
 
 /**

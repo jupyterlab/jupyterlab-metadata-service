@@ -1,4 +1,4 @@
-<!-- 
+<!--
 
 @license BSD-3-Clause
 
@@ -192,31 +192,18 @@ src        extension source code
 <!-- links -->
 
 [git]: http://git-scm.com/
-
 [python]: https://www.python.org/
-
 [pip]: https://github.com/pypa/pip
-
 [node-js]: https://nodejs.org/en/
-
 [npm]: https://www.npmjs.com/
-
 [jupyterlab]: https://github.com/jupyterlab/jupyterlab
-
 [anaconda]: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
-
 [github-fork]: https://help.github.com/articles/fork-a-repo/
-
 [github-fork-sync]: https://help.github.com/articles/syncing-a-fork/
-
 [github-remote]: https://help.github.com/articles/configuring-a-remote-for-a-fork/
-
 [git-clone-depth]: https://git-scm.com/docs/git-clone#git-clone---depthltdepthgt
-
 [git-remotes]: https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes
-
 [editorconfig]: http://editorconfig.org/
-
 [editorconfig-chrome]: https://chrome.google.com/webstore/detail/github-editorconfig/bppnolhdpdfmmpeefopdbpmabdpoefjh?hl=en-US
 
 <!-- /.links -->

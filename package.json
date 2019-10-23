@@ -40,13 +40,20 @@
     "install:extensions": "jupyter labextension install @jupyterlab/dataregistry-extension",
     "link": "jlpm run link:packages",
     "link:packages": "jupyter labextension link ./ --no-build",
-    "lint": "jlpm run lint:css",
+    "lint": "jlpm run lint:css && jlpm run prettier",
     "lint:css": "stylelint *.css",
     "prepublishOnly": "npm run clean && npm install && npm run build:packages",
+    "prettier": "prettier --write '**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}'",
+    "prettier:check": "prettier --list-different '**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}'",
     "rebuild:packages": "jlpm run clean:packages && jlpm run build:packages",
     "uninstall:extensions": "jupyter labextension uninstall --all --no-build",
     "unlink": "jlpm run unlink:packages",
     "unlink:packages": "jupyter labextension unlink ./ --no-build || echo 'Unlink command failed, but continuing...'"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "dependencies": {
     "@jupyterlab/application": "^1.0.0",
@@ -62,10 +69,15 @@
   "devDependencies": {
     "@jupyterlab/dataregistry-extension": "^3.0.0",
     "@types/jsonld": "1.5.0",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.18.2",
     "rimraf": "~2.6.2",
     "stylelint": "11.0.0",
     "stylelint-config-prettier": "6.0.0",
     "stylelint-config-standard": "19.0.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
     "typescript": "~3.3.1"
   },
   "publishConfig": {

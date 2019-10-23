@@ -5,7 +5,7 @@
  * Distributed under the terms of the 3-Clause BSD License.
  */
 
-import React from "react";
+import React from 'react';
 
 /**
  * Interface describing internal URL properties.
@@ -13,17 +13,17 @@ import React from "react";
  * @private
  */
 interface Props {
-	/**
-	 * URL.
-	 */
-	url: string;
+  /**
+   * URL.
+   */
+  url: string;
 
-	/**
-	 * Callback invoked upon a "click" event.
-	 *
-	 * @param url - URL
-	 */
-	onClick: (url: URL) => void;
+  /**
+   * Callback invoked upon a "click" event.
+   *
+   * @param url - URL
+   */
+  onClick: (url: URL) => void;
 }
 
 /**
@@ -34,14 +34,14 @@ interface Props {
  * @returns a rendered URL
  */
 function InternalURL(props: Props) {
-	return (
-		<a
-			className="jl-metadata-internal-url"
-			onClick={() => props.onClick(new URL(props.url))}
-		>
-			{props.url}
-		</a>
-	);
+  return (
+    <a
+      className="jl-metadata-internal-url"
+      onClick={() => props.onClick(new URL(props.url))}
+    >
+      {props.url}
+    </a>
+  );
 }
 
 /**

@@ -6,12 +6,12 @@
  */
 
 import {
-	JupyterFrontEnd,
-	JupyterFrontEndPlugin
-} from "@jupyterlab/application";
+  JupyterFrontEnd,
+  JupyterFrontEndPlugin
+} from '@jupyterlab/application';
 import {
-	LinkedDataRegistry,
-	LinkedDataRegistryToken
+  LinkedDataRegistry,
+  LinkedDataRegistryToken
 } from './linked_data_registry';
 import { findEntity } from './find_entity';
 import defaultGraph from './default_graph';
@@ -24,11 +24,11 @@ import defaultGraph from './default_graph';
  * @returns a function returning a promise which resolves linked data
  */
 function resolver(url: URL) {
-	const result = findEntity(defaultGraph, url);
-	if (!result) {
-		return null;
-	}
-	return async () => result;
+  const result = findEntity(defaultGraph, url);
+  if (!result) {
+    return null;
+  }
+  return async () => result;
 }
 
 /**
@@ -39,20 +39,20 @@ function resolver(url: URL) {
  * @param registry - linked data registry
  */
 function activate(app: JupyterFrontEnd, registry: LinkedDataRegistry) {
-	const provider = {
-		get: resolver
-	};
-	registry.register(provider);
+  const provider = {
+    get: resolver
+  };
+  registry.register(provider);
 }
 
 /**
  * Plugin registration data.
  */
 const extension: JupyterFrontEndPlugin<void> = {
-	id: "jupyterlab-metadata-service:sample-provider",
-	activate: activate,
-	autoStart: true,
-	requires: [LinkedDataRegistryToken]
+  id: 'jupyterlab-metadata-service:sample-provider',
+  activate: activate,
+  autoStart: true,
+  requires: [LinkedDataRegistryToken]
 };
 
 /**

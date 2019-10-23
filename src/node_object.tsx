@@ -5,7 +5,7 @@
  * Distributed under the terms of the 3-Clause BSD License.
  */
 
-import React from "react";
+import React from 'react';
 import { NodeEntry } from './node_entry';
 
 /**
@@ -14,19 +14,19 @@ import { NodeEntry } from './node_entry';
  * [1]:https://w3c.github.io/json-ld-syntax/#node-objects
  */
 interface Props {
-	/**
-	 * [Node object][1].
-	 *
-	 * [1]:https://w3c.github.io/json-ld-syntax/#node-objects
-	 */
-	nodeObject: object;
+  /**
+   * [Node object][1].
+   *
+   * [1]:https://w3c.github.io/json-ld-syntax/#node-objects
+   */
+  nodeObject: object;
 
-	/**
-	 * Callback invoked upon a "click" event.
-	 *
-	 * @param url - URL
-	 */
-	onClick: (url: URL) => void;
+  /**
+   * Callback invoked upon a "click" event.
+   *
+   * @param url - URL
+   */
+  onClick: (url: URL) => void;
 }
 
 /**
@@ -37,17 +37,20 @@ interface Props {
  * @returns rendered node object
  */
 function NodeObject(props: Props) {
-	const entries = Object.entries(props.nodeObject);
-	if (entries.length === 0) {
-		return <div>No properties.</div>;
-	}
-	return (
-		<dl className="jl-metadata-node">
-			{entries.map(([keyword, object]) => (
-				<NodeEntry key={keyword} {...{ keyword, object, onClick: props.onClick }} />
-			))}
-		</dl>
-	);
+  const entries = Object.entries(props.nodeObject);
+  if (entries.length === 0) {
+    return <div>No properties.</div>;
+  }
+  return (
+    <dl className="jl-metadata-node">
+      {entries.map(([keyword, object]) => (
+        <NodeEntry
+          key={keyword}
+          {...{ keyword, object, onClick: props.onClick }}
+        />
+      ))}
+    </dl>
+  );
 }
 
 /**
