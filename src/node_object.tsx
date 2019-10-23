@@ -13,7 +13,7 @@ import { NodeEntry } from './node_entry';
  *
  * [1]:https://w3c.github.io/json-ld-syntax/#node-objects
  */
-interface Props {
+interface IProps {
   /**
    * [Node object][1].
    *
@@ -36,7 +36,7 @@ interface Props {
  * @param props - node object property values
  * @returns rendered node object
  */
-function NodeObject(props: Props) {
+function NodeObject(props: IProps) {
   const entries = Object.entries(props.nodeObject);
   if (entries.length === 0) {
     return <div>No properties.</div>;

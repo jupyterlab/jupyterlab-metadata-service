@@ -21,7 +21,7 @@ import { NodeObject } from './node_object';
  *
  * @private
  */
-interface Props {
+interface IProps {
   /**
    * Keyword.
    */
@@ -47,7 +47,7 @@ interface Props {
  * @param props - node entry property values
  * @returns rendered node entry
  */
-function NodeEntry(props: Props) {
+function NodeEntry(props: IProps) {
   if (props.keyword === '@id') {
     return (
       <>

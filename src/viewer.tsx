@@ -14,7 +14,7 @@ import { NodeObject } from './node_object';
  *
  * @private
  */
-interface Props {
+interface IProps {
   /**
    * URL.
    */
@@ -36,7 +36,7 @@ interface Props {
 /**
  * Interface describing viewer state.
  */
-interface State {
+interface IState {
   /**
    * Linked data.
    */
@@ -46,11 +46,11 @@ interface State {
 /**
  * Component for viewing linked data.
  */
-class Viewer extends React.Component<Props, State> {
+class Viewer extends React.Component<IProps, IState> {
   /**
    * Viewer state.
    */
-  readonly state: State = {};
+  readonly state: IState = {};
 
   /**
    * Component hook invoked prior to mounting.
@@ -64,7 +64,7 @@ class Viewer extends React.Component<Props, State> {
    *
    * @param prevProps - previous properties
    */
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps: IProps) {
     if (this.props.url.toString() !== prevProps.url.toString()) {
       this.componentWillMount();
     }

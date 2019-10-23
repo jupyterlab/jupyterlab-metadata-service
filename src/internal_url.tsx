@@ -12,7 +12,7 @@ import React from 'react';
  *
  * @private
  */
-interface Props {
+interface IProps {
   /**
    * URL.
    */
@@ -33,7 +33,7 @@ interface Props {
  * @param props - property values
  * @returns a rendered URL
  */
-function InternalURL(props: Props) {
+function InternalURL(props: IProps) {
   return (
     <a
       className="jl-metadata-internal-url"

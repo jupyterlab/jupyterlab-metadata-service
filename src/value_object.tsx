@@ -12,7 +12,7 @@ import React from 'react';
  *
  * [1]: https://w3c.github.io/json-ld-syntax/#value-objects
  */
-interface Props {
+interface IProps {
   /**
    * Value object.
    */
@@ -28,7 +28,7 @@ interface Props {
  * @param props - value object property values
  * @returns a rendered value object
  */
-function ValueObject(props: ValueObject) {
+function ValueObject(props: IProps) {
   const value = props.valueObject['@value'];
   return (
     <span className="jl-metadata-value">
