@@ -9,10 +9,10 @@ jupyter labextension install @jupyterlab/metadata-extension @jupyterlab/dataregi
 
 This JupyterLab extension
 
-* displays linked data about the resources you are interacting with in JuyterLab.
-* enables other extensions to register as linked data providers to expose [JSON LD][json-ld] about an entity given the entity's URL.
-* exposes linked data to the user as a Linked Data viewer in the Data Browser pane.
-* Check out the project vision in the ["Press Release from the Future"](./press_release.md)!
+-   displays linked data about the resources you are interacting with in JuyterLab.
+-   enables other extensions to register as linked data providers to expose [JSON LD][json-ld] about an entity given the entity's URL.
+-   exposes linked data to the user as a Linked Data viewer in the Data Browser pane.
+-   Check out the project vision in the ["Press Release from the Future"](./press_release.md)!
 
 ![](./docs/img/screenshot.png)
 
@@ -27,11 +27,8 @@ We try to keep the current issues relevant and matched to relevant milestones.
 <!-- links -->
 
 [badge-stability]: https://img.shields.io/badge/stability-experimental-red.svg
-
 [badge-binder]: https://mybinder.org/badge_logo.svg
-
 [binder]: https://mybinder.org/v2/gh/jupyterlab/jupyterlab-metadata-service/master?urlpath=lab
-
 [json-ld]: https://json-ld.org/
 
 <!-- /.links -->
