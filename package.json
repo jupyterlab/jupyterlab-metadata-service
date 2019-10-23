@@ -30,7 +30,7 @@
     "build": "jlpm run build:dev",
     "build:dev": "jlpm install && jlpm run clean:packages && jlpm run build:packages && jlpm run link:packages && jlpm run install:extensions && jupyter labextension list",
     "build:jupyter": "jupyter lab build && jupyter lab",
-    "build:jupyter:watch": "jlpm run build:jupyter && jupyter lab --watch",
+    "build:jupyter:watch": "jupyter lab build && jupyter lab --watch",
     "build:packages": "tsc --build",
     "build:watch": "tsc --build --watch --listEmittedFiles",
     "clean": "jlpm run clean:jupyter && jlpm clean:packages && jlpm clean:node",
