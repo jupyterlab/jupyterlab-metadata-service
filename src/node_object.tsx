@@ -1,0 +1,58 @@
+/**
+ * @license BSD-3-Clause
+ *
+ * Copyright (c) 2019 Project Jupyter Contributors.
+ * Distributed under the terms of the 3-Clause BSD License.
+ */
+
+import React from "react";
+import { NodeEntry } from './node_entry';
+
+/**
+ * Interface describing a [node object][1].
+ *
+ * [1]:https://w3c.github.io/json-ld-syntax/#node-objects
+ */
+interface NodeObject {
+	/**
+	 * [Node object][1].
+	 *
+	 * [1]:https://w3c.github.io/json-ld-syntax/#node-objects
+	 */
+	nodeObject: object;
+
+	/**
+	 * Callback invoked upon a "click" event.
+	 *
+	 * @param url - URL
+	 */
+	onClick: (url: URL) => void;
+}
+
+/**
+ * Renders a node object.
+ *
+ * @private
+ * @param obj - node object
+ * @returns rendered node object
+ */
+function render(obj: NodeObject) {
+	{
+		const entries = Object.entries(obj.nodeObject);
+		if (entries.length === 0) {
+			return <div>No properties.</div>;
+		}
+		return (
+			<dl className="jl-metadata-node">
+				{entries.map(([keyword, object]) => (
+					<NodeEntry key={keyword} {...{ keyword, object, onClick: obj.onClick }} />
+				))}
+			</dl>
+		);
+	}
+}
+
+/**
+ * Exports.
+ */
+export { render as NodeObject };
