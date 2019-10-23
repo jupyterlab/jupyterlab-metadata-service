@@ -66,7 +66,7 @@ class Viewer extends React.Component<IProps, IState> {
    */
   componentDidUpdate(prevProps: IProps) {
     if (this.props.url.toString() !== prevProps.url.toString()) {
-      this.componentWillMount();
+      return this.componentWillMount();
     }
   }
 
