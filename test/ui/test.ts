@@ -26,10 +26,16 @@ function sleep(ms: number): Promise<void> {
 }
 describe('JupyterLab', () => {
   beforeAll(async () => {
+    // Load JupyterLab:
     await page.goto('http://localhost:8080/lab?reset');
+
+    // NOTE: depending on system resource constraints, this may NOT be enough time for JupyterLab to load and get "settled", so to speak. If CI tests begin inexplicably failing due to timeout failures, may want to consider increasing the sleep duration...
     await sleep(3000);
+
+    // Attempt to find the data explorer tab on the page (all tests essentially presume that we can load the data explorer via the tab bar button):
     const el = await page.$('[title="Data Explorer"]');
     if (el !== null) {
+      // Clicking on the data explorer tab should open the data explorer, thus allowing us to test data explorer UI interactions:
       el.click();
     } else {
       console.log('Unable to find expected tab.');
