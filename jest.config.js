@@ -1,17 +1,36 @@
-const { defaults: tsjPreset } = require("ts-jest/presets");
+/**
+ * @license BSD-3-Clause
+ *
+ * Copyright (c) 2019 Project Jupyter Contributors.
+ * Distributed under the terms of the 3-Clause BSD License.
+ */
 
-module.exports = {
-  rootDir: "src",
+const { defaults: tsjPreset } = require('ts-jest/presets');
+
+const config = {
+  rootDir: '.',
 
   // Needed for jest-screenshots
-  // https://yarnpkg.com/en/package/@rws-air/jestscreenshot
-  testRunner: "jest-circus/runner",
+  testRunner: 'jest-circus/runner',
 
-  globalSetup: "jest-environment-puppeteer/setup",
-  globalTeardown: "jest-environment-puppeteer/teardown",
-  testEnvironment: "../jest-environment.js",
-  setupFilesAfterEnv: ["expect-puppeteer"],
+  testEnvironment: './jest-environment.js',
+  globalSetup: 'jest-environment-puppeteer/setup',
+  globalTeardown: 'jest-environment-puppeteer/teardown',
+  setupFilesAfterEnv: ['expect-puppeteer'],
   transform: {
     ...tsjPreset.transform
+  },
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  testMatch: ['**/test/**/test*.ts?(x)'],
+  testPathIgnorePatterns: ['/build/', '/lib/', '/node_modules/'],
+  globals: {
+    'ts-jest': {
+      tsConfig: './tsconfig.test.json'
+    }
   }
 };
+
+/**
+ * Exports.
+ */
+module.exports = config;
