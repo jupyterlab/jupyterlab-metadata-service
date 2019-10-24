@@ -27,24 +27,10 @@ function sleep(ms: number): Promise<void> {
 describe('JupyterLab', () => {
   beforeAll(async () => {
     await page.goto('http://localhost:8080/lab?reset');
-    await sleep(1000);
+    await sleep(3000);
     let el = await page.$('[title="Data Explorer"]');
     if (el !== null) {
-      await el.click();
-      const box = await el.boundingBox();
-      if (box !== null) {
-        await page.mouse.move(box.x, box.y);
-        await page.mouse.down();
-        await page.mouse.up();
-        el = await page.$('#jp-main-content-panel .p-TabBar');
-        if (el !== null) {
-          await el.click();
-        } else {
-          console.log('Unable to find tab bar.');
-        }
-      } else {
-        console.log('Unable to resolve bounding box.');
-      }
+      el.click();
     } else {
       console.log('Unable to find expected tab.');
     }
@@ -55,9 +41,8 @@ describe('JupyterLab', () => {
     await expect(page).toMatchElement('#jp-MainLogo', { visible: true } as any);
   });
 
-  it.only("show be able to show 'Data Explorer' tab", async () => {
+  it("show be able to show 'Data Explorer' tab", async () => {
     expect.assertions(1);
-    // await expect(page).toClick('[title="Data Explorer"]');
     await expect(page).toMatchElement('.jl-explorer-heading', {
       text: 'Datasets',
       visible: true
