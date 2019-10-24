@@ -2,12 +2,15 @@ const { defaults: tsjPreset } = require("ts-jest/presets");
 
 module.exports = {
   rootDir: "src",
-  preset: "jest-puppeteer",
-  
-  //  Needed for jest-screenshots
-  testRunner: 'jest-circus/runner',
-  
-  testEnvironment: '../jest-environment.js',
+
+  // Needed for jest-screenshots
+  // https://yarnpkg.com/en/package/@rws-air/jestscreenshot
+  testRunner: "jest-circus/runner",
+
+  globalSetup: "jest-environment-puppeteer/setup",
+  globalTeardown: "jest-environment-puppeteer/teardown",
+  testEnvironment: "../jest-environment.js",
+  setupFilesAfterEnv: ["expect-puppeteer"],
   transform: {
     ...tsjPreset.transform
   }
