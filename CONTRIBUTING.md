@@ -159,6 +159,23 @@ Tests should accompany **all** bug fixes and features. For guidance on how to wr
 
 Any [pull requests][github-pull-request] which include failing tests and/or lint errors will **not** be accepted.
 
+To run the tests:
+
+```bash
+$ jlpm run test
+```
+
+You can also run the tests with a browser GUI for debugging with:
+
+```bash
+$ jlpm run test:debug
+```
+
+If a test fails, a screenshot will be taken of the current state of the browser and
+saved in the `./screenshots` folder for debugging.
+
+If they fail in CI, this folder will be provided as an archive you can download from the Github Actions UI.
+
 #### Step 7: Push
 
 Push your changes to your remote GitHub repository.
