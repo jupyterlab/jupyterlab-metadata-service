@@ -1,10 +1,22 @@
-module.exports = {
+/**
+ * @license BSD-3-Clause
+ *
+ * Copyright (c) 2019 Project Jupyter Contributors.
+ * Distributed under the terms of the 3-Clause BSD License.
+ */
+
+const config = {
   launch: {
-    headless: process.env.HEADLESS !== "false"
+    headless: process.env.HEADLESS !== 'false'
   },
   // https://github.com/smooth-code/jest-puppeteer/tree/master/packages/jest-dev-server#options
   server: {
-    command: "jupyter lab --port 8080 --no-browser",
+    command: 'jupyter lab --port 8080 --no-browser',
     port: 8080
   }
 };
+
+/**
+ * Exports.
+ */
+module.exports = config;
