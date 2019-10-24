@@ -17,7 +17,6 @@ const config = {
   globalSetup: 'jest-environment-puppeteer/setup',
   globalTeardown: 'jest-environment-puppeteer/teardown',
   setupFilesAfterEnv: ['expect-puppeteer'],
-
   transform: {
     ...tsjPreset.transform
   },

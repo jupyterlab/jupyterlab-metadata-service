@@ -13,6 +13,7 @@ jobs:
           node-version: "10.x"
       - run: python -m pip install --upgrade pip
       - run: pip install jupyterlab
+      - run: jlpm run build
       - run: jupyter labextension install . @jupyterlab/dataregistry-extension --debug-log-path log.txt
       - if: failure()
         run: cat log.txt
