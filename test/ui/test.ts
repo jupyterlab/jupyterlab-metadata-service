@@ -28,7 +28,7 @@ describe('JupyterLab', () => {
   beforeAll(async () => {
     await page.goto('http://localhost:8080/lab?reset');
     await sleep(3000);
-    let el = await page.$('[title="Data Explorer"]');
+    const el = await page.$('[title="Data Explorer"]');
     if (el !== null) {
       el.click();
     } else {
