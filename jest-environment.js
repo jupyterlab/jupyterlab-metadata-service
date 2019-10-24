@@ -11,6 +11,9 @@ const PuppeteerEnvironment = require('jest-environment-puppeteer');
 const JestScreenshot = require('@rws-air/jestscreenshot');
 
 class CustomEnvironment extends PuppeteerEnvironment {
+  async setup() {
+    await super.setup();
+  }
   async teardown() {
     await this.global.page.waitFor(2000);
     await super.teardown();

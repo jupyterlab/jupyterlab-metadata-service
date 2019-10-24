@@ -8,13 +8,16 @@
 const { defaults: tsjPreset } = require('ts-jest/presets');
 
 const config = {
-  preset: 'jest-puppeteer',
   rootDir: '.',
 
   // Needed for jest-screenshots
   testRunner: 'jest-circus/runner',
 
   testEnvironment: './jest-environment.js',
+  globalSetup: 'jest-environment-puppeteer/setup',
+  globalTeardown: 'jest-environment-puppeteer/teardown',
+  setupFilesAfterEnv: ['expect-puppeteer'],
+
   transform: {
     ...tsjPreset.transform
   },

@@ -7,11 +7,12 @@
 
 const config = {
   launch: {
-    headless: process.env.HEADLESS !== 'false'
+    headless: process.env.HEADLESS !== 'false',
+    slowMo: true
   },
   // https://github.com/smooth-code/jest-puppeteer/tree/master/packages/jest-dev-server#options
   server: {
-    command: 'jupyter lab --port 8080 --no-browser',
+    command: "jupyter lab --port 8080 --no-browser --LabApp.token=''",
     port: 8080
   }
 };

@@ -49,7 +49,7 @@
     "prettier": "prettier --write '**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}'",
     "prettier:check": "prettier --list-different '**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}'",
     "rebuild:packages": "jlpm run clean:packages && jlpm run build:packages",
-    "test": "jlpm jest --runInBand",
+    "test": "jlpm jest --runInBand --verbose",
     "test:debug": "env HEADLESS=false jlpm test",
     "uninstall:extensions": "jupyter labextension uninstall --all --no-build",
     "unlink": "jlpm run unlink:packages",
