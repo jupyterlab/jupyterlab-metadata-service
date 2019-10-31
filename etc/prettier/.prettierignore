@@ -6,3 +6,5 @@ node_modules
 tests/**/coverage
 **/package.json
 .eggs
+.mypy_cache
+.ipynb_checkpoints
