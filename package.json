@@ -49,7 +49,7 @@
     "prettier": "prettier --write '**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}' --config ./etc/prettier/.prettierrc --ignore-path ./etc/prettier/.prettierignore",
     "prettier:check": "prettier --list-different '**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}' --config ./etc/prettier/.prettierrc --ignore-path ./etc/prettier/.prettierignore",
     "rebuild:packages": "jlpm run clean:packages && jlpm run build:packages",
-    "test": "jest --runInBand",
+    "test": "env JEST_PUPPETEER_CONFIG=./etc/jest/jest-puppeteer.config.js jest --runInBand --config ./etc/jest/jest.config.js",
     "test:debug": "env HEADLESS=false SLOWMO=true jlpm test",
     "uninstall:extensions": "jupyter labextension uninstall --all --no-build",
     "unlink": "jlpm run unlink:packages",
