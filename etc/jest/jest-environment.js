@@ -7,6 +7,7 @@
 
 // Based on from https://yarnpkg.com/en/package/@rws-air/jestscreenshot
 
+const resolve = require('path').resolve;
 const PuppeteerEnvironment = require('jest-environment-puppeteer');
 const JestScreenshot = require('@rws-air/jestscreenshot');
 
@@ -25,7 +26,7 @@ class CustomEnvironment extends PuppeteerEnvironment {
 
       const jestScreenshot = new JestScreenshot({
         page: this.global.page,
-        dirName: __dirname,
+        dirName: resolve(__dirname, '..', '..'),
         testName
       });
 
