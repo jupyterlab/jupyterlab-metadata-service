@@ -42,7 +42,7 @@
     "link:packages": "jupyter labextension link ./ --no-build",
     "lint": "jlpm run prettier && jlpm run lint:css && jlpm run lint:tslint",
     "lint:check": "jlpm run prettier:check && jlpm run lint:tslint:check",
-    "lint:css": "stylelint *.css",
+    "lint:css": "stylelint *.css --config ./etc/stylelint/.stylelintrc.json",
     "lint:tslint": "tslint --fix -c tslint.json --project tsconfig.json '**/*{.ts,.tsx}'",
     "lint:tslint:check": "tslint -c tslint.json --project tsconfig.json '**/*{.ts,.tsx}'",
     "prepublishOnly": "npm run clean && npm install && npm run build:packages",
