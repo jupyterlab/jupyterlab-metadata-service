@@ -1,19 +1,43 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: 'enhancement'
-assignees: ''
+name: 🚀 Feature Request
+about: I have a suggestion (and may want to help contribute 🙂)!
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+<!--lint disable first-heading-level-->
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+## Checklist
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+> Please ensure the following tasks are completed before submitting a feature request.
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+-   [ ] Read and understood the [Code of Conduct][code-of-conduct].
+-   [ ] Searched for existing issues and pull requests.
+
+## Description
+
+> Description of the feature request.
+
+This feature request proposes .
+
+## Related Issues
+
+> Does this feature request have any related issues?
+
+Related issues # , # , and # .
+
+## Questions
+
+> Any questions for reviewers?
+
+No.
+
+## Other
+
+> Any other information relevant to this feature request? This may include screenshots, references, sample output, and/or implementation notes.
+
+No.
+
+<!-- <links> -->
+
+[code-of-conduct]: https://github.com/jupyter/governance/blob/master/conduct/code_of_conduct.md
+
+<!-- </links> -->
