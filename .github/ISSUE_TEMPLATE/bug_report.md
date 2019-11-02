@@ -1,40 +1,90 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: 'bug'
-assignees: ''
+name: 🐛 Bug Report
+about: Something isn't working as I expected. 🤔
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+<!--lint disable first-heading-level-->
 
-**To Reproduce**
-Steps to reproduce the behavior:
+## Checklist
 
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+> Please ensure the following tasks are completed before filing a bug report.
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+-   [ ] Read and understood the [Code of Conduct][code-of-conduct].
+-   [ ] Searched for existing issues and pull requests.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+## Description
 
-**Desktop (please complete the following information):**
+> Description of the issue.
 
--   OS: [e.g. iOS]
--   Browser [e.g. chrome, safari]
--   Version [e.g. 22]
+Encountered an error when .
 
-**Smartphone (please complete the following information):**
+## Related Issues
 
--   Device: [e.g. iPhone6]
--   OS: [e.g. iOS8.1]
--   Browser [e.g. stock browser, safari]
--   Version [e.g. 22]
+> Does this issue have any related issues?
 
-**Additional context**
-Add any other context about the problem here.
+Related issues # , # , and # .
+
+## Questions
+
+> Any questions for reviewers?
+
+No.
+
+## Other
+
+> Any other information relevant to this issue? This may include screenshots, references, stack traces, sample output, and/or implementation notes.
+
+#### Demo
+
+> If relevant, provide a link to a live demo.
+
+For a live demo of the issue, see
+
+-   (link)
+
+#### Reproduction
+
+> What steps are required to reproduce the unexpected output?
+
+In order to reproduce this bug, do the following:
+
+-   Go to '...'
+-   Click on '...'
+-   Scroll down to '...'
+
+#### Expected Results
+
+> What are the expected results?
+
+The following results are expected:
+
+```text
+(insert expected results here)
+```
+
+#### Actual Results
+
+> What are the actual results?
+
+The following are the actual results:
+
+```text
+(insert actual results here)
+```
+
+#### Environments
+
+> What environments are affected (e.g., if unique to a particular browser, `Chrome`, `IE 11`)? Include the Python package version, extension version, and any other potentially relevant platform information.
+
+The following environments are affected:
+
+-   Device:
+-   OS:
+-   Browser:
+-   Version:
+
+<!-- <links> -->
+
+[code-of-conduct]: https://github.com/jupyter/governance/blob/master/conduct/code_of_conduct.md
+
+<!-- </links> -->
