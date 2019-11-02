@@ -6,7 +6,6 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "jsx": "react",
-    "lib": ["dom", "esnext"],
     "module": "esnext",
     "moduleResolution": "node",
     "noEmitOnError": true,
