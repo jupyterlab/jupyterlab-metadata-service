@@ -14,7 +14,9 @@ This JupyterLab extension
 -   exposes linked data to the user as a Linked Data viewer in the Data Browser pane.
 -   Check out the project vision in the ["Press Release from the Future"](./press_release.md)!
 
-![](./docs/img/screenshot.png)
+## Usage
+
+[Usage docs](./docs/usage.md)
 
 ## Contributing
 
