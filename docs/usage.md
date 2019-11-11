@@ -1,7 +1,7 @@
 # Usage
 
 The JupyterLab Metadata extension adds a Linked Data viewer to the [Data Registry][data-registry]. To view metadata about a dataset,
-find it in the data explorer and then selected the "Linked Data" view:
+find it in the data explorer and then select the "Linked Data" view:
 
 ![](./img/interface.png)
 
