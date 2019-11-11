@@ -7,7 +7,7 @@ find it in the data explorer and then select the "Linked Data" view:
 
 You can also register Linked Data about entities from a notebook by outputting the `application/ld+json` MIME type:
 
-![](./docs/notebook.png)
+![](./img/notebook.png)
 
 Third party extensions can depend on this extension to expose other linked data providers to register other metadata sources for users.
 
