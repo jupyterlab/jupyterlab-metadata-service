@@ -1,3 +1,5 @@
+**This project has been archived by lack of maintainers**
+
 # JupyterLab Metadata Extension
 
 ![Stability Experimental][badge-stability]
